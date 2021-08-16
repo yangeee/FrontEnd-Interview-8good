@@ -58,8 +58,6 @@ function createGraph(entry) {
   return queue;
 }
 
-
-
 /**
  * 输出编译后的结果
  * @param graph 依赖图谱
