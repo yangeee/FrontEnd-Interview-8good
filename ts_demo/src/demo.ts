@@ -99,4 +99,41 @@ class GenericNumber<T> {
 let myGenericNumber = new GenericNumber<number>();
 myGenericNumber.zeroValue = 0;
 myGenericNumber.add = function(x, y) { return x + y; };
-console.log(myGenericNumber.add(1,5))
+
+type User = {
+  userId: string
+  friendList: {
+    fristName: string
+    lastName: string
+  }[]
+}
+
+type UserIdType = User['userId'] // string
+type FriendList = User['friendList'] // { fristName: string; lastName: string; }[]
+type Friend = FriendList[number]
+
+enum ActiveType {
+  Active,
+  Inactive
+}
+type KeyOfType = keyof typeof ActiveType // "Active" | "Inactive"
+let lllll: KeyOfType = 'Active'
+
+// setTimeout 可能报错 id找不到（我这里没有出现）
+type UserWithoutId = {};
+type UserWithId = {
+  id: string;
+};
+type User1 = UserWithoutId | UserWithId;
+function logUserInfo(user: User1) {
+  if (!("id" in user)) {
+    return;
+  }
+  setTimeout(() => {
+    log(user.id);
+  });
+}
+function log(id: string) {
+  console.log(id);
+}
+
