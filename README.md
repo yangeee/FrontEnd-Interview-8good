@@ -5,4 +5,4 @@
 
 宝典地址：[未成年人勿点](https://github.com/yangeee/js-fuck/blob/master/8good.md)
 
-文件夹为某些示例的实际演示，见名知意
+文件夹为剑法实操：某些示例的实际演示，见名知意
