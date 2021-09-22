@@ -4740,4 +4740,48 @@ cwnd 窗口表示的是发送频率，快速重传和快速恢复算法一般同
 
 检验和在接收方收到数据后会重新算一次看是否匹配
 
+# 设计架构
+
+## MVC
+
+M：Model 数据模型
+
+V：View 界面视图
+
+C：Controller 控制器，协调用户操作、Model、 View
+
+![](https://content.markdowner.net/pub/aG8RvP-BMeN4Dk)
+
+最原始的 MVC 通信都是单向的
+
+### 服务端 MVC
+
+Spring MVC 等 Model 一般存储在数据库中。View 通常是编写的页面模板，模板与 Model 绑定，在里面通过变量嵌入动态数据。Controller 一般处理 Web 前端请求
+
+### 客户端 MVC 
+
+用户在 view 上输入，controller 进行逻辑判断，通知 model 中的数据改变，最后反映到 view 上发生视图改变
+
+> 缺点：controller 会慢慢变的越来越臃肿，因为包含了所有 view 的业务逻辑操作。v 和 c 过于紧密，不是可复用的。
+
+## MVP
+
+1. Passive View（被动视图模式）
+
+   ![](https://content.markdowner.net/pub/9W0OXB-zgRVD77)
+
+   这个模式下 View 是完全被动的，只有显示数据逻辑和触发操作入口，所有的逻辑都由 Presenter 承担。View 和 Model 不直接交互，Presenter 将数据通过 View 的接口设置到视图控件上，同时负责响应 View 的事件，做出处理，根据需要更新 Model，然后触发视图重新加载或者刷新。（类似发布订阅的感觉）
+2. Supervising Controller（监督控制器）
+
+   ![](https://content.markdowner.net/pub/1jbAoD-p3kV8qw)
+
+   被动视图模式中 View 必须提供非常多的接口，有些繁琐。监督控制器模式 View 可以与 Model 进行通信，少了一层中间层，做一些简单的 UI 与数据的交互
+
+## MVVM
+
+![](https://content.markdowner.net/pub/O1a3nR-0kybrQV)
+
+首先在 View 和 ViewModel 中需要进行绑定，省去了 MVP 中视图与数据需要通过接口通信。VM 和 model 之间可以双向通信，当 model 处理完业务逻辑更新数据后通知 VM，然后自动更新 View
+
+
 
