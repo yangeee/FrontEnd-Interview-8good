@@ -4763,7 +4763,7 @@ Spring MVC 等 Model 一般存储在数据库中。View 通常是编写的页面
 用户在 view 上输入，controller 进行逻辑判断，通知 model 中的数据改变，最后反映到 view 上发生视图改变
 
 > 缺点：controller 会慢慢变的越来越臃肿，因为包含了所有 view 的业务逻辑操作。v 和 c 过于紧密，不是可复用的。
-
+ 
 ## MVP
 
 1. Passive View（被动视图模式）
