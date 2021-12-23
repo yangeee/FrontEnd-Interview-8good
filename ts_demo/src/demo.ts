@@ -137,3 +137,6 @@ function log(id: string) {
   console.log(id);
 }
 
+const x = 'x'; // has the type 'x'
+let y = 'x' as const; // y has type 'x'`
+
