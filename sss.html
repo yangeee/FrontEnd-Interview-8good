@@ -1,0 +1,364 @@
+<main id="vue-container">
+  <section class="buy-banner pt-3" style="border-bottom: 1px solid #000">
+    <div class="container py-4 text-center">
+      <h1 class="font-size-title-48 mb-4 text-black d-md-flex align-items-md-center justify-content-md-center" style="font-family: inherit">
+        <span class="text-left ml-2 ml-md-4">
+          <span class="pr-2">Pick up your plans of</span>
+          <a href="https://democreator.wondershare.com/" style="text-decoration: underline">DemoCreator</a>
+        </span>
+      </h1>
+      <a href="#" class=" switch-sys-btn m-font-size-large d-flex align-items-center text-action justify-content-center" @click="switchSys">
+        {{buttonText}}
+        <i>
+          <svg class="ml-2" width="9" height="12" viewBox="0 0 9 12" fill="none" xmlns="https://www.w3.org/2000/svg">
+            <path d="M1 1L7 6L1 11" stroke="currentColor" stroke-width="1.5" />
+          </svg>
+        </i>
+      </a>
+    </div>
+    <div class="pt-4">
+      <div class="container container-lg text-center">
+        <div class="row row-cols-4 m-font-size-large font-weight-bold nav-border no-gutters">
+          <div class="col">
+            <div class="h-100">
+              <a :href="buyLink" class="nav-link py-2 px-2 px-md-3 text-black font-weight-bold">Subscription</a>
+            </div>
+          </div>
+          <div class="col">
+            <div class="h-100">
+              <a href="#" class="nav-link py-2 px-2 px-md-3 active text-black font-weight-bold">Perpetual</a>
+            </div>
+          </div>
+          <div class="col">
+            <div class="h-100">
+              <a :href="businessLink" class="nav-link py-2 px-2 px-md-3  text-black font-weight-bold">Business</a>
+            </div>
+          </div>
+          <div class="col">
+            <div class="h-100">
+              <a :href="educationLink" target="_blank" class="nav-link py-2 px-2 px-md-3 text-black font-weight-bold">Education</a>
+            </div>
+          </div>
+          <!--<div class="col">
+            <div class="h-100">
+              <a :href="bundleLink" target="_blank" class="nav-link py-2 px-2 px-md-3 text-black font-weight-bold">Bundles</a>
+            </div>
+          </div>-->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="buy-container py-3">
+    <div class="container container-xl py-lg-3">
+      <div class="row">
+        <div class="col-lg-5 my-3 py-lg-3">
+          <div class="buy-container h-100  border-radius-10 p-4 position-relative d-flex flex-column box-shadow" style="box-shadow: 0 2px 12px rgb(0 0 0 / 15%);">
+            <div class="">
+              <h4 class="font-size-title-24 font-size-super mt-3 mb-4 text-black text-center" v-if="pageSys === 'win'">Perpetual Plan for Windows</h4>
+              <h4 class="font-size-title-24 font-size-super mt-3 mb-4 text-black text-center" v-else>Perpetual Plan for Mac</h4>
+              <div class="dropdown-switch-change-three">
+                <!--价格内容-->
+                <div style="">
+                  <div class="display-1 font-weight-bold text-black py-4 d-flex align-items-start justify-content-center">
+                    <span class="font-size-extra font-weight-bold">US$</span><span class="text-nowrap"><span>69</span><span class="font-size-extra font-weight-bold text-black"></span></span>
+                  </div>
+                  <p class="font-size-small mb-3 text-muted text-center">One-time price for 1 user.
+                    <span t="popover" data-original-title="This plan includes every update to DemoCreator V5.X. But it does not include upgrades to future versions of the software beyond DemoCreator V5." data-placement="top" data-html="true" class="with-hand">
+                  <i data-icon="extra-exclamation-circle" class="wsc-icon wsc-icon-font text-black font-size-small wsc-icon-loaded"><svg class="wsc-svg-extra-exclamation-circle" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 512 512"><path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"></path></svg></i>
+                </span>
+                  </p>
+
+                  <div class="custom-control custom-checkbox font-size-small mb-3 pb-lg-3">
+                    <input type="checkbox" id="customCheck33" name="receive" class="custom-control-input" checked="">
+                    <label for="customCheck33" class="custom-control-label text-left" style="line-height: 17px">
+                      Get a 7-day free access to
+                      <a class="text-action text-decoration-underline" href="https://democreator.wondershare.com/effects.html" target="_blank" ga360location="content_2_buttonLink_23">DemoCreator Effects</a>
+                      for unlimited downloads.
+                      <a class="text-action text-decoration-underline" href="https://accounts.wondershare.com/web/subscription" target="_blank" ga360location="content_2_buttonLink_24">Cancel any time</a>
+                      or subscribe for $8.99/month.
+                    </label>
+                  </div>
+                  <!--价格按钮-->
+                  <div v-if="pageSys === 'win'">
+                    <div class="price-area  btn-groups-1 text-center mb-5">
+                      <a
+                        style="width: 250px;"
+                        href="https://store.wondershare.com/index.php?submod=checkout&method=index&currency=USD&language=English&sku_id=100077432652&ver=v5&verify=7E679D6BC240855EBAFE3EFBFDC72803&additional_sku=100107122680&additional_activity=1302146541793185883&quick_batch=0" class="btn btn-lg btn-action " ga360location="content_2_buttonLink_25">Buy Now</a>
+                    </div>
+                    <div class="price-area btn-groups-2 text-center mb-5 hidden">
+                      <a
+                        style="width: 250px;"
+                        href="https://store.wondershare.com/index.php?submod=checkout&method=index&currency=USD&language=English&sku_id=100077432652&ver=v5&verify=7E679D6BC240855EBAFE3EFBFDC72803" class="btn btn-lg btn-action " ga360location="content_2_buttonLink_25">Buy Now</a>
+                    </div>
+                  </div>
+                  <div v-else>
+                    <div class="price-area  btn-groups-1 text-center mb-5">
+                      <a
+                        style="width: 250px;"
+                        href="mac+购买资源链接" class="btn btn-lg btn-action " ga360location="content_2_buttonLink_25">Buy Now</a>
+                    </div>
+                    <div class="price-area btn-groups-2 text-center mb-5 hidden">
+                      <a
+                        style="width: 250px;"
+                        href="mac不购买资源链接" class="btn btn-lg btn-action " ga360location="content_2_buttonLink_25">Buy Now</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 按钮及特性 -->
+            <div>
+              <!--<div class="text-center mt-3 mb-5 pb-3">-->
+              <!--  <a-->
+              <!--    data-judge="0"-->
+              <!--    class="btn-buy btn btn-lg m-font-size-large btn-action font-weight-bold btn-rounded btn-uncap text-center m-0 w-100 btn-groups-1"-->
+              <!--    style="max-width: 206px; border-radius: 4px"-->
+              <!--    href="https://store.wondershare.com/index.php?submod=checkout&method=index&currency=USD&language=English&sku_id=20014931&ver=v5&verify=58C0038F0256F07E802D4FC61620E82E&additional_sku=100107122680,20015051&additional_activity=1302146541793185883,0&quick_batch=0"-->
+              <!--    href-win32="#"-->
+              <!--    ga360location="content_3_buttonLink_4"-->
+              <!--  >-->
+              <!--    <span class="text-white">Buy Now</span>-->
+              <!--  </a>-->
+              <!--  <a-->
+              <!--    data-judge="0"-->
+              <!--    class="btn-buy btn btn-lg m-font-size-large btn-action font-weight-bold btn-rounded btn-uncap text-center m-0 w-100 btn-groups-2 hidden"-->
+              <!--    style="max-width: 206px; border-radius: 4px"-->
+              <!--    href="https://store.wondershare.com/index.php?submod=checkout&method=index&currency=USD&language=English&sku_id=20014931&ver=v5&verify=58C0038F0256F07E802D4FC61620E82E&additional_sku=20015051"-->
+              <!--    href-win32="#"-->
+              <!--    ga360location="content_3_buttonLink_4"-->
+              <!--  >-->
+              <!--    <span class="text-white">Buy Now</span>-->
+              <!--  </a>-->
+              <!--  &lt;!&ndash; <a data-judge="0" href="https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2652&sub_lid=0&coupon_id=8817&currency=USD&language=English&verify=5b1548775339f6377d8408aff76e2dca&flush=paypal" class="btn-buy m-1" json="paypal_url"><img src="https://images.wondershare.com/democreator/article/btn-paypal.png" class="img-fluid" style="max-width: 206px;border-radius: 4px;" alt="paypal"></a>&ndash;&gt;-->
+              <!--</div>-->
+              <!-- 这一层div不可删，根据底部文案不同调整 -->
+              <div class="mb-3 mt-n2">
+                <div class="d-flex align-items-center pt-1 pb-2  ">
+                  <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1 wsc-icon-loaded"><svg class="wsc-svg-symbol-checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
+                    <path d="M2 20 L12 28 30 4"></path>
+                  </svg></i>
+                  <span class="font-size-small text-black">Keep DemoCreator V5.X for life.</span>
+                </div>
+                <div class="d-flex align-items-center py-2  ">
+                  <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1 wsc-icon-loaded"><svg class="wsc-svg-symbol-checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
+                    <path d="M2 20 L12 28 30 4"></path>
+                  </svg></i>
+                  <span class="font-size-small text-black">All DemoCreator features.</span>
+                </div>
+                <div class="d-flex align-items-center py-2  ">
+                  <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1 wsc-icon-loaded"><svg class="wsc-svg-symbol-checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
+                    <path d="M2 20 L12 28 30 4"></path>
+                  </svg></i>
+                  <span class="font-size-small text-black">Customizable watermark.</span>
+                </div>
+
+                <div class="btn-groups-1">
+                  <div class="d-flex align-items-center py-2  ">
+                    <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1 align-self-start mt-1 wsc-icon-loaded"><svg class="wsc-svg-symbol-checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
+                      <path d="M2 20 L12 28 30 4"></path>
+                    </svg></i>
+                    <span class="font-size-small text-black">
+                      7-day unlimited downloads from DemoCreator Effect Store.
+                    </span>
+                  </div>
+                </div>
+                <div class="btn-groups-2 hidden">
+                  <div class="d-flex align-items-center py-2  ">
+                    <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1 align-self-start mt-1 wsc-icon-loaded" style="visibility: hidden"><svg class="wsc-svg-symbol-checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
+                      <path d="M2 20 L12 28 30 4"></path>
+                    </svg></i>
+
+                    <span class="font-size-small text-black" style="opacity: 0.5">
+                      7-day unlimited downloads from DemoCreator Effect Store.
+                      <span t="popover" data-original-title="<a class='font-size-small text-action' href='https://democreator.wondershare.com/effects.html' target='_blank'>DemoCreator Effects Store</a> is your one-stop-shop for royalty-free video effects, audio, and transitions. You can <a class='text-decoration-underline text-action' href='https://democreator.wondershare.com/effects/store.html' target='_blank'>subscribe to it</a> to enjoy unlimited downloads from Effects Store." data-placement="top" data-html="true"></span>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="d-flex align-items-center py-2  ">
+                  <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1 wsc-icon-loaded"><svg class="wsc-svg-symbol-checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
+                    <path d="M2 20 L12 28 30 4"></path>
+                  </svg></i>
+                  <span class="font-size-small text-black">New effects update every month.</span>
+                </div>
+                <!-- <div class="d-flex align-items-center py-2  ">
+                   <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1 wsc-icon-loaded"><svg class="wsc-svg-symbol-checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
+                     <path d="M2 20 L12 28 30 4"></path>
+                   </svg></i>
+                   <span class="font-size-small text-black">Extra Chrome extension included.</span>
+                 </div>-->
+                <div class="d-flex align-items-center py-2  ">
+                  <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1 wsc-icon-loaded"><svg class="wsc-svg-symbol-checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
+                    <path d="M2 20 L12 28 30 4"></path>
+                  </svg></i>
+                  <span class="font-size-small text-black">24/7 tech support.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--<div class="h-100 border-1 border-radius-10 p-3">-->
+          <!--  <div id="buy-list" class="my-4 mx-3">-->
+          <!--    <h4 class="font-size-title-24 text-center mb-3">For Team</h4>-->
+          <!--    <p class="text-center mb-3 pb-3">Team plan gives you the flexibility to provision, track and manage licensing across groups and teams.</p>-->
+          <!--    <div class="row justify-content-center">-->
+          <!--      <div class="col-lg-6" v-if="productLicense.length > 1">-->
+          <!--        <div class="form-group">-->
+          <!--          &lt;!&ndash; select license &ndash;&gt;-->
+          <!--          <select class="custom-select" id="teamPlan" v-model="annual">-->
+          <!--            <option :value="license.value" v-for="(license, index) in productLicense" :key="index" v-text="license.name"></option>-->
+          <!--          </select>-->
+          <!--        </div>-->
+          <!--      </div>-->
+          <!--      <div class="col-12" v-if="maxNum > 1">-->
+          <!--        <div class="form-group">-->
+          <!--          &lt;!&ndash; select users &ndash;&gt;-->
+          <!--          <select class="custom-select" id="teamUser" v-model="user">-->
+          <!--            <option :value="index + 1" v-for="(user, index) in maxNum" :key="index" v-text="index + 1 + (index > 0 ? ' Users': ' User')"></option>-->
+          <!--          </select>-->
+          <!--        </div>-->
+          <!--      </div>-->
+          <!--    </div>-->
+          <!--    <div class="font-size-large text-center py-3 mb-3 d-flex justify-content-center">-->
+          <!--      <div v-if="annual == 1">-->
+          <!--        <span v-text="currency" class="display-3 font-weight-bold"></span>-->
+          <!--        <span class="pr-2 display-3 font-weight-bold" v-text="annualInfo[user-1].price"></span>-->
+          <!--        <del v-if="annualInfo[user-1].dPrice">-->
+          <!--          <span v-text="currency"></span>-->
+          <!--          <span v-text="annualInfo[user-1].dPrice"></span>-->
+          <!--        </del>-->
+          <!--      </div>-->
+          <!--      <div v-else>-->
+          <!--        <div v-if="perpetualComfirm">-->
+          <!--          <span v-text="currency" class="display-3 font-weight-bold"></span>-->
+          <!--          <span class="pr-2 display-3 font-weight-bold" v-text="perpetualInfo[user-1].price"></span>-->
+          <!--          <del v-if="perpetualInfo[user-1].dPrice">-->
+          <!--            <span v-text="currency"></span>-->
+          <!--            <span v-text="perpetualInfo[user-1].dPrice"></span>-->
+          <!--          </del>-->
+          <!--        </div>-->
+          <!--        <div v-else>-->
+          <!--          <span v-text="currency" class="display-3 font-weight-bold"></span>-->
+          <!--          <span class="pr-2 display-3 font-weight-bold" v-text="perpetualInfo[user-1].price"></span>-->
+          <!--          <del v-if="perpetualInfo[user-1].dPrice">-->
+          <!--            <span v-text="currency"></span>-->
+          <!--            <span v-text="perpetualInfo[user-1].dPrice"></span>-->
+          <!--          </del>-->
+          <!--        </div>-->
+          <!--      </div>-->
+          <!--    </div>-->
+          <!--    <div class="pb-4 text-center">-->
+          <!--      <div v-if="annual == 1" class="d-flex align-items-lg-stretch">-->
+          <!--        <a :href="annualInfo[user-1].url" :class="['btn btn-action  btn-uncap font-weight-bold border-radius-4 m-0 flex-fill', {'w-100': !annualInfo[user-1].paypal}]">Buy Now</a>-->
+          <!--        <a :href="annualInfo[user-1].paypal" v-if="annualInfo[user-1].paypal" class="border-radius-4 m-0 flex-fill">-->
+          <!--          <img class="img-fluid h-100" src="https://images.wondershare.com/images2021/btn-paypal-sm.png" alt="paypal" />-->
+          <!--        </a>-->
+          <!--      </div>-->
+          <!--      <div v-else>-->
+          <!--        <a :href="perpetualInfo[user-1].url" :class="['btn btn-action  btn-uncap font-weight-bold border-radius-4 m-0 flex-fill', {'w-100': !perpetualInfo[user-1].paypal}]">Buy Now</a>-->
+          <!--        <a :href="perpetualInfo[user-1].paypal" v-if="perpetualInfo[user-1].paypal" class="border-radius-4 m-0 flex-fill">-->
+          <!--          <img class="img-fluid h-100" src="https://images.wondershare.com/images2021/btn-paypal-sm.png" alt="paypal" />-->
+          <!--        </a>-->
+          <!--      </div>-->
+          <!--    </div>-->
+          <!--    <div class="mb-4 pb-3 px-3 text-center d-none" v-if="annual == 2">-->
+          <!--      <div class="custom-control custom-checkbox">-->
+          <!--        <input type="checkbox" class="custom-control-input" id="confirmRules" v-model="perpetualComfirm" :value="perpetualAdd" @click="setComfirm" />-->
+          <!--        <label class="custom-control-label text-left" for="confirmRules" style="color: #6d6e78">-->
+          <!--          Add upgrade fee for-->
+          <!--          <span class="font-weight-bold text-black">$10 per year to get the latest major version update.</span>-->
+          <!--        </label>-->
+          <!--      </div>-->
+          <!--    </div>-->
+          <!--    <div class="text-left">-->
+          <!--      <div class="py-2 d-flex align-items-center">-->
+          <!--        <i class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1" data-icon="symbol-checkmark"></i>-->
+          <!--        <span class="font-size-small">Everything you get with the Pro Membership Plan.</span>-->
+          <!--      </div>-->
+          <!--      <div class="py-2 d-flex align-items-center">-->
+          <!--        <i class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1" data-icon="symbol-checkmark"></i>-->
+          <!--        <span class="font-size-small">Multi-user control for both team and business.</span>-->
+          <!--      </div>-->
+          <!--      <div class="py-2 d-flex align-items-center">-->
+          <!--        <i class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1" data-icon="symbol-checkmark"></i>-->
+          <!--        <span class="font-size-small">Free update and upgrade for annual plan.</span>-->
+          <!--      </div>-->
+          <!--      <div class="py-2 d-flex align-items-center">-->
+          <!--        <i class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1" data-icon="symbol-checkmark"></i>-->
+          <!--        <span class="font-size-small">Free tech support</span>-->
+          <!--      </div>-->
+          <!--      <div class="py-2 d-flex align-items-center">-->
+          <!--        <i class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1" data-icon="symbol-checkmark"></i>-->
+          <!--        <span class="font-size-small">No attribution required</span>-->
+          <!--      </div>-->
+          <!--      <div class="py-2 d-flex align-items-center">-->
+          <!--        <i class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1" data-icon="symbol-checkmark"></i>-->
+          <!--        <span class="font-size-small">Volume discount</span>-->
+          <!--      </div>-->
+          <!--      <div class="py-2 d-flex align-items-center">-->
+          <!--        <i class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1" data-icon="symbol-checkmark"></i>-->
+          <!--        <span class="font-size-small">Flexible payment options</span>-->
+          <!--      </div>-->
+          <!--      <div class="py-2 d-flex align-items-center">-->
+          <!--        <i class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1" data-icon="symbol-checkmark"></i>-->
+          <!--        <span class="font-size-small">Support commercial use</span>-->
+          <!--      </div>-->
+          <!--    </div>-->
+          <!--  </div>-->
+          <!--</div>-->
+        </div>
+        <div class="col-lg-7 my-3 py-lg-3">
+          <div class="h-100  border-radius-10 p-3">
+            <div id="pardot-container" class="my-4 mx-3">
+              <img src="https://images.wondershare.com/democreator/product/Perpetual.png" alt="democreator price" style="width:100%;">
+            </div>
+            <div style="padding-left: 35%;
+    font-weight: 600;">
+              This plan is <span style="color: #af3bff;">DemoCreator 2021 (V5.X)</span> perpetual license for Windows OS
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="text-center font-size-tiny py-4">
+    <div class="container">
+      <span class="mr-2">We accept:</span>
+      <img src="https://images.wondershare.com/democreator/images2020/buy/we-accept.png" class="img-fluid" alt="DemoCreator">
+    </div>
+  </section>
+
+  <section class="py-5"><div class="container container-xl"><h2 class="text-center mb-3 pb-lg-3">See What Our Users Ask Frequently</h2> <div class="row justify-content-center"><div class="col-xl-10"><ul id="accordion" role="tablist"
+                                                                                                                                                                                                           class="list-group text-black"><li
+    class="list-group-item px-0 m-0 py-3"><div id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" role="tab" class="with-hand m-font-size-large position-relative d-flex align-items-center my-3"><span class="pr-3 flex-1 m-font-size-large font-weight-bold">Can I cancel my subscription plan?</span> <i data-icon="symbol-chevron-bottom" class="wsc-icon wsc-icon-sm list-right-plus wsc-icon-thick position-absolute text-black wsc-icon-loaded"><svg class="wsc-svg-symbol-chevron-bottom" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
+    <path d="M30 12 L16 24 2 12"></path>
+  </svg></i></div> <div id="collapseOne" aria-labelledby="headingOne" data-parent="#accordion" class="collapse show" style=""><p class="mb-3">
+    Yes, of course, you can. All subscriptions allow you to use this product for the plan time and renew if you’re satisfied. You’ll receive an email notification 7 days before the end of the subscription, which will include
+    instructions to either renew the subscription or cancel it.
+  </p></div></li> <li class="list-group-item px-0 m-0 py-3"><div id="headingTwo" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" role="tab" class="with-hand collapsed m-font-size-large position-relative d-flex align-items-center my-3"><span class="pr-3 flex-1 m-font-size-large font-weight-bold">What’s the difference between free version and paid version?</span> <i data-icon="symbol-chevron-bottom" class="wsc-icon wsc-icon-sm list-right-plus wsc-icon-thick position-absolute text-black wsc-icon-loaded"><svg class="wsc-svg-symbol-chevron-bottom" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
+    <path d="M30 12 L16 24 2 12"></path>
+  </svg></i></div> <div id="collapseTwo" aria-labelledby="headingTwo" data-parent="#accordion" class="collapse"><p class="mb-3">The trial version of Wondershare DemoCreator includes all the same features as the full version. The only difference is the exported videos in the trial version are watermarked.</p></div></li> <li class="list-group-item px-0 m-0 py-3"><div id="headingThree" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" role="tab" class="with-hand collapsed m-font-size-large position-relative d-flex align-items-center my-3"><span class="pr-3 flex-1 m-font-size-large font-weight-bold">Is there a limitation on recording length?</span> <i data-icon="symbol-chevron-bottom" class="wsc-icon wsc-icon-sm list-right-plus wsc-icon-thick position-absolute text-black wsc-icon-loaded"><svg class="wsc-svg-symbol-chevron-bottom" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
+    <path d="M30 12 L16 24 2 12"></path>
+  </svg></i></div> <div id="collapseThree" aria-labelledby="headingThree" data-parent="#accordion" class="collapse"><p class="mb-3">
+    Actually, there is no limit on the duration of a recording. However, the recording could be limited by the capacity of free drive space where you save the recorded files. Also, be aware that a longer recording time period
+    will create very large files that may reduce system performance while working with them during editing and exporting.
+  </p></div></li> <li class="list-group-item px-0 m-0 py-3"><div id="headingFour" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour" role="tab" class="with-hand collapsed m-font-size-large position-relative d-flex align-items-center my-3"><span class="pr-3 flex-1 m-font-size-large font-weight-bold">Can I capture two PC display screens simultaneously?</span> <i data-icon="symbol-chevron-bottom" class="wsc-icon wsc-icon-sm list-right-plus wsc-icon-thick position-absolute text-black wsc-icon-loaded"><svg class="wsc-svg-symbol-chevron-bottom" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
+    <path d="M30 12 L16 24 2 12"></path>
+  </svg></i></div> <div id="collapseFour" aria-labelledby="headingFour" data-parent="#accordion" class="collapse"><p class="mb-3">Currently, DemoCreator only supports to capture the main display screen only if you have two PC screens.</p></div></li> <li class="list-group-item px-0 m-0 py-3"><div id="headingFive" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive" role="tab" class="with-hand collapsed m-font-size-large position-relative d-flex align-items-center my-3"><span class="pr-3 flex-1 m-font-size-large font-weight-bold">How to record my computer screen &amp; webcam?</span> <i data-icon="symbol-chevron-bottom" class="wsc-icon wsc-icon-sm list-right-plus wsc-icon-thick position-absolute text-black wsc-icon-loaded"><svg class="wsc-svg-symbol-chevron-bottom" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
+    <path d="M30 12 L16 24 2 12"></path>
+  </svg></i></div> <div id="collapseFive" aria-labelledby="headingFive" data-parent="#accordion" class="collapse"><p class="mb-3">
+    You can use DemoCreator to record your screen and webcam simultaneously. Run the software and click "New Recording", click Camera, then you will find some setting options for camera, resolution and frame rate.You can set
+    up them according to your needs. The computer screen capture and webcam recording will be displayed in different tracks. You can edit them separately.
+  </p></div></li> <li class="list-group-item px-0 m-0 py-3"><div id="headingSix" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix" role="tab" class="with-hand collapsed m-font-size-large position-relative d-flex align-items-center my-3"><span class="pr-3 flex-1 m-font-size-large font-weight-bold">How to register my DemoCreator after purchase?</span> <i data-icon="symbol-chevron-bottom" class="wsc-icon wsc-icon-sm list-right-plus wsc-icon-thick position-absolute text-black wsc-icon-loaded"><svg class="wsc-svg-symbol-chevron-bottom" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
+    <path d="M30 12 L16 24 2 12"></path>
+  </svg></i></div> <div id="collapseSix" aria-labelledby="headingSix" data-parent="#accordion" class="collapse"><p class="mb-3">
+    The registration code will be sent in the confirmation email after your purchase. You can click Register and enter the registration code as well as your email address then it will show your DemoCreator has been activated
+    successfully.
+  </p></div></li> <li class="list-group-item px-0 m-0 py-3"><div id="headingSeven" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven" role="tab" class="with-hand collapsed m-font-size-large position-relative d-flex align-items-center my-3"><span class="pr-3 flex-1 m-font-size-large font-weight-bold">What is the difference between update and upgrade?</span> <i data-icon="symbol-chevron-bottom" class="wsc-icon wsc-icon-sm list-right-plus wsc-icon-thick position-absolute text-black wsc-icon-loaded"><svg class="wsc-svg-symbol-chevron-bottom" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
+    <path d="M30 12 L16 24 2 12"></path>
+  </svg></i></div> <div id="collapseSeven" aria-labelledby="headingSeven" data-parent="#accordion" class="collapse"><p class="mb-3">
+    Update generally refers to a minor version release while upgrade refers to a major version release like DemoCreator V4 to DemoCreator V5. Perpetual plan includes all updates to the current major version, but doesn't
+    include upgrades to future major versions. And subscription plan includes all updates and upgrades during the subscription period.
+  </p></div></li></ul></div></div></div></section>
+</main>

@@ -15,7 +15,7 @@ console.log(person.constructor === Person); // true
 
 `__proto__`
 
-来自于 Object.prototype,更像是一个 getter/setter，使用 obj.__proto__ 时，可以理解成返回了 Object.getPrototypeOf(obj)
+来自于 Object.prototype,更像是一个 getter/setter，使用 `obj.__proto__` 时，可以理解成返回了 Object.getPrototypeOf(obj)
 
 ---
 
@@ -4783,5 +4783,24 @@ Spring MVC 等 Model 一般存储在数据库中。View 通常是编写的页面
 
 首先在 View 和 ViewModel 中需要进行绑定，省去了 MVP 中视图与数据需要通过接口通信。VM 和 model 之间可以双向通信，当 model 处理完业务逻辑更新数据后通知 VM，然后自动更新 View
 
+# 单点登录
 
+## 同域名下的单点登录
+
+利用 Cookie 的特点：domain 属性设置为当前域的父域，父域的 cookie 会被子域所共享
+
+操作：将 Cookie 的 domain 属性设置为父域的域名（主域名），同时将 Cookie 的 path 属性设置为根路径。这样 token 被保存到父域中即可让所有子域访问
+
+
+## 不同域名下的单点登录
+
+使用一个认证中心，专门处理登录请求、
+
+1、应用A发现用户未登录，url 跳转到认证中心并携带当前网址用做回调
+
+2、用户在认证中心登录之后，生成一个 cookie 在用户浏览器中，并跳回到之前页面并在 url 上携带 token
+
+3、应用A读取token，发送到认证中心进行校验，登录成功
+
+4、应用B打开之后无 token 未登录，跳转到认证中心，由于 cookie 的存在进行检查，如果登录有效直接跳回应用B并携带 token，应用B进行校验登录成功
 
