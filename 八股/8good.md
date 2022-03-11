@@ -1,13 +1,13 @@
-# JS 部分
-
-<br>
+# JS
 
 ## 1、原型链
 
 实例对象的constructor也会指向构造函数
+
 因为没有constructor属性会通过原型链找（容易忽略，是个小陷阱）
 
-```js
+```javascript
+
 function Person() {}
 var person = new Person();
 console.log(person.constructor === Person); // true
@@ -262,15 +262,15 @@ ECMAScript的类型分为两种：语言类型、规范类型
 
 ### Reference
 
-**定义**： 用来解释诸如 delete、typeof 以及赋值等操作行为
+**定义**： 用来解释诸如 delete、typeof 、点操作符以及赋值等操作行为
 
 **三部分组成：**
 
-* base value （属性所在的对象或者是EnvironmentRecord，值只可能是 undefined, an Object, a Boolean, a String, a Number, or an environment record 其中的一种）
+* base value （属性所在的对象或者是Environment Record，值只可能是 undefined, an Object, a Boolean, a String, a Number, or an environment record 其中的一种）
 * referenced name （属性名称）
 * strict reference （是否是严格引用）
 
- Reference 组成部分的方法，比如 GetBase 和 IsPropertyReference。
+Reference 组成部分的方法，比如 GetBase 和 IsPropertyReference。
 
 **两个组成部分的方法**
 
@@ -297,22 +297,30 @@ GetValue：用于从 Reference 类型获取对应值的方法
 > 2.1 如果 ref 是 Reference，并且 IsPropertyReference(ref) 是 true, 那么 this 的值为 GetBase(ref)
 
 > 2.2 如果 ref 是 Reference，并且 base value 值是 Environment Record, 那么this的值为 ImplicitThisValue(ref)
-> ImplicitThisValue 该方法始终返回 undefined
+> ImplicitThisValue 该方法始终返回 undefined（函数直接调用返回里面的this）
 
-> 2.3 如果 ref 不是 Reference，那么 this 的值为 undefined
+> 2.3 如果 ref 不是 Reference，那么 this 的值为 undefined(进行了赋值操作等调用了GetValue)
 
 **什么是 MemberExpression ？**
 
 * PrimaryExpression // 原始表达式 可以参见《JavaScript权威指南第四章》
-* FunctionExpressio  // 函数定义表达式 
+* FunctionExpressio  // 函数定义表达式
 * MemberExpression [ Expression ] // 属性访问表达式
-* MemberExpression . IdentifierName // 属性访问表达式 
+* MemberExpression . IdentifierName // 属性访问表达式
 * new MemberExpression Arguments // 对象创建表达式
 
 说白了就是比如 foo.bar()、foo[0]、foo.obj 这些运算中，括号、点运算符、中括号运算符之前的表达式要先进行计算，为 null 或者其他不能用的情况就会报错。
 
-**几种调用情况下的this**
+**什么是 Environment Record ？**  
+先说词法环境：是一种规范类型，用于根据代码的词法嵌套结构来定义标识符与特定变量和函数的关联  
+组成：由一个环境记录（Environment Record）和一个可能为空的外部词法环境（outer Lexical Environment）引用组成  
 
+**环境记录记录了在其关联的词法环境作用域内创建的标识符绑定**  
+ES8规范中主要使用两种环境记录值：声明性环境记录和对象环境记录。
+![img_1.png](img_1.png)
+
+**几种调用情况下的this**  
+非严格模式下，this 的值为 undefined 的时候，其值会被隐式转换为全局对象
 ```js
 var value = 1;
 var foo = {
@@ -344,6 +352,9 @@ var ref = {
 (foo.bar, foo.bar)()
 同上，调用了 GetValue
 ------------------------------------------------
+function foo() {
+console.log(this)
+}
 foo()
 1、计算 MemberExpression 的结果 赋值给 ref 如下：
 var ref = {
@@ -353,11 +364,10 @@ var ref = {
 };
 2、base value 是 EnvironmentRecord, this 的值为 ImplicitThisValue(ref), 返回 undefined
 ```
-
+注意：以上是在非严格模式下的结果，严格模式下因为 this 返回 undefined，所以示例 3 会报错  
 上述情况是从**规范**的角度去理解 this，大部分人是从**调用**的角度去理解，但是这个角度会无法去理解为何 (false || foo.bar)() 这种情况的 this 值
 
 ---
-
 <br>
 
 ## 7、立即执行函数表达式（IIFE）
@@ -388,10 +398,10 @@ function foo(){}
 
 js 在底层存储变量的时候，会在变量的机器码的低位1-3位存储其类型信息
 
-* 000：对象 
-* 010：浮点数 
-* 100：字符串 
-* 110：布尔 
+* 000：对象
+* 010：浮点数
+* 100：字符串
+* 110：布尔
 * 1：整数
 
 两个特殊值：
@@ -430,7 +440,7 @@ function new_instance_of(leftVaule, rightVaule) {
 
 特点：
 
-> 1）返回函数 
+> 1）返回函数
 > 2）传参2次：调用bind的时候可以传参，返回的新函数调用时也可以传参 3）绑定之后返回的新函数，作为构造函数时，绑定的this应该失效
 
 具体实现
@@ -572,7 +582,7 @@ V8引擎在64位系统下最多只能使用约1.4GB的内存，在32位系统下
 
 1）浏览器端很少需要操作太多内存资源的场景
 
-2）JS 单线程机制 
+2）JS 单线程机制
 
 > 没有复杂的多线程执行场景，对程序内存要求低
 
@@ -634,7 +644,7 @@ rss(resident set size)：表示驻留集大小，是给这个node进程分配了
 
 两个条件满足其一：
 
-* 对象是否经历过一次Scavenge算法 
+* 对象是否经历过一次Scavenge算法
 * To空间的内存占比是否已经超过25%（防止变成 From 空间后，后续对象内存分配时内存过高溢出）
 
 ##### 老生代
@@ -643,7 +653,7 @@ rss(resident set size)：表示驻留集大小，是给这个node进程分配了
 
 总步骤：标记、整理、清除
 
-1）Mark-Sweep (标记清除) 
+1）Mark-Sweep (标记清除)
 
 > 详细步骤：
 >
@@ -653,8 +663,8 @@ rss(resident set size)：表示驻留集大小，是给这个node进程分配了
 
 `根节点类型`
 
-> 1. 全局对象 
-> 2. 本地函数的局部变量和参数 
+> 1. 全局对象
+> 2. 本地函数的局部变量和参数
 > 3. 当前嵌套调用链上的其他函数的变量和参数
 
 `问题`
@@ -746,13 +756,13 @@ Number 类型使用 IEEE 二进制浮点数算术标准 中的 双精度64位表
  10.0110011001100110011001100110011001100110011001100111
 ```
 
- 结果：```10.0110011001100110011001100110011001100110011001100111 * 2^-3```
+结果：```10.0110011001100110011001100110011001100110011001100111 * 2^-3```
 
 3）规格化
- 移一位：```1.0011001100110011001100110011001100110011001100110011(1) * 2^-2```
+移一位：```1.0011001100110011001100110011001100110011001100110011(1) * 2^-2```
 
- 4）舍入处理（0 舍 1 入）
- 括号里的1是多出来的，会舍弃，并进1
+4）舍入处理（0 舍 1 入）
+括号里的1是多出来的，会舍弃，并进1
 
 5）溢出判断（这里没有）
 
@@ -760,12 +770,12 @@ Number 类型使用 IEEE 二进制浮点数算术标准 中的 双精度64位表
 
 > 0 01111111101 0011001100110011001100110011001100110011001100110100
 
- 十进制就是 ```0.30000000000000004440892098500626```
+十进制就是 ```0.30000000000000004440892098500626```
 
- 由于两次存储时的精度丢失，再加上运算时的精度丢失，导致了这个结果
+由于两次存储时的精度丢失，再加上运算时的精度丢失，导致了这个结果
 
- 扩展：为什么(2.55).toFixed(1)等于2.5？
- 简单总结：2.55的存储要比实际存储小一点，导致0.05的第1位尾数不是1，所以就被舍掉了
+扩展：为什么(2.55).toFixed(1)等于2.5？
+简单总结：2.55的存储要比实际存储小一点，导致0.05的第1位尾数不是1，所以就被舍掉了
 
 ---
 
@@ -962,10 +972,10 @@ IE模型元素宽度 width = content + padding + border，高度计算相同
 > 2. position 属性为 absolute：最近的 position 的值不是 static 的祖先元素的**内边距区**的边缘
 > 3. position 属性是 fixed：连续媒体的情况下包含块是 viewport（视口），分页媒体是分页区域
 > 4. absolute 或 fixed：也可能是满足以下条件的最近父级元素的内边距
->    1）transform 或 perspective 的值不是 none
->    2）will-change 的值是 transform 或 perspective
->    3）filter 的值不是 none 或 will-change 的值是 filter(只在 Firefox 下生效).
->    4）contain 的值是 paint (例如: contain: paint;)
+     >    1）transform 或 perspective 的值不是 none
+     >    2）will-change 的值是 transform 或 perspective
+     >    3）filter 的值不是 none 或 will-change 的值是 filter(只在 Firefox 下生效).
+     >    4）contain 的值是 paint (例如: contain: paint;)
 
 **包含块计算百分值**
 
@@ -1000,7 +1010,7 @@ IE模型元素宽度 width = content + padding + border，高度计算相同
 
 注意交叉轴的拉伸，如果一些元素比其他元素高的话，会拉伸矮的元素
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210717163002668.png)
-**flex-flow** 
+**flex-flow**
 
 是 flex-direction 和 flex-wrap 的简写属性
 
@@ -1011,13 +1021,13 @@ flex: auto ===  flex: 1 1 auto （自由伸缩）
 flex: none === flex: 0 0 auto （无法伸缩）
 flex: 2 === flex: 2 1 0% 单值语法只改变 grow
 
-**flex-basis** 
+**flex-basis**
 
 默认设置为 auto：先检测是否设置了绝对值，没有设置的话就使用 flex 子元素的 max-content 大小作为 flex-basis，不会超过元素最大宽度
 
 如果要让三个不同尺寸的flex子元素，在剩余空间分配后保持同一宽度，应使用 flex: 1 1 0，尺寸计算值是 0 表示所有的空间都用来争夺
 
-**flex-shrink** 
+**flex-shrink**
 
 数值越大收缩的越快，并且最小不会小于内容的 min-content（也就是能把内容显示出来）
 
@@ -1054,7 +1064,7 @@ flex: 2 === flex: 2 1 0% 单值语法只改变 grow
 2. 父元素设置overflow: hidden; 形成BFC， 同时左右 padding 设置成左右子元素宽度
 3. 子元素全部 float:left;
 4. left、right 设置各自的宽度
-5. middle 设置width: 100%; 
+5. middle 设置width: 100%;
 6. inner 设置左右边距为左右栏宽度，为左右栏腾出宽度
 
 注意：左栏 margin-left: -100% 以包含块内容区左侧（当然以相邻元素右侧 margin 为基准也可以，一个道理）为基准线，负值表示向基准线移动**靠近**。
@@ -1173,15 +1183,15 @@ p::after{
 
 行内样式缺点
 
-> * 样式不能复用。 
-> * 样式权重太高，样式不好覆盖。 
-> * 表现层与结构层没有分离。 
+> * 样式不能复用。
+> * 样式权重太高，样式不好覆盖。
+> * 表现层与结构层没有分离。
 > * 不能进行缓存，影响加载效率。
 
 导入样式缺点
 
-> * 导入样式，只能放在 style 标签的第一行，放其他行则会无效。 
-> * @import 声明的样式表不能充分利用浏览器并发请求资源的行为，其加载行为往往会延后触发或被其他资源加载挂起。 
+> * 导入样式，只能放在 style 标签的第一行，放其他行则会无效。
+> * @import 声明的样式表不能充分利用浏览器并发请求资源的行为，其加载行为往往会延后触发或被其他资源加载挂起。
 > * 由于 @import 样式表的延后加载，可能会导致页面样式闪烁。
 
 所以一般我们只用内嵌样式和外部样式
@@ -1196,8 +1206,8 @@ p::after{
 
 使用场景：
 
-> * 配合 stylelint 校验 css 语法 
-> * 自动增加浏览器前缀 autoprefixer 
+> * 配合 stylelint 校验 css 语法
+> * 自动增加浏览器前缀 autoprefixer
 > * 编译 css next 的语法
 
 **CSS Modules**
@@ -1244,7 +1254,7 @@ module.exports = {
 > 11. 善后工作，css压缩(在线压缩工具 YUI Compressor)
 > 12. GZIP压缩
 
-> 避免使用@import  
+> 避免使用@import
 >
 > 1. 影响浏览器的并行下载
 > 2. 多个@import会导致下载顺序紊乱
@@ -1340,17 +1350,17 @@ HTML & 浏览器
 
 ② 高度，行高以及外边距和内边距都可控制；
 
-③ 不加控制的话宽度会撑满浏览器，与内容无关； 
+③ 不加控制的话宽度会撑满浏览器，与内容无关；
 
 ④ 它可以容纳内联元素和其他块元素。
 
 行内元素：
 
-① 和其他元素都在一行上； 
+① 和其他元素都在一行上；
 
 ② 行高及外边距和内边距部分可改变（水平方向有效，竖直方向无效）。 如果是可替换元素，比如 input ，竖直方向是有效的
 
-③ 宽度只与内容有关； 
+③ 宽度只与内容有关；
 
 ④ 行内元素只能容纳文本或者其他行内元素。
 
@@ -1515,7 +1525,7 @@ History.replaceState：修改当前历史记录，参数同上
 2. 只有用户点击浏览器倒退按钮和前进按钮，或者使用 JavaScript 调用 History.back()、History.forward()、History.go() 方法时才会触发。
 3. 该事件只针对同一个文档，如果浏览历史的切换，导致加载不同的文档，该事件也不会触发。
 4. 页面第一次加载的时候，浏览器不会触发 popstate 事件。
-5. 回调函数的参数中的 state === 
+5. 回调函数的参数中的 state ===
 
 **缺点**
 
@@ -1702,7 +1712,7 @@ wheel：滚动鼠标的滚轮时触发
 
 请求行
 
-HTTP头(通用信息头，请求头，实体头) 
+HTTP头(通用信息头，请求头，实体头)
 
 请求报文主体(只有POST才有报文主体)
 
@@ -1712,7 +1722,7 @@ HTTP报文格式为：
 
 状态行
 
-HTTP头(通用信息头，响应头，实体头) 
+HTTP头(通用信息头，响应头，实体头)
 
 响应报文主体
 
@@ -1745,7 +1755,7 @@ HTTP/1.1 的字段
 
 1. public：所有内容都将被缓存（客户端和代理服务器都可缓存）
 2. private：所有内容只有客户端可以缓存，Cache-Control 的默认取值
-3. no-cache：客户端缓存内容，但是是否使用缓存则需要经过协商缓存来验证决定
+3. no-cache：客户端缓存内容，但是强制要求使用缓存前把请求提交给原始服务器进行验证(协商缓存验证)
 4. no-store：所有内容都不会被缓存，即不使用强制缓存，也不使用协商缓存
 5. max-age=xxx (xxx is numeric)：缓存内容将在 xxx 秒后失效
 
@@ -2114,11 +2124,11 @@ obj = null // 重写obj，obj 代表的内存会被回收
 6. 被遗忘的未使用的闭包
 7. 脱离 DOM 的引用
 
-   > let elements = {      
+   > let elements = {
    >
    >    btn: document.querySelector('#button')
    >
-   >  } 
+   >  }
    >
    > document.body.removeChild(elements.btn)
    >
@@ -2128,7 +2138,7 @@ obj = null // 重写obj，obj 代表的内存会被回收
 
 1. 打开谷歌开发者工具，切换至 Performance 选项，勾选 Memory 选项，点击运行按钮
 
-   ![](https://content.markdowner.net/pub/34RMXp-ajooBpX) 
+   ![](https://content.markdowner.net/pub/34RMXp-ajooBpX)
 
    上图红框内就是内存变化，如果是一直递增，那基本可以确定存在泄漏
 2. 切换至 Memory 选项，点击运行获取网页快照
@@ -2214,7 +2224,7 @@ navigator.storage.estimate().then(function(estimate) {
 >
 > 协商缓存
 >
-> 1. 最后修改时间：服务器第一次响应时返回 Last-Modified，而浏览器在后续请求时带上其值作为 If-Modified-Since（精度不够，如果时间很短）
+> 1. 最后修改时间：服务器第一次响应时返回 Last-Modified，而浏览器在后续请求时带上其值作为 If-Modified-Since（精度不够，最短1s）
 > 2. 文件标识：服务器第一次响应时返回 ETag，而浏览器在后续请求时带上其值作为 If-None-Match，一般会用文件的 MD5 作为 ETag
 
 #### Push Cache
@@ -2245,7 +2255,7 @@ HTTP/2 的 Push 功能所带来的。请求一个资源的同时，服务端可�
 5. 根服务器根据域名类型判断对应的顶级域名服务器（.com），返回给本地 DNS，然后重复该过程，直到找到该域名；
 6. 如果设置了转发，本地 DNS 会将请求逐级转发，直到转发服务器返回或者也不能解析。
 
-上述服务前端不好切入，但可以通过设置属性，告诉浏览器尽快解析（并不保证，根据网络、负载等做决定）
+上述服务前端不好切入，但可以通过设置 HTML 预解析属性，告诉浏览器尽快解析（并不保证，根据网络、负载等做决定）
 
 ```html
 <link rel="dns-prefetch" href="//yourwebsite.com">
@@ -2346,7 +2356,7 @@ CSS 放到头部，保证了下面的 DOM 构建后，CSSOM 构建完毕。JS �
 
 1）CSS 与 HTML
 
-> 1. link 标签放在 head 标签中，CSS 的加载，不会阻塞 HTML 的解析（HTML解析完会触发DOMContentLoaded 事件，所有依赖资源加载完才触发 load 事件，然后进行样式计算、布局、绘制、合成图层） 
+> 1. link 标签放在 head 标签中，CSS 的加载，不会阻塞 HTML 的解析（HTML解析完会触发DOMContentLoaded 事件，所有依赖资源加载完才触发 load 事件，然后进行样式计算、布局、绘制、合成图层）
 > 2. link 标签放在 body 标签底部，CSS 的加载，不会阻塞页面内容的呈现，但是页面没有样式。加载完解析后会发生一次页面跳动，渲染出样式。
 > 3. link 标签放在 2个 div 中间，第一个 div 先展示，但是没样式。css 加载解析，第二个 div 显示，随后两个 div 都有了样式
 
@@ -2751,7 +2761,7 @@ window.requestIdleCallback(deadline => {
 
 3）并行计算
 
-使用 Web Worker 
+使用 Web Worker
 
 **4.善用 Composite**
 
@@ -2789,13 +2799,13 @@ window.requestIdleCallback(deadline => {
 
 层爆炸：由于隐式合成 或者 人为设置了太多层
 
-> 隐式合成原因： 
+> 隐式合成原因：
 >
 > 1. 举例：
->
->    h1 与 1000个 li 都设置了 overflow: hidden 形成渲染层
->
->    h1设置了 animation ，同时是 transform ，循环运动，变成合成层。由于动态交叠不确定性，浏览器会把 1000 个 li 都提升为合成层，导致爆炸
+     >
+     >    h1 与 1000个 li 都设置了 overflow: hidden 形成渲染层
+     >
+     >    h1设置了 animation ，同时是 transform ，循环运动，变成合成层。由于动态交叠不确定性，浏览器会把 1000 个 li 都提升为合成层，导致爆炸
 > 2. 元素的不经意的重叠也导致合成层的产生
 
 解决方法：设置明确的合适的 z-index 或者 浏览器自带的层压缩
@@ -2841,7 +2851,7 @@ div.addEventListener('touchstart', function (e) {
 
 **1.Resource Hints**
 
-一种预加载相关的标准，包括 DNS Prefetch、Preconnect、Prefetch 与 Prerender，还有一个与 Resource Hints 类似的 Preload 
+一种预加载相关的标准，包括 DNS Prefetch、Preconnect、Prefetch 与 Prerender，还有一个与 Resource Hints 类似的 Preload
 
 1）Prefetch（as 指定文件类型，只提前加载，不会预处理）
 
@@ -3350,7 +3360,6 @@ http 监听进程得到这个请求后，一般启动一个新的子进程去处
 
 从内存到 LCD/LED，再由光线进入人眼
 
-
 # 15、动画性能
 
 总结：
@@ -3405,7 +3414,6 @@ Chrome 使用纹理从 GPU上获得大块的页面内容，将纹理应用到一
    > 注意：GPU 只把绘图上下文的位图输出进行组合，绘图上下文的位图生成还是 CPU 执行
 
 其他概念在性能优化手段中有分析
-
 
 # 工程化
 
@@ -3590,8 +3598,8 @@ customName(); // 'foo'
 
 JS 的代码压缩原理：
 
-1. 将 code 转换成AST 
-2. 将 AST 进行优化，生成一个更小的 AST 
+1. 将 code 转换成AST
+2. 将 AST 进行优化，生成一个更小的 AST
 3. 将新生成的 AST 再转化成 code
 
 babel，eslint，v8 的逻辑均与此类似
@@ -3628,7 +3636,7 @@ code = ast.print_to_string();
 
 将字符串形式的代码转换为 Tokens(令牌)，Tokens 可以视作是一些语法片段组成的数组。
 
- 例如 for (const item of items) {} 的词法解析结果（[AST、syntax、tokens网站](https://esprima.org/)）
+例如 for (const item of items) {} 的词法解析结果（[AST、syntax、tokens网站](https://esprima.org/)）
 
 ![](https://content.markdowner.net/pub/enP7gg-dEjOWm5)
 
@@ -3682,8 +3690,8 @@ Babel 和 Webpack 为了适应复杂的定制需求和频繁的功能变化�
 
   一般用户不需要关心这个，Transform 插件里面已经包含了相关的plugin-syntax-*插件了。用户也可以通过 parserOpts 配置项来直接配置 Parser
 * 转换插件： 用于对 AST 进行转换, 实现转换为 ES5 代码、压缩、功能增强等目的。 Babel 仓库将转换插件划分为两种(只是命名上的区别)：
-  * @babel/plugin-transform-*： 普通的转换插件
-  * @babel/plugin-proposal-*： 还在’提议阶段’(非正式)的语言特性, 目前有这些
+    * @babel/plugin-transform-*： 普通的转换插件
+    * @babel/plugin-proposal-*： 还在’提议阶段’(非正式)的语言特性, 目前有这些
 * 预定义集合(@babel/presets-*)： 插件集合或者分组，主要方便用户对插件进行管理和使用。比如 preset-env 含括所有的标准的最新特性; 再比如 preset-react 含括所有 react 相关的插件。
 
 #### 插件开发辅助
@@ -3780,7 +3788,7 @@ Scope 对象提供了一个 generateUid 方法来生成唯一的、不冲突的
 
 1. 初始化参数
 
-    解析 Webpack 配置参数，合并 Shell 传入和 webpack.config.js 文件配置的参数，形成最后的配置结果。
+   解析 Webpack 配置参数，合并 Shell 传入和 webpack.config.js 文件配置的参数，形成最后的配置结果。
 2. 开始编译
 
    上一步得到的参数初始化 compiler 对象，注册所有配置的插件，插件监听 Webpack 构建生命周期的事件节点，做出相应的反应，执行对象的 run 方法开始执行编译。
@@ -4120,7 +4128,7 @@ class MyExampleWebpackPlugin {
 >
 > 抢占式优先权调度算法：有更高优先级进程出现时，处理机会重新分配
 >
-> 优先级倒置现象：A（低优先级）和 C（高优先级）需要同样的资源， A 在执行时被 B（中优先级）的进程抢占，此时资源并没有释放，而 C 这时候由于拿不到共用资源，所以无法抢占 B 
+> 优先级倒置现象：A（低优先级）和 C（高优先级）需要同样的资源， A 在执行时被 B（中优先级）的进程抢占，此时资源并没有释放，而 C 这时候由于拿不到共用资源，所以无法抢占 B
 >
 > > 解决方案： A 和 C 共用资源时，临时提升 A 的优先级，释放后回到原优先级
 
@@ -4145,7 +4153,7 @@ class MyExampleWebpackPlugin {
 
 > 缺点：次发起系统调用，只能检查一个文件描述符是否就绪。当文件描述符很多时，系统调用的成本很高
 
- I/O 多路复用：通过一次系统调用，检查多个文件描述符的状态。在文件描述符较多的场景下，避免了频繁的用户态和内核态的切换，减少了系统调用的开销
+I/O 多路复用：通过一次系统调用，检查多个文件描述符的状态。在文件描述符较多的场景下，避免了频繁的用户态和内核态的切换，减少了系统调用的开销
 
 > 缺点：引入了一些额外的操作和开销，性能更差
 
@@ -4213,7 +4221,7 @@ HTTP 1.0 主要扩展：
 >
 > * 一个是加大了HTTP的安全性，比如使用 TLS 协议。
 > * 另一个是让HTTP可以支持更多的应用，在 HTTP/1.1 下，HTTP已经支持四种网络协议：
->   * 传统的短链接。
+    >   * 传统的短链接。
 >   * 可重用 TCP 的的长链接模型。
 >   * 服务端 push 的模型。
 >   * WebSocket模型。
@@ -4309,21 +4317,21 @@ HTTP/2 和 HTTP/1.1 最主要的不同是：
 * 0RTT 建链：
 
   首次连接
-  1. 客户端发送 client hello 
-  2. 服务器计算自己的公钥私钥，然后将公钥和一个素数一个整数打包成 config 发送给客户端
-  3. 客户端生成自己的私钥，通过素数和整数生成公钥，使用私钥和服务端的公钥生成数据加密的密钥 K
-  4. 用密钥 K 加密数据，并把自己的公钥给服务端
-  5. 服务端根据自己的私钥和客户端的公钥生成客户端同样的密钥 K 解密数据。为了保证安全，根据上面的规则再生成一套公私钥和密钥 M，然后把新公钥和加密过的数据发送给客户端，客户端根据新公钥和自己的老私钥计算出 M，解密数据
-  6. 之后都是用 M 加密数据，K 只用一次
+    1. 客户端发送 client hello
+    2. 服务器计算自己的公钥私钥，然后将公钥和一个素数一个整数打包成 config 发送给客户端
+    3. 客户端生成自己的私钥，通过素数和整数生成公钥，使用私钥和服务端的公钥生成数据加密的密钥 K
+    4. 用密钥 K 加密数据，并把自己的公钥给服务端
+    5. 服务端根据自己的私钥和客户端的公钥生成客户端同样的密钥 K 解密数据。为了保证安全，根据上面的规则再生成一套公私钥和密钥 M，然后把新公钥和加密过的数据发送给客户端，客户端根据新公钥和自己的老私钥计算出 M，解密数据
+    6. 之后都是用 M 加密数据，K 只用一次
 
   非首次连接
-  1. 客户端会把 config 包存储下来，后续连接时直接使用，跳过这个 RTT，变成 0 RTT，当然这个 config 保存是有时限的
+    1. 客户端会把 config 包存储下来，后续连接时直接使用，跳过这个 RTT，变成 0 RTT，当然这个 config 保存是有时限的
 
-     ![](https://content.markdowner.net/pub/O17pV1-z9DzeAy)
+       ![](https://content.markdowner.net/pub/O17pV1-z9DzeAy)
 
-     > 问：为什么 K 只用一次呢？
-     >
-     > 答：基于前向安全，密钥泄漏不会让之前加密的数据被泄漏，影响的只有当前
+       > 问：为什么 K 只用一次呢？
+       >
+       > 答：基于前向安全，密钥泄漏不会让之前加密的数据被泄漏，影响的只有当前
 * 连接迁移
 
   QUIC 摒弃了 TCP 五元组（源IP地址，源端口，目的IP地址，目的端口和传输层协议），使用64位的随机数作为连接的 ID，并使用该 ID 表示连接。当我们从 4G 环境切换到 wifi 环境时，如果是 TCP 手机的 IP 地址就会发生变化，这时必须创建新的 TCP 连接才能继续传输数据，QUIC则不会，因为 connection ID 没变
@@ -4513,9 +4521,9 @@ Sec-WebSocket-Protocol: binary
 
 ### 四次挥手
 
-1. 客户端发送一个FIN段，并包含一个希望接收者看到的自己当前的序列号K. 同时还包含一个ACK表示确认对方最近一次发过来的数据。 
+1. 客户端发送一个FIN段，并包含一个希望接收者看到的自己当前的序列号K. 同时还包含一个ACK表示确认对方最近一次发过来的数据。
 2. 服务端将K值加1作为ACK序号值，表明收到了上一个包。这时上层的应用程序会被告知另一端发起了关闭操作，通常这将引起应用程序发起自己的关闭操作。
-3. 服务端发起自己的FIN段，ACK=K+1, Seq=L 
+3. 服务端发起自己的FIN段，ACK=K+1, Seq=L
 4. 客户端确认。ACK=L+1
 
 ### 为什么要三次握手
@@ -4557,8 +4565,8 @@ Sec-WebSocket-Protocol: binary
 5. 关于 MSL（Maximum Segment Lifetime 报文最大存活时间） 和 TIME_WAIT
 
    TIME_WAIT状态的主要目的有两个：
-   * 优雅的关闭 TCP 连接，尽量保证被动关闭的一端收到它自己发出去的 FIN 报文的 ACK 确认报文；
-   * 处理延迟的重复报文，避免前后两个使用相同四元组的连接中的前一个连接的报文干扰后一个连接。
+    * 优雅的关闭 TCP 连接，尽量保证被动关闭的一端收到它自己发出去的 FIN 报文的 ACK 确认报文；
+    * 处理延迟的重复报文，避免前后两个使用相同四元组的连接中的前一个连接的报文干扰后一个连接。
 
    问：为什么发送了最后一个 ACK 报文之后需要等待 2MSL 时长的 TIME_WAIT 状态
 
@@ -4579,7 +4587,7 @@ SeqNum 和 Ack 是以字节数为单位，所以 ack 的时候，不能跳着确
 
 缺点：4和5即使已经收到，发送方也不知道。重传时有两种情况：只传timeout的3、连着后面的4、5一起传。但是都不太好，第一种节省带宽但是慢，第二种浪费带宽还有可能做无用功，因为接收方可能已经到了
 
-**2）快速重传机制（中级）** 
+**2）快速重传机制（中级）**
 
 如果包没有连续到达，就 ack 最后那个可能被丢了的包，如果发送方连续收到3次相同的ack，就重传。举个栗子：发送方发出了1，2，3，4，5份数据，2因为某些原因没收到，3到达了，于是ack回2。后面的4和5都到了，但是还是 ack 回2。发送端收到了三个 ack=2 的确认，知道了2还没有到，于是就马上重传2。接收方收到2后，ack 回6。
 
@@ -4758,12 +4766,12 @@ C：Controller 控制器，协调用户操作、Model、 View
 
 Spring MVC 等 Model 一般存储在数据库中。View 通常是编写的页面模板，模板与 Model 绑定，在里面通过变量嵌入动态数据。Controller 一般处理 Web 前端请求
 
-### 客户端 MVC 
+### 客户端 MVC
 
 用户在 view 上输入，controller 进行逻辑判断，通知 model 中的数据改变，最后反映到 view 上发生视图改变
 
 > 缺点：controller 会慢慢变的越来越臃肿，因为包含了所有 view 的业务逻辑操作。v 和 c 过于紧密，不是可复用的。
- 
+
 ## MVP
 
 1. Passive View（被动视图模式）
@@ -4784,6 +4792,11 @@ Spring MVC 等 Model 一般存储在数据库中。View 通常是编写的页面
 首先在 View 和 ViewModel 中需要进行绑定，省去了 MVP 中视图与数据需要通过接口通信。VM 和 model 之间可以双向通信，当 model 处理完业务逻辑更新数据后通知 VM，然后自动更新 View
 
 # 单点登录
+## 一、数据持久化方案
+
+各种服务收到请求后，都向持久层请求数据。
+
+优点是架构清晰，缺点是工程量比较大。另外，持久层万一挂了，就会单点失败
 
 ## 同域名下的单点登录
 
@@ -4791,16 +4804,80 @@ Spring MVC 等 Model 一般存储在数据库中。View 通常是编写的页面
 
 操作：将 Cookie 的 domain 属性设置为父域的域名（主域名），同时将 Cookie 的 path 属性设置为根路径。这样 token 被保存到父域中即可让所有子域访问
 
-
 ## 不同域名下的单点登录
 
-使用一个认证中心，专门处理登录请求、
+使用一个认证中心（持久层），专门处理登录请求、
 
 1、应用A发现用户未登录，url 跳转到认证中心并携带当前网址用做回调
 
-2、用户在认证中心登录之后，生成一个 cookie 在用户浏览器中，并跳回到之前页面并在 url 上携带 token
+2、用户在认证中心登录之后，生成一个认证中心的 cookie 在用户浏览器中，并跳回到之前页面并在 url 上携带 token
 
 3、应用A读取token，发送到认证中心进行校验，登录成功
 
-4、应用B打开之后无 token 未登录，跳转到认证中心，由于 cookie 的存在进行检查，如果登录有效直接跳回应用B并携带 token，应用B进行校验登录成功
+4、应用B打开之后无 token 未登录，跳转到认证中心，由于 cookie 的存在进行检查，如果登录有效直接跳回应用B并携带 token，应用 B 进行校验登录成功，后续统一使用 token 登录
 
+## 二、数据持久化方案
+
+服务器索性不保存 session 数据了，所有数据都保存在客户端，每次请求都发回服务器。JWT 就是这种方案的一个代表
+
+## JWT 原理
+
+1、服务器认证以后，生成一个 JSON 对象，发回给用户
+`JSON 对象使用 Base64URL 算法转成字符串`
+
+2、以后，用户与服务端通信的时候，都要发回这个 JSON 对象，服务器完全只靠这个对象认定用户身份。为了防止用户篡改数据，服务器在生成这个对象的时候，会加上签名
+
+## JWT 的数据结构
+一个很长的字符串，中间用点（.）分隔成三个部分
+![在这里插入图片描述](https://img-blog.csdnimg.cn/53fc3a48f6074fde9e39b45d90a825b9.png)
+分别表示
+```
+Header（头部）
+Payload（负载）
+Signature（签名）
+```
+### Header
+一个 JSON 对象，描述 JWT 的元数据
+```
+{
+  "alg": "HS256", // alg属性表示签名的算法
+  "typ": "JWT"
+}
+```
+### Payload
+Payload 部分也是一个 JSON 对象,JWT 规定了 7 个官方字段
+```json
+iss (issuer)：签发人
+exp (expiration time)：过期时间
+sub (subject)：主题
+aud (audience)：受众
+nbf (Not Before)：生效时间
+iat (Issued At)：签发时间
+jti (JWT ID)：编号
+```
+还可以在这个定义部分私有字段，注意不能把秘密信息放这里
+
+### Signature
+Signature 部分是对前两部分的签名，防止数据篡改
+首先，需要指定一个密钥（secret）。这个密钥只有服务器才知道，不能泄露给用户。然后，使用 Header 里面指定的签名算法（默认是 HMAC SHA256），按照下面的公式产生签名。
+```js
+HMACSHA256(
+  base64UrlEncode(header) + "." +
+  base64UrlEncode(payload),
+  secret)
+```
+
+### Base64URL
+JWT 作为一个令牌（token），有些场合可能会放到 URL（比如 api.example.com/?token=xxx）。Base64 有三个字符 +、/ 和 =，在 URL 里面有特殊含义，所以要被替换掉：=被省略、+替换成-，/替换成_ 。这就是 Base64URL 算法
+
+### JWT 的使用方式
+可以把它放在 Cookie 里面自动发送，但是这样不能跨域
+以更好的做法是放在 HTTP 请求的头信息Authorization字段里面
+`Authorization: Bearer <token>`
+另一种做法是，跨域的时候，JWT 就放在 POST 请求的数据体里面
+
+### JWT 的特点
+- JWT 默认不加密，但也是可以加密的。生成原始 Token 以后，可以用密钥再加密一次
+- JWT 不加密的情况下，不能将秘密数据写入 JWT
+- JWT 本身包含了认证信息，为了减少盗用，JWT 的有效期应该设置得比较短。对于一些比较重要的权限，使用时应该再次对用户进行认证
+- JWT 的最大缺点是：服务器不保存 session 状态吗，无法在使用过程中废止某个 token，或者更改 token 的权限，除非服务器部署额外的逻辑
