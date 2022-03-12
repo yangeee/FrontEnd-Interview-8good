@@ -1,10 +1,17 @@
 # JS
 
 ## 1、原型链
+记住两点：
+1.`__proto__`、 constructor属性是对象所独有的，函数是对象所以也有；
+2.prototype属性是函数独有的；
 
-实例对象的constructor也会指向构造函数
+构造函数的prototype指向原型对象
+**实例对象**和原型对象的constructor都会指向构造函数
+实例对象的`__proto__`指向原型对象
 
-因为没有constructor属性会通过原型链找（容易忽略，是个小陷阱）
+因为实例对象没有constructor属性会通过原型链找（容易忽略，是个小陷阱）
+
+原生的 Number Object 这种都是构造函数，不是对象。直接调用函数会进行类型转换
 
 ```javascript
 
@@ -12,10 +19,11 @@ function Person() {}
 var person = new Person();
 console.log(person.constructor === Person); // true
 ```
+![img.png](img.png)
 
 `__proto__`
 
-来自于 Object.prototype,更像是一个 getter/setter，使用 `obj.__proto__` 时，可以理解成返回了 Object.getPrototypeOf(obj)
+隐式原型，来自于 Object.prototype,更像是一个 getter/setter，使用 `obj.__proto__` 时，可以理解成返回了 Object.getPrototypeOf(obj)
 
 ---
 
@@ -23,24 +31,40 @@ console.log(person.constructor === Person); // true
 
 ## 2、继承
 
-原型链继承：子函数的原型是父函数的实例对象。
-缺点不能传参，引用属性共享
+原型链继承：子函数的原型是父函数的实例对象。  
+缺点:不能传参，引用属性是共享，堆中地址相同
+```js
+Child.prototype = new Parent() // 核心
+```
 
-构造函数继承：子函数中通过call调用父函数,改变this
+构造函数继承：子函数中通过call调用父函数,改变this  
 缺点：每次都要调用父函数
+```js
+function Child(name,like) {
+    Parent.call(this,name);  // 核心
+    this.like = like;
+}
+```
+组合继承: 同时使用上面两种      
+缺点：调用两次父构造函数
 
-组合继承缺点：调用两次父构造函数
-
-一次是设置子类型实例的原型的时候：
+一次是设置子类型实例的原型的时候，原型链继承：
 
 ```js
 Child.prototype = new Parent();
 ```
 
-一次在创建子类型实例的时候：
+一次在创建子类型实例的时候，构造函数继承中绑定this：
 
 ```js
 var child1 = new Child('kevin', '18'); // 调用了Child中的Parent.call(this, name);
+```  
+
+寄生组合继承：只是把原型链继承的部分改为子类原型 = 父类原型的一个拷贝
+```js
+Child.prototype = Object.create(Parent.prototype) // 核心  通过创建中间对象，子类原型和父类原型，就会隔离开。不是同一个
+//这里是修复构造函数指向的代码
+Child.prototype.constructor = Child
 ```
 
 ---
@@ -4791,7 +4815,8 @@ Spring MVC 等 Model 一般存储在数据库中。View 通常是编写的页面
 
 首先在 View 和 ViewModel 中需要进行绑定，省去了 MVP 中视图与数据需要通过接口通信。VM 和 model 之间可以双向通信，当 model 处理完业务逻辑更新数据后通知 VM，然后自动更新 View
 
-# 单点登录
+# 单点登录(SSO) 和 CAS （Central Authentication Service）中心授权服务
+前者是理念，后者是实现方案
 ## 一、数据持久化方案
 
 各种服务收到请求后，都向持久层请求数据。
