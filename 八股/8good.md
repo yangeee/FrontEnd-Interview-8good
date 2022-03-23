@@ -60,12 +60,21 @@ Child.prototype = new Parent();
 var child1 = new Child('kevin', '18'); // 调用了Child中的Parent.call(this, name);
 ```  
 
-寄生组合继承：只是把原型链继承的部分改为子类原型 = 父类原型的一个拷贝
+寄生组合继承：只是把组合继承中的原型链继承的部分改为子类原型 = 父类原型的一个拷贝
 ```js
 Child.prototype = Object.create(Parent.prototype) // 核心  通过创建中间对象，子类原型和父类原型，就会隔离开。不是同一个
+// Object.create() 的内部原理
+// 其中，o 是新创建对象的原型(对象)
+function object(o) {
+  function F() {}
+  F.prototype = o
+  return new F()
+}
 //这里是修复构造函数指向的代码
 Child.prototype.constructor = Child
 ```
+> Object.create 和 new 产生的实例对象区别
+> Object.create()没有调用父对象的构造函数，只是原型链的拼接所以不会执行构造函数的方法
 
 ---
 
@@ -438,7 +447,7 @@ undefined：用 −2^30 整数来表示
 
 所以 typeof 判断 null 为对象，机器码低位相同
 
-instanceof 原理：右边变量的 prototype 在左边变量的原型链上
+instanceof 原理：右边构造函数的 prototype 在左边实例对象的原型链上
 
 ```js
 function new_instance_of(leftVaule, rightVaule) { 
