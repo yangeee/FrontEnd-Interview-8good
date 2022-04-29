@@ -1,61 +1,70 @@
 const PENDING = 'PENDING';
 const FULFILLED = 'FULFILLED';
 const REJECTED = 'REJECTED';
-
-const resolvePromise = (promise2, x, resolve, reject) => {
+/**
+ * 处理then的值可能出现的各种情况。
+ * @param nextPromise then 返回的新 promise
+ * @param res 上一个promise处理结果或者原因
+ * @param resolve // 新的 resolve 方法
+ * @param reject // 新的 rej 方法
+ * @returns {*}
+ */
+const resolvePromise = (nextPromise, res, resolve, reject) => {
   // 自己等待自己完成是错误的实现，用一个类型错误，结束掉 promise  Promise/A+ 2.3.1
-  if (promise2 === x) {
+  if (nextPromise === res) {
     return reject(new TypeError('Chaining cycle detected for promise #<Promise>'))
   }
-  // Promise/A+ 2.3.3.3.3 针对 return 时调用了别家的 promise 库的情况，别家的 promise 库有可能既调 resolve 又调 reject
-  let called;
-  // 后续的条件要严格判断 保证代码能和别的库一起使用
-  if ((typeof x === 'object' && x != null) || typeof x === 'function') {
+  // 针对 return 时调用了别家的 promise 库的情况，别家的 promise 库有可能既调 resolve 又调 reject
+  // 用一个变量来标识 只能调用resolve或reject, 不能两者都调用，触发了某一个之后就返回递归
+  let called = false;
+  // 如果是返回值是对象或者函数
+  if ((typeof res === 'object' && res != null) || typeof res === 'function') {
     try {
-      // 为了判断 resolve 过的就不用再 reject 了（比如 reject 和 resolve 同时调用的时候）  Promise/A+ 2.3.3.1
-      let then = x.then;
       // 判断是否是 promise，有 then 的就视为 promise
+      let then = res.then;
       if (typeof then === 'function') {
-        // 不要写成 x.then，直接 then.call 就可以了 因为 x.then 会再次取值触发getter，Object.defineProperty  Promise/A+ 2.3.3.3
-        then.call(x, y => { // 根据 promise 的状态决定是成功还是失败
+        // 不要写成 res.then，直接 then.call 就可以了 因为 res.then 会再次取值触发getter，Object.defineProperty
+        then.call(res, val => { // 根据 promise 的状态决定是成功还是失败
           if (called) return;
           called = true;
-          // 递归解析的过程（因为可能 promise 中还有 promise，知道在下面返回一个普通值） Promise/A+ 2.3.3.3.1
-          resolvePromise(promise2, y, resolve, reject);
+          // 递归解析的过程（因为可能 promise 中还有 promise，直到在下面返回一个普通值）
+          resolvePromise(nextPromise, val, resolve, reject);
         }, r => {
-          // 只要失败就失败 Promise/A+ 2.3.3.3.2
+          // 只要失败就reject
           if (called) return;
           called = true;
           reject(r);
         });
       } else {
-        // 如果 x.then 不是函数就直接返回 resolve 作为结果  Promise/A+ 2.3.3.4
-        resolve(x);
+        // 如果 res.then 不是函数就直接返回 resolve 作为结果
+        if (called) return;
+        called = true;
+        resolve(res);
       }
     } catch (e) {
-      // Promise/A+ 2.3.3.2
+      // 取值（res.then）出错
       if (called) return;
       called = true;
       reject(e)
     }
   } else {
-    // 如果 x 是个普通值就直接返回 resolve 作为结果  Promise/A+ 2.3.4
-    resolve(x)
+    // 如果 res 是个普通值就直接返回 resolve 作为结果
+    resolve(res)
   }
 }
 
 class Promise {
-  constructor(executor) {
+  constructor(fn) {
     this.status = PENDING;
-    this.value = undefined;
-    this.reason = undefined;
+    this.value = null;
+    this.reason = null;
     this.onResolvedCallbacks = [];
     this.onRejectedCallbacks= [];
-
-    let resolve = (value) => {
+    // 在构造函数中定义并且使用箭头函数，下面try调用就不需要绑定this了
+    let resolve = (val) => {
       if(this.status ===  PENDING) {
         this.status = FULFILLED;
-        this.value = value;
+        this.value = val;
         this.onResolvedCallbacks.forEach(fn=>fn());
       }
     }
@@ -69,7 +78,7 @@ class Promise {
     }
 
     try {
-      executor(resolve,reject)
+      fn(resolve,reject)
     } catch (error) {
       reject(error)
     }
@@ -77,12 +86,11 @@ class Promise {
 
   then(onFulfilled, onRejected) {
     //解决 onFulfilled，onRejected 没有传值的问题，是函数就传原本的函数，否则就变为传递值的函数
-    //Promise/A+ 2.2.1 / Promise/A+ 2.2.5 / Promise/A+ 2.2.7.3 / Promise/A+ 2.2.7.4
     onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : v => v;
     //因为错误的值要让后面访问到，所以这里也要抛出个错误，不然会在之后 then 的 resolve 中捕获
     onRejected = typeof onRejected === 'function' ? onRejected : err => { throw err };
     // 每次调用 then 都返回一个新的 promise  Promise/A+ 2.2.7
-    let promise2 = new Promise((resolve, reject) => {
+    let nextPromise = new Promise((resolve, reject) => {
 
       if (this.status === FULFILLED) {
         //Promise/A+ 2.2.2
@@ -90,9 +98,9 @@ class Promise {
         setTimeout(() => {
           try {
             //Promise/A+ 2.2.7.1
-            let x = onFulfilled(this.value); // 计算出当前promise的值
+            let res = onFulfilled(this.value); // 计算出当前promise的值
             // x可能是一个promise
-            resolvePromise(promise2, x, resolve, reject);
+            resolvePromise(nextPromise, res, resolve, reject);
           } catch (e) {
             //Promise/A+ 2.2.7.2
             reject(e)
@@ -104,8 +112,8 @@ class Promise {
         //Promise/A+ 2.2.3
         setTimeout(() => {
           try {
-            let x = onRejected(this.reason);
-            resolvePromise(promise2, x, resolve, reject);
+            let res = onRejected(this.reason);
+            resolvePromise(nextPromise, res, resolve, reject);
           } catch (e) {
             reject(e)
           }
@@ -117,8 +125,8 @@ class Promise {
         this.onResolvedCallbacks.push(() => {
           setTimeout(() => {
             try {
-              let x = onFulfilled(this.value);
-              resolvePromise(promise2, x, resolve, reject);
+              let res = onFulfilled(this.value);
+              resolvePromise(nextPromise, res, resolve, reject);
             } catch (e) {
               reject(e)
             }
@@ -128,8 +136,8 @@ class Promise {
         this.onRejectedCallbacks.push(()=> {
           setTimeout(() => {
             try {
-              let x = onRejected(this.reason);
-              resolvePromise(promise2, x, resolve, reject)
+              let res = onRejected(this.reason);
+              resolvePromise(nextPromise, res, resolve, reject)
             } catch (e) {
               reject(e)
             }
@@ -138,7 +146,7 @@ class Promise {
       }
     });
 
-    return promise2;
+    return nextPromise;
   }
 }
 

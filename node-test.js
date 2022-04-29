@@ -38,3 +38,22 @@ setTimeout(() => {
     console.log('12')
   })
 })
+
+
+async function a(){
+  let c = 0
+  let b = new Promise(r=>{
+      setTimeout(()=>{
+        let n = 2
+        r(n)
+      },0)
+    })
+  console.log('c1:',c);
+  await b.then(s=>{
+    c=s
+  })
+  console.log('c:',c);
+  return 3
+  }
+  let w = a()
+console.log('w:',w);

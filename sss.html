@@ -1,364 +1,689 @@
-<main id="vue-container">
-  <section class="buy-banner pt-3" style="border-bottom: 1px solid #000">
-    <div class="container py-4 text-center">
-      <h1 class="font-size-title-48 mb-4 text-black d-md-flex align-items-md-center justify-content-md-center" style="font-family: inherit">
-        <span class="text-left ml-2 ml-md-4">
-          <span class="pr-2">Pick up your plans of</span>
-          <a href="https://democreator.wondershare.com/" style="text-decoration: underline">DemoCreator</a>
-        </span>
-      </h1>
-      <a href="#" class=" switch-sys-btn m-font-size-large d-flex align-items-center text-action justify-content-center" @click="switchSys">
-        {{buttonText}}
-        <i>
-          <svg class="ml-2" width="9" height="12" viewBox="0 0 9 12" fill="none" xmlns="https://www.w3.org/2000/svg">
-            <path d="M1 1L7 6L1 11" stroke="currentColor" stroke-width="1.5" />
-          </svg>
-        </i>
-      </a>
-    </div>
-    <div class="pt-4">
-      <div class="container container-lg text-center">
-        <div class="row row-cols-4 m-font-size-large font-weight-bold nav-border no-gutters">
-          <div class="col">
-            <div class="h-100">
-              <a :href="buyLink" class="nav-link py-2 px-2 px-md-3 text-black font-weight-bold">Subscription</a>
-            </div>
-          </div>
-          <div class="col">
-            <div class="h-100">
-              <a href="#" class="nav-link py-2 px-2 px-md-3 active text-black font-weight-bold">Perpetual</a>
-            </div>
-          </div>
-          <div class="col">
-            <div class="h-100">
-              <a :href="businessLink" class="nav-link py-2 px-2 px-md-3  text-black font-weight-bold">Business</a>
-            </div>
-          </div>
-          <div class="col">
-            <div class="h-100">
-              <a :href="educationLink" target="_blank" class="nav-link py-2 px-2 px-md-3 text-black font-weight-bold">Education</a>
-            </div>
-          </div>
-          <!--<div class="col">
-            <div class="h-100">
-              <a :href="bundleLink" target="_blank" class="nav-link py-2 px-2 px-md-3 text-black font-weight-bold">Bundles</a>
-            </div>
-          </div>-->
-        </div>
-      </div>
-    </div>
-  </section>
+<script src="https://neveragain.allstatics.com/2019/assets/vendor/vue.min.js"></script>
+<script src="https://pdf.wondershare.com/pfah/pardot-form.js"></script>
+<script>
+  var buttonText = {
+    win: 'Switch to Mac',
+    mac: 'Switch to Windows'
+  }
+  var productInfo = {
+    win: {
+      license: [
+        { name: 'Annual Plan', label: 'annual', value: '1' },
+        // { name: 'Perpetual Plan', label: 'perpetual', value: '2' }
+      ],
 
-  <section class="buy-container py-3">
-    <div class="container container-xl py-lg-3">
-      <div class="row">
-        <div class="col-lg-5 my-3 py-lg-3">
-          <div class="buy-container h-100  border-radius-10 p-4 position-relative d-flex flex-column box-shadow" style="box-shadow: 0 2px 12px rgb(0 0 0 / 15%);">
-            <div class="">
-              <h4 class="font-size-title-24 font-size-super mt-3 mb-4 text-black text-center" v-if="pageSys === 'win'">Perpetual Plan for Windows</h4>
-              <h4 class="font-size-title-24 font-size-super mt-3 mb-4 text-black text-center" v-else>Perpetual Plan for Mac</h4>
-              <div class="dropdown-switch-change-three">
-                <!--价格内容-->
-                <div style="">
-                  <div class="display-1 font-weight-bold text-black py-4 d-flex align-items-start justify-content-center">
-                    <span class="font-size-extra font-weight-bold">US$</span><span class="text-nowrap"><span>69</span><span class="font-size-extra font-weight-bold text-black"></span></span>
-                  </div>
-                  <p class="font-size-small mb-3 text-muted text-center">One-time price for 1 user.
-                    <span t="popover" data-original-title="This plan includes every update to DemoCreator V5.X. But it does not include upgrades to future versions of the software beyond DemoCreator V5." data-placement="top" data-html="true" class="with-hand">
-                  <i data-icon="extra-exclamation-circle" class="wsc-icon wsc-icon-font text-black font-size-small wsc-icon-loaded"><svg class="wsc-svg-extra-exclamation-circle" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 512 512"><path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"></path></svg></i>
-                </span>
-                  </p>
+      priceInfo: {
+        annualInfo: [
+          {
+            user: 1,
+            price: 29.99,
+            dPrice: 49.99,
+            url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=164&sub_lid=0&coupon_id=9922&currency=USD&language=English&verify=c70b5582c7bf08c96a66c03ecf6747bf',
+            paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=164&sub_lid=0&coupon_id=9922&currency=USD&language=English&verify=c70b5582c7bf08c96a66c03ecf6747bf&flush=paypal'
+          },
+          // {
+          //   user: 2,
+          //  price: 137.18,
+          //
+          //	dPrice: 139.98,
+          //   url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2345&sub_lid=0&currency=USD&language=English&verify=7cee2b5e651b360c8fdb61254344c235',
+          //   paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2345&sub_lid=0&currency=USD&language=English&verify=7cee2b5e651b360c8fdb61254344c235&flush=paypal'
+          //  },
+          //  {
+          //   user: 3,
+          //   price: 203.67,
+          //    dPrice: 209.97,
+          //    url: 'https://store.wondershare.com/index.php?submod=checkout&method=index&pid=7743&license_id=2346&sub_lid=0&currency=USD&language=English&verify=45cd72fe43191987cb1cee982d20a026',
+          //    paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2346&sub_lid=0&currency=USD&language=English&verify=45cd72fe43191987cb1cee982d20a026&flush=paypal'
+          //  },
+          //  {
+          //    user: 4,
+          //    price: 268.76,
+          //   dPrice: 279.96,
+          //    url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2347&sub_lid=0&currency=USD&language=English&verify=840c7ca5035440fde3f1e9d419144da4',
+          //    paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2347&sub_lid=0&currency=USD&language=English&verify=840c7ca5035440fde3f1e9d419144da4&flush=paypal'
+          //   },
+          //  {
+          //     user: 5,
+          //     price: 332.45,
+          //     dPrice: 349.95,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=406&sub_lid=0&currency=USD&language=English&verify=21fb1c3d73f645999cc3e9d61a1dc421',
+          //     paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=406&sub_lid=0&currency=USD&language=English&verify=21fb1c3d73f645999cc3e9d61a1dc421&flush=paypal'
+          //   },
+          //   {
+          //      user: 6,
+          //     price: 394.74,
+          //      dPrice: 419.94,
+          //       url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2951&sub_lid=0&currency=USD&language=English&verify=973279a0eaff1b8577b27ed851f9564d',
+          //      paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2951&sub_lid=0&currency=USD&language=English&verify=973279a0eaff1b8577b27ed851f9564d&flush=paypal'
+          //    },
+          //    {
+          //        user: 7,
+          //       price: 455.63,
+          //        dPrice: 489.93,
+          //       url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2950&sub_lid=0&currency=USD&language=English&verify=9c41b28cf425c9af19ae30ba13807651',
+          //       paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2950&sub_lid=0&currency=USD&language=English&verify=9c41b28cf425c9af19ae30ba13807651&flush=paypal'
+          //      },
+          //      {
+          //       user: 8,
+          //        price: 515.12,
+          //        dPrice: 559.92,
+          //        url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2949&sub_lid=0&currency=USD&language=English&verify=5b6294f375db21927aa05256e4bd803b',
+          //        paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2949&sub_lid=0&currency=USD&language=English&verify=5b6294f375db21927aa05256e4bd803b&flush=paypal'
+          //      },
+          //      {
+          //        user: 9,
+          //       price: 573.21,
+          //       dPrice: 629.91,
+          //       url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2948&sub_lid=0&currency=USD&language=English&verify=2cb8339c61b905c1e9053d83e658a00f',
+          //       paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2948&sub_lid=0&currency=USD&language=English&verify=2cb8339c61b905c1e9053d83e658a00f&flush=paypal'
+          //      },
+          //     {
+          //        user: 10,
+          //        price: 629.91,
+          //         dPrice: 699.9,
+          //         url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2947&sub_lid=0&currency=USD&language=English&verify=9a429e021f48fd204c483f98a3df5d95',
+          //         paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2947&sub_lid=0&currency=USD&language=English&verify=9a429e021f48fd204c483f98a3df5d95&flush=paypal'
+          //       },
+          //       {
+          //        user: 11,
+          //          price: 677.5,
+          //          dPrice: 769.89,
+          //          url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2946&sub_lid=0&currency=USD&language=English&verify=95c4265a9eef2e20fb9ff1fde5d9849c',
+          //           paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2946&sub_lid=0&currency=USD&language=English&verify=95c4265a9eef2e20fb9ff1fde5d9849c&flush=paypal'
+          //       },
+          //        {
+          //         user: 12,
+          //         price: 722.29,
+          //         dPrice: 839.88,
+          //        url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2945&sub_lid=0&currency=USD&language=English&verify=8a3467b167241b6bc466e1a785389a20',
+          //        paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2945&sub_lid=0&currency=USD&language=English&verify=8a3467b167241b6bc466e1a785389a20&flush=paypal'
+          //      },
+          //     {
+          //       user: 13,
+          //       price: 764.29,
+          //        dPrice: 909.87,
+          //       url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2944&sub_lid=0&currency=USD&language=English&verify=4f25b5f2cc9f8a146941433c02777a7d',
+          //       paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2944&sub_lid=0&currency=USD&language=English&verify=4f25b5f2cc9f8a146941433c02777a7d&flush=paypal'
+          //     },
+          //    {
+          //      user: 14,
+          //      price: 803.48,
+          //      dPrice: 979.86,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2943&sub_lid=0&currency=USD&language=English&verify=13d6a1076698d6331124607f57acfb46',
+          //    paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2943&sub_lid=0&currency=USD&language=English&verify=13d6a1076698d6331124607f57acfb46&flush=paypal'
+          //   },
+          //   {
+          //     user: 15,
+          //     price: 839.88,
+          //    dPrice: 1049.85,
+          //    url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2942&sub_lid=0&currency=USD&language=English&verify=7437cef54a06db2794260fdb7ea0f638',
+          //    paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2942&sub_lid=0&currency=USD&language=English&verify=7437cef54a06db2794260fdb7ea0f638&flush=paypal'
+          //   },
+          //   {
+          //    user: 16,
+          //   price: 873.47,
+          //    dPrice: 1119.84,
+          //    url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2941&sub_lid=0&currency=USD&language=English&verify=8340bdeaeaf12ebf2bb63f6fdad47096',
+          //    paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2941&sub_lid=0&currency=USD&language=English&verify=8340bdeaeaf12ebf2bb63f6fdad47096&flush=paypal'
+          //  },
+          //   {
+          //    user: 17,
+          //    price: 904.27,
+          //    dPrice: 1189.83,
+          //    url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2940&sub_lid=0&currency=USD&language=English&verify=fe904dad32a68833ff6e4bae344b3105',
+          //    paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2940&sub_lid=0&currency=USD&language=English&verify=fe904dad32a68833ff6e4bae344b3105&flush=paypal'
+          //  },
+          // {
+          //    user: 18,
+          //   price: 932.26,
+          //   dPrice: 1259.82,
+          //   url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2939&sub_lid=0&currency=USD&language=English&verify=f1a24cf6a5726a4ea265c7328765fc94',
+          //    paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2939&sub_lid=0&currency=USD&language=English&verify=f1a24cf6a5726a4ea265c7328765fc94&flush=paypal'
+          //  },
+          //  {
+          //   user: 19,
+          //  price: 957.46,
+          //   dPrice: 1329.81,
+          //  url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2938&sub_lid=0&currency=USD&language=English&verify=68fa74b20dd93ff667cc994f8b698757',
+          //   paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2938&sub_lid=0&currency=USD&language=English&verify=68fa74b20dd93ff667cc994f8b698757&flush=paypal'
+          //   },
+          //  {
+          //    user: 20,
+          //    price: 979.86,
+          //    dPrice: 1399.8,
+          //   url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2937&sub_lid=0&currency=USD&language=English&verify=b59a84bd762f51446b31b70f0e2e4989',
+          //    paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2937&sub_lid=0&currency=USD&language=English&verify=b59a84bd762f51446b31b70f0e2e4989&flush=paypal'
+          //  }
+          // ],
+          // perpetualInfo: [
+          //   {
+          //     user: 1,
+          //     price: 99.99,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2651&sub_lid=0&currency=USD&language=English&verify=13a32fc63da5e254fceb6d840b2cf56a'
+          //   },
+          //   {
+          //     user: 2,
+          //     price: 195.98,
+          //     dPrice: 199.98,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2426&sub_lid=0&currency=USD&language=English&verify=ed86ce93cb637e83186e5fe40f9ba441'
+          //   },
+          //   {
+          //     user: 3,
+          //     price: 290.97,
+          //     dPrice: 299.97,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2424&sub_lid=0&currency=USD&language=English&verify=12d85e09fa020c929f346c3ee377b130'
+          //   },
+          //   {
+          //     user: 4,
+          //     price: 383.96,
+          //     dPrice: 399.96,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2425&sub_lid=0&currency=USD&language=English&verify=0879b15113eae3a6fcd7fc68573c0f94'
+          //   },
+          //   {
+          //     user: 5,
+          //     price: 474.95,
+          //     dPrice: 499.95,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2423&sub_lid=0&currency=USD&language=English&verify=4dea282dd43666b4493264df66a9a15b'
+          //   },
+          //   {
+          //     user: 6,
+          //     price: 563.94,
+          //     dPrice: 599.94,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2965&sub_lid=0&currency=USD&language=English&verify=13f7315d9b64d8a664a49924feadc400'
+          //   },
+          //   {
+          //     user: 7,
+          //     price: 650.93,
+          //     dPrice: 699.93,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2965&sub_lid=0&currency=USD&language=English&verify=13f7315d9b64d8a664a49924feadc400'
+          //   },
+          //   {
+          //     user: 8,
+          //     price: 735.92,
+          //     dPrice: 799.92,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2963&sub_lid=0&currency=USD&language=English&verify=a00f57979dc3dbc18ff965e72273a5d9'
+          //   },
+          //   {
+          //     user: 9,
+          //     price: 818.91,
+          //     dPrice: 899.91,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2963&sub_lid=0&currency=USD&language=English&verify=a00f57979dc3dbc18ff965e72273a5d9'
+          //   },
+          //   {
+          //     user: 10,
+          //     price: 899.91,
+          //     dPrice: 999.9,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2962&sub_lid=0&currency=USD&language=English&verify=0410ac546b9aa149951717468d008d9e'
+          //   },
+          //   {
+          //     user: 11,
+          //     price: 967.9,
+          //     dPrice: 1099.89,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2961&sub_lid=0&currency=USD&language=English&verify=c9b78e9a3f3e2e60c4d878e4ffb77fca'
+          //   },
+          //   {
+          //     user: 12,
+          //     price: 1031.89,
+          //     dPrice: 1199.88,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2960&sub_lid=0&currency=USD&language=English&verify=aedb8d76656e343b78c7af180453fa8b'
+          //   },
+          //   {
+          //     user: 13,
+          //     price: 1091.89,
+          //     dPrice: 1299.87,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2959&sub_lid=0&currency=USD&language=English&verify=2b691a55c83cc738b0254daead975462'
+          //   },
+          //   {
+          //     user: 14,
+          //     price: 1147.88,
+          //     dPrice: 1399.86,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2958&sub_lid=0&currency=USD&language=English&verify=e2ffe8091062d37a23336c6c93030a4f'
+          //   },
+          //   {
+          //     user: 15,
+          //     price: 1199.88,
+          //     dPrice: 1499.85,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2957&sub_lid=0&currency=USD&language=English&verify=a3a1d84414053ea2ba06162871cc1e43'
+          //   },
+          //   {
+          //     user: 16,
+          //     price: 1247.87,
+          //     dPrice: 1599.84,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2956&sub_lid=0&currency=USD&language=English&verify=bc3c33c5206ae0b2f53e820c8f475e10'
+          //   },
+          //   {
+          //     user: 17,
+          //     price: 1291.87,
+          //     dPrice: 1699.83,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2956&sub_lid=0&currency=USD&language=English&verify=bc3c33c5206ae0b2f53e820c8f475e10'
+          //   },
+          //   {
+          //     user: 18,
+          //     price: 1331.86,
+          //     dPrice: 1799.82,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2954&sub_lid=0&currency=USD&language=English&verify=a4fa1a5f5d1eb8ca54e3db0637111bcb'
+          //   },
+          //   {
+          //     user: 19,
+          //     price: 1367.86,
+          //     dPrice: 1899.81,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2953&sub_lid=0&currency=USD&language=English&verify=5c5a3a723202af9ddca467cad4ca34de'
+          //   },
+          //   {
+          //     user: 20,
+          //     price: 1399.86,
+          //     dPrice: 1999.8,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2952&sub_lid=0&currency=USD&language=English&verify=67546ca9985c3547805f7e85367517a0'
+          //   }
+        ]
+      }
+    },
+    mac: {
+      license: [
+        { name: 'Annual Plan', label: 'annual', value: '1' },
+        // { name: 'Perpetual Plan', label: 'perpetual', value: '2' }
+      ],
+      priceInfo: {
+        annualInfo: [
+          {
+            user: 1,
+            price: 29.99,
+            dPrice: 49.99,
+            url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=164&sub_lid=0&coupon_id=9922&currency=USD&language=English&verify=2603e37d96626d62690ffd239d43a2c9',
+            paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=164&sub_lid=0&coupon_id=9922&currency=USD&language=English&verify=2603e37d96626d62690ffd239d43a2c9&flush=paypal'
+          },
+          // {
+          //     user: 2,
+          //     price: 137.18,
+          //      dPrice: 139.98,
+          //    url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2345&sub_lid=0&currency=USD&language=English&verify=388297b95fb197f9fa55aa4332986ca5'
+          //  },
+          //   {
+          //     user: 3,
+          //    price: 203.67,
+          //    dPrice: 209.97,
+          //    url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2346&sub_lid=0&currency=USD&language=English&verify=1c1d535acd04c87866e77a1354ed851e'
+          //  },
+          //   {
+          //     user: 4,
+          //     price: 268.76,
+          //     dPrice: 279.96,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2347&sub_lid=0&currency=USD&language=English&verify=c409efe997065b53d0f0dd83986db60b'
+          //   },
+          //   {
+          //     user: 5,
+          //    price: 332.45,
+          //    dPrice: 349.95,
+          //    url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=406&sub_lid=0&currency=USD&language=English&verify=96725994d9a59464361aaacad5a7247c'
+          //  },
+          //  {
+          //    user: 6,
+          //   price: 394.74,
+          //    dPrice: 419.94,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2951&sub_lid=0&currency=USD&language=English&verify=82fc08396a24ce01eaaea4afb73cc7ca',
+          //    paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2951&sub_lid=0&currency=USD&language=English&verify=82fc08396a24ce01eaaea4afb73cc7ca&flush=paypal'
+          //   },
+          //   {
+          //     user: 7,
+          //     price: 455.63,
+          //    dPrice: 489.93,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2950&sub_lid=0&currency=USD&language=English&verify=23d1bfe28538dac3255cd513cd5b1004',
+          //   paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2950&sub_lid=0&currency=USD&language=English&verify=23d1bfe28538dac3255cd513cd5b1004&flush=paypal'
+          // },
+          //  {
+          //    user: 8,
+          //   price: 515.12,
+          //   dPrice: 559.92,
+          //   url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2949&sub_lid=0&currency=USD&language=English&verify=47f563dd3af2cf24d13636ed4f5899fc',
+          //  paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2949&sub_lid=0&currency=USD&language=English&verify=47f563dd3af2cf24d13636ed4f5899fc&flush=paypal'
+          //  },
+          //  {
+          //    user: 9,
+          //   price: 573.21,
+          //   dPrice: 629.91,
+          //    url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2948&sub_lid=0&currency=USD&language=English&verify=3d85ef183ea88840ecdf7b0002341924',
+          //    paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2948&sub_lid=0&currency=USD&language=English&verify=3d85ef183ea88840ecdf7b0002341924&flush=paypal'
+          //   },
+          //   {
+          //    user: 10,
+          //    price: 629.91,
+          //   dPrice: 699.9,
+          //  url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2947&sub_lid=0&currency=USD&language=English&verify=cedbed28ec639ab94bf413da95d5909c',
+          //   paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2947&sub_lid=0&currency=USD&language=English&verify=cedbed28ec639ab94bf413da95d5909c&flush=paypal'
+          //  },
+          //  {
+          //    user: 11,
+          //    price: 677.5,
+          //   dPrice: 769.89,
+          //    url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2946&sub_lid=0&currency=USD&language=English&verify=9287e7061c4f8b0e54082da44fe4f628',
+          //    paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2946&sub_lid=0&currency=USD&language=English&verify=9287e7061c4f8b0e54082da44fe4f628&flush=paypal'
+          //   },
+          //   {
+          //     user: 12,
+          //     price: 722.29,
+          //     dPrice: 839.88,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2945&sub_lid=0&currency=USD&language=English&verify=79c1712ffb1e440081d4f17a6372cf5d',
+          //      paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2945&sub_lid=0&currency=USD&language=English&verify=79c1712ffb1e440081d4f17a6372cf5d&flush=paypal'
+          //     },
+          //    {
+          //      user: 13,
+          //      price: 764.29,
+          //     dPrice: 909.87,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2944&sub_lid=0&currency=USD&language=English&verify=efdfe112527579f51ae1da3a9f7be803',
+          //     paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2944&sub_lid=0&currency=USD&language=English&verify=efdfe112527579f51ae1da3a9f7be803&flush=paypal'
+          //   },
+          //   {
+          //     user: 14,
+          //      price: 803.48,
+          //      dPrice: 979.86,
+          //      url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2943&sub_lid=0&currency=USD&language=English&verify=62812335564c368c2b23550486e96415',
+          //      paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2943&sub_lid=0&currency=USD&language=English&verify=62812335564c368c2b23550486e96415&flush=paypal'
+          //     },
+          //    {
+          //      user: 15,
+          //      price: 839.88,
+          //      dPrice: 1049.85,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2942&sub_lid=0&currency=USD&language=English&verify=b50d6966215c66e24b97c1438a788d02',
+          //     paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2942&sub_lid=0&currency=USD&language=English&verify=b50d6966215c66e24b97c1438a788d02&flush=paypal'
+          //    },
+          //    {
+          //     user: 16,
+          //     price: 873.47,
+          //    dPrice: 1119.84,
+          //    url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2941&sub_lid=0&currency=USD&language=English&verify=0f79ae3cf82ccd75ae0c92afb93494d6',
+          //   paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2941&sub_lid=0&currency=USD&language=English&verify=0f79ae3cf82ccd75ae0c92afb93494d6&flush=paypal'
+          //  },
+          //   {
+          //    user: 17,
+          //    price: 904.27,
+          //   dPrice: 1189.83,
+          //    url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2940&sub_lid=0&currency=USD&language=English&verify=73a950dea4355ab2eebb170bed686333',
+          //    paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2940&sub_lid=0&currency=USD&language=English&verify=73a950dea4355ab2eebb170bed686333&flush=paypal'
+          //   },
+          //   {
+          //    user: 18,
+          //    price: 932.26,
+          //    dPrice: 1259.82,
+          //    url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2939&sub_lid=0&currency=USD&language=English&verify=50350fc867f6074ad010eee9fe12ccdd',
+          //     paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2939&sub_lid=0&currency=USD&language=English&verify=50350fc867f6074ad010eee9fe12ccdd&flush=paypal'
+          //   },
+          //   {
+          //    user: 19,
+          //    price: 957.46,
+          //    dPrice: 1329.81,
+          //    url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2938&sub_lid=0&currency=USD&language=English&verify=c5e9c79ce027595b0ba4ae18c80a7c94',
+          //     paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2938&sub_lid=0&currency=USD&language=English&verify=c5e9c79ce027595b0ba4ae18c80a7c94&flush=paypal'
+          //   },
+          //   {
+          //    user: 20,
+          //    price: 979.86,
+          //    dPrice: 1399.8,
+          //    url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2937&sub_lid=0&currency=USD&language=English&verify=893c29da9bd26cd9c2fbaea24a96131c',
+          //     paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2937&sub_lid=0&currency=USD&language=English&verify=893c29da9bd26cd9c2fbaea24a96131c&flush=paypal'
+          //    }
+          //  ],
+          // perpetualInfo: [
+          //   {
+          //     user: 1,
+          //     price: 99.99,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2651&sub_lid=0&currency=USD&language=English&verify=6eada4a1bd9fb4a199ba7cda4f9b9c2c'
+          //   },
+          //   {
+          //     user: 2,
+          //     price: 195.98,
+          //     dPrice: 199.98,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2426&sub_lid=0&currency=USD&language=English&verify=213076866ee376cf8d708d67e66e3bd0'
+          //   },
+          //   {
+          //     user: 3,
+          //     price: 290.97,
+          //     dPrice: 299.97,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2424&sub_lid=0&currency=USD&language=English&verify=8fab4d9b5dd5caa43774042d07ecf6b8'
+          //   },
+          //   {
+          //     user: 4,
+          //     price: 383.96,
+          //     dPrice: 399.96,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2425&sub_lid=0&currency=USD&language=English&verify=9a0d85f0e6d68ba426a8204a82bd034d'
+          //   },
+          //   {
+          //     user: 5,
+          //     price: 474.95,
+          //     dPrice: 499.95,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2423&sub_lid=0&currency=USD&language=English&verify=4f0550c92082cba8abb04e41a68d10b5'
+          //   },
+          //   {
+          //     user: 6,
+          //     price: 563.94,
+          //     dPrice: 599.94,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2965&sub_lid=0&currency=USD&language=English&verify=e101a4e4685a04b64a7ea2d0391860ac'
+          //   },
+          //   {
+          //     user: 7,
+          //     price: 650.93,
+          //     dPrice: 699.93,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2964&sub_lid=0&currency=USD&language=English&verify=b69d3daa3b419d93301afa608760c623'
+          //   },
+          //   {
+          //     user: 8,
+          //     price: 735.92,
+          //     dPrice: 799.92,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2963&sub_lid=0&currency=USD&language=English&verify=986fa766164fa8b49014ed0c7c7b7c3e'
+          //   },
+          //   {
+          //     user: 9,
+          //     price: 818.91,
+          //     dPrice: 899.91,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2962&sub_lid=0&currency=USD&language=English&verify=47c23b1b3943e6b38653445ca543dd67'
+          //   },
+          //   {
+          //     user: 10,
+          //     price: 899.91,
+          //     dPrice: 999.9,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2966&sub_lid=0&currency=USD&language=English&verify=951ce13f6d5149e1bc8f10fa4b16a4a8'
+          //   },
+          //   {
+          //     user: 11,
+          //     price: 967.9,
+          //     dPrice: 1099.89,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2961&sub_lid=0&currency=USD&language=English&verify=7c674eaa29486712add4ec34d84a335a'
+          //   },
+          //   {
+          //     user: 12,
+          //     price: 1031.89,
+          //     dPrice: 1199.88,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2960&sub_lid=0&currency=USD&language=English&verify=efc65788c3d1216a44e55674bde37c85'
+          //   },
+          //   {
+          //     user: 13,
+          //     price: 1091.89,
+          //     dPrice: 1299.87,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2959&sub_lid=0&currency=USD&language=English&verify=126d0d28621b565c2aa66ba7aa51a592'
+          //   },
+          //   {
+          //     user: 14,
+          //     price: 1147.88,
+          //     dPrice: 1399.86,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2958&sub_lid=0&currency=USD&language=English&verify=6018899ecce76ae78dfdbeebcceb79f9'
+          //   },
+          //   {
+          //     user: 15,
+          //     price: 1199.88,
+          //     dPrice: 1499.85,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2957&sub_lid=0&currency=USD&language=English&verify=4513426626a2218b75f5241fafc7eb95'
+          //   },
+          //   {
+          //     user: 16,
+          //     price: 1247.87,
+          //     dPrice: 1599.84,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2956&sub_lid=0&currency=USD&language=English&verify=dacb8283dd2ca4c635f311a92636e229'
+          //   },
+          //   {
+          //     user: 17,
+          //     price: 1291.87,
+          //     dPrice: 1699.83,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2955&sub_lid=0&currency=USD&language=English&verify=08eb4d3c68f3222f673a6330ded78b8e'
+          //   },
+          //   {
+          //     user: 18,
+          //     price: 1331.86,
+          //     dPrice: 1799.82,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2954&sub_lid=0&currency=USD&language=English&verify=bd6d2ab15eb1775043c8560eb8eb710f'
+          //   },
+          //   {
+          //     user: 19,
+          //     price: 1367.86,
+          //     dPrice: 1899.81,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2953&sub_lid=0&currency=USD&language=English&verify=1b7ec813b413a00a04c9b755e7b58c76'
+          //   },
+          //   {
+          //     user: 20,
+          //     price: 1399.86,
+          //     dPrice: 1999.8,
+          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2952&sub_lid=0&currency=USD&language=English&verify=0f1de728b080bf2eb0ce86e212293d19'
+          //   }
+        ]
+      }
+    }
+  }
 
-                  <div class="custom-control custom-checkbox font-size-small mb-3 pb-lg-3">
-                    <input type="checkbox" id="customCheck33" name="receive" class="custom-control-input" checked="">
-                    <label for="customCheck33" class="custom-control-label text-left" style="line-height: 17px">
-                      Get a 7-day free access to
-                      <a class="text-action text-decoration-underline" href="https://democreator.wondershare.com/effects.html" target="_blank" ga360location="content_2_buttonLink_23">DemoCreator Effects</a>
-                      for unlimited downloads.
-                      <a class="text-action text-decoration-underline" href="https://accounts.wondershare.com/web/subscription" target="_blank" ga360location="content_2_buttonLink_24">Cancel any time</a>
-                      or subscribe for $8.99/month.
-                    </label>
-                  </div>
-                  <!--价格按钮-->
-                  <div v-if="pageSys === 'win'">
-                    <div class="price-area  btn-groups-1 text-center mb-5">
-                      <a
-                        style="width: 250px;"
-                        href="https://store.wondershare.com/index.php?submod=checkout&method=index&currency=USD&language=English&sku_id=100077432652&ver=v5&verify=7E679D6BC240855EBAFE3EFBFDC72803&additional_sku=100107122680&additional_activity=1302146541793185883&quick_batch=0" class="btn btn-lg btn-action " ga360location="content_2_buttonLink_25">Buy Now</a>
-                    </div>
-                    <div class="price-area btn-groups-2 text-center mb-5 hidden">
-                      <a
-                        style="width: 250px;"
-                        href="https://store.wondershare.com/index.php?submod=checkout&method=index&currency=USD&language=English&sku_id=100077432652&ver=v5&verify=7E679D6BC240855EBAFE3EFBFDC72803" class="btn btn-lg btn-action " ga360location="content_2_buttonLink_25">Buy Now</a>
-                    </div>
-                  </div>
-                  <div v-else>
-                    <div class="price-area  btn-groups-1 text-center mb-5">
-                      <a
-                        style="width: 250px;"
-                        href="mac+购买资源链接" class="btn btn-lg btn-action " ga360location="content_2_buttonLink_25">Buy Now</a>
-                    </div>
-                    <div class="price-area btn-groups-2 text-center mb-5 hidden">
-                      <a
-                        style="width: 250px;"
-                        href="mac不购买资源链接" class="btn btn-lg btn-action " ga360location="content_2_buttonLink_25">Buy Now</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- 按钮及特性 -->
-            <div>
-              <!--<div class="text-center mt-3 mb-5 pb-3">-->
-              <!--  <a-->
-              <!--    data-judge="0"-->
-              <!--    class="btn-buy btn btn-lg m-font-size-large btn-action font-weight-bold btn-rounded btn-uncap text-center m-0 w-100 btn-groups-1"-->
-              <!--    style="max-width: 206px; border-radius: 4px"-->
-              <!--    href="https://store.wondershare.com/index.php?submod=checkout&method=index&currency=USD&language=English&sku_id=20014931&ver=v5&verify=58C0038F0256F07E802D4FC61620E82E&additional_sku=100107122680,20015051&additional_activity=1302146541793185883,0&quick_batch=0"-->
-              <!--    href-win32="#"-->
-              <!--    ga360location="content_3_buttonLink_4"-->
-              <!--  >-->
-              <!--    <span class="text-white">Buy Now</span>-->
-              <!--  </a>-->
-              <!--  <a-->
-              <!--    data-judge="0"-->
-              <!--    class="btn-buy btn btn-lg m-font-size-large btn-action font-weight-bold btn-rounded btn-uncap text-center m-0 w-100 btn-groups-2 hidden"-->
-              <!--    style="max-width: 206px; border-radius: 4px"-->
-              <!--    href="https://store.wondershare.com/index.php?submod=checkout&method=index&currency=USD&language=English&sku_id=20014931&ver=v5&verify=58C0038F0256F07E802D4FC61620E82E&additional_sku=20015051"-->
-              <!--    href-win32="#"-->
-              <!--    ga360location="content_3_buttonLink_4"-->
-              <!--  >-->
-              <!--    <span class="text-white">Buy Now</span>-->
-              <!--  </a>-->
-              <!--  &lt;!&ndash; <a data-judge="0" href="https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2652&sub_lid=0&coupon_id=8817&currency=USD&language=English&verify=5b1548775339f6377d8408aff76e2dca&flush=paypal" class="btn-buy m-1" json="paypal_url"><img src="https://images.wondershare.com/democreator/article/btn-paypal.png" class="img-fluid" style="max-width: 206px;border-radius: 4px;" alt="paypal"></a>&ndash;&gt;-->
-              <!--</div>-->
-              <!-- 这一层div不可删，根据底部文案不同调整 -->
-              <div class="mb-3 mt-n2">
-                <div class="d-flex align-items-center pt-1 pb-2  ">
-                  <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1 wsc-icon-loaded"><svg class="wsc-svg-symbol-checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                    <path d="M2 20 L12 28 30 4"></path>
-                  </svg></i>
-                  <span class="font-size-small text-black">Keep DemoCreator V5.X for life.</span>
-                </div>
-                <div class="d-flex align-items-center py-2  ">
-                  <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1 wsc-icon-loaded"><svg class="wsc-svg-symbol-checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                    <path d="M2 20 L12 28 30 4"></path>
-                  </svg></i>
-                  <span class="font-size-small text-black">All DemoCreator features.</span>
-                </div>
-                <div class="d-flex align-items-center py-2  ">
-                  <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1 wsc-icon-loaded"><svg class="wsc-svg-symbol-checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                    <path d="M2 20 L12 28 30 4"></path>
-                  </svg></i>
-                  <span class="font-size-small text-black">Customizable watermark.</span>
-                </div>
+  new Vue({
+    el: '#vue-container',
+    data: {
+      pageSys: 'win',
+      buttonText: '',
+      target: '',
+      currency: '$', // 货币，多语言可更改为自己的
+      annual: 1, // 默认展示年，默认选择终身此处设为2
+      user: 1, // 默认1个用户，1-10
+      maxNum: 1, // 最多可选人数5,
+      perpetualComfirm: false, // 终身价是否默认勾选升级价格，false不勾选，true勾选
+      perpetualAdd: 10, // 附加价格
+      productLicense: [],
+      annualInfo: [],
+      perpetualInfo: [],
+      buyLink: '',
+      educationLink: '',
 
-                <div class="btn-groups-1">
-                  <div class="d-flex align-items-center py-2  ">
-                    <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1 align-self-start mt-1 wsc-icon-loaded"><svg class="wsc-svg-symbol-checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                      <path d="M2 20 L12 28 30 4"></path>
-                    </svg></i>
-                    <span class="font-size-small text-black">
-                      7-day unlimited downloads from DemoCreator Effect Store.
-                    </span>
-                  </div>
-                </div>
-                <div class="btn-groups-2 hidden">
-                  <div class="d-flex align-items-center py-2  ">
-                    <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1 align-self-start mt-1 wsc-icon-loaded" style="visibility: hidden"><svg class="wsc-svg-symbol-checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                      <path d="M2 20 L12 28 30 4"></path>
-                    </svg></i>
+      bundleLink: ''
+    },
+    created() {
+      var _this = this
+      goSystemJudge(function (pageSys, currSys) {
+        _this.pageSys = pageSys
+        _this.buttonText = buttonText[pageSys]
+        _this.setPrice()
+        _this.setLink()
+      })
+    },
+    mounted() {
+      var _this = this
+      _this.setParams('auth_code')
+      _this.annualInfo.forEach(function (e) {
+        e.url = e.url + (e.url.indexOf('?') > -1 ? '&' : '?') + _this.target
+      })
+      // _this.perpetualInfo.forEach(function (e) {
+      //   e.url = e.url + (e.url.indexOf('?') > -1 ? '&' : '?') + _this.target
+      // })
+      this.setHeight()
+    },
+    updated() {
+      this.setHeight()
+    },
+    methods: {
+      setHeight() {
+        // 计算pardot表单的textarea高度
+        var buyListHeight = document.querySelector('#buy-list').offsetHeight
+        var pardotContainerHeight = document.querySelector('#pardot-container').offsetHeight
+        var pardotTextHeight = document.querySelector('.pardot-text').offsetHeight
+        var pardotFormHeight = document.querySelector('.pfah-form').offsetHeight
+        var pardotTextAreaHeight = document.querySelector('.pardot-textarea').offsetHeight
 
-                    <span class="font-size-small text-black" style="opacity: 0.5">
-                      7-day unlimited downloads from DemoCreator Effect Store.
-                      <span t="popover" data-original-title="<a class='font-size-small text-action' href='https://democreator.wondershare.com/effects.html' target='_blank'>DemoCreator Effects Store</a> is your one-stop-shop for royalty-free video effects, audio, and transitions. You can <a class='text-decoration-underline text-action' href='https://democreator.wondershare.com/effects/store.html' target='_blank'>subscribe to it</a> to enjoy unlimited downloads from Effects Store." data-placement="top" data-html="true"></span>
-                    </span>
-                  </div>
-                </div>
+        console.log(buyListHeight, pardotContainerHeight)
+        if (buyListHeight > pardotContainerHeight) {
+          var height = buyListHeight - pardotTextHeight - pardotFormHeight
+          document.querySelector('.pardot-textarea').style.height = pardotTextAreaHeight + height - 24 + 'px'
+        } else {
+          var height = pardotContainerHeight - buyListHeight
+          document.querySelector('.pardot-textarea').style.height = pardotTextAreaHeight - height - 24 + 'px'
+        }
+      },
+      setLink() {
+        var pageSys = this.pageSys
+        let link = setLink(pageSys)
+        this.buyLink = link.buyLink
+        this.educationLink = link.educationLink
+        this.bundleLink = link.bundleLink
+      },
+      switchSys() {
+        var pageSys = this.pageSys
+        if (pageSys == 'win') {
+          this.pageSys = 'mac'
+        } else {
+          this.pageSys = 'win'
+        }
+        this.annual = 1
+        this.user = 1
+        this.buttonText = buttonText[this.pageSys]
+        this.setPrice()
+        this.setLink()
+      },
+      setPrice() {
+        var sys = this.pageSys
+        var info
+        if (sys !== 'default') {
+          info = productInfo[sys]
+        } else {
+          info = productInfo
+        }
+        ;(this.productLicense = info.license), (this.annualInfo = info.priceInfo.annualInfo), (this.perpetualInfo = info.priceInfo.perpetualInfo)
+      },
+      setComfirm() {
+        if (!this.perpetualComfirm) {
+          this.comfirmHref = this.target ? this.perpetualAddList[this.user - 1] + (this.perpetualAddList[this.user - 1].indexOf('?') > -1 ? '&' : '?') + this.target : this.perpetualAddList[this.user - 1]
+        }
+      },
+      getParams(aim) {
+        var url = location.search
+        var param = {}
+        if (url.indexOf('?') != -1) {
+          var str = url.substr(1)
+          strs = str.split('&')
+          for (var i = 0; i < strs.length; i++) {
+            if (strs[i].split('=')[0] == aim) {
+              param[strs[i].split('=')[0]] = unescape(strs[i].split('=')[1])
+            }
+          }
+        }
+        return param
+      },
+      setParams(param) {
+        if (JSON.stringify(this.getParams(param)) != '{}') {
+          this.target = param + '=' + this.getParams(param)[param]
+        }
+      }
+    }
+  })
+</script>
+<script>
+  $('body').on('pfah.callback', function (e, id, result) {
+    if (id === 'pfah-8vscjy') {
+      setTimeout(function () {
+        $('[data-id="' + id + '"]')
+          .find('[type="submit"]')
+          .attr('disabled', 'disabled')
+      }, 200)
+    }
+  })
 
-                <div class="d-flex align-items-center py-2  ">
-                  <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1 wsc-icon-loaded"><svg class="wsc-svg-symbol-checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                    <path d="M2 20 L12 28 30 4"></path>
-                  </svg></i>
-                  <span class="font-size-small text-black">New effects update every month.</span>
-                </div>
-                <!-- <div class="d-flex align-items-center py-2  ">
-                   <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1 wsc-icon-loaded"><svg class="wsc-svg-symbol-checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                     <path d="M2 20 L12 28 30 4"></path>
-                   </svg></i>
-                   <span class="font-size-small text-black">Extra Chrome extension included.</span>
-                 </div>-->
-                <div class="d-flex align-items-center py-2  ">
-                  <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1 wsc-icon-loaded"><svg class="wsc-svg-symbol-checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                    <path d="M2 20 L12 28 30 4"></path>
-                  </svg></i>
-                  <span class="font-size-small text-black">24/7 tech support.</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!--<div class="h-100 border-1 border-radius-10 p-3">-->
-          <!--  <div id="buy-list" class="my-4 mx-3">-->
-          <!--    <h4 class="font-size-title-24 text-center mb-3">For Team</h4>-->
-          <!--    <p class="text-center mb-3 pb-3">Team plan gives you the flexibility to provision, track and manage licensing across groups and teams.</p>-->
-          <!--    <div class="row justify-content-center">-->
-          <!--      <div class="col-lg-6" v-if="productLicense.length > 1">-->
-          <!--        <div class="form-group">-->
-          <!--          &lt;!&ndash; select license &ndash;&gt;-->
-          <!--          <select class="custom-select" id="teamPlan" v-model="annual">-->
-          <!--            <option :value="license.value" v-for="(license, index) in productLicense" :key="index" v-text="license.name"></option>-->
-          <!--          </select>-->
-          <!--        </div>-->
-          <!--      </div>-->
-          <!--      <div class="col-12" v-if="maxNum > 1">-->
-          <!--        <div class="form-group">-->
-          <!--          &lt;!&ndash; select users &ndash;&gt;-->
-          <!--          <select class="custom-select" id="teamUser" v-model="user">-->
-          <!--            <option :value="index + 1" v-for="(user, index) in maxNum" :key="index" v-text="index + 1 + (index > 0 ? ' Users': ' User')"></option>-->
-          <!--          </select>-->
-          <!--        </div>-->
-          <!--      </div>-->
-          <!--    </div>-->
-          <!--    <div class="font-size-large text-center py-3 mb-3 d-flex justify-content-center">-->
-          <!--      <div v-if="annual == 1">-->
-          <!--        <span v-text="currency" class="display-3 font-weight-bold"></span>-->
-          <!--        <span class="pr-2 display-3 font-weight-bold" v-text="annualInfo[user-1].price"></span>-->
-          <!--        <del v-if="annualInfo[user-1].dPrice">-->
-          <!--          <span v-text="currency"></span>-->
-          <!--          <span v-text="annualInfo[user-1].dPrice"></span>-->
-          <!--        </del>-->
-          <!--      </div>-->
-          <!--      <div v-else>-->
-          <!--        <div v-if="perpetualComfirm">-->
-          <!--          <span v-text="currency" class="display-3 font-weight-bold"></span>-->
-          <!--          <span class="pr-2 display-3 font-weight-bold" v-text="perpetualInfo[user-1].price"></span>-->
-          <!--          <del v-if="perpetualInfo[user-1].dPrice">-->
-          <!--            <span v-text="currency"></span>-->
-          <!--            <span v-text="perpetualInfo[user-1].dPrice"></span>-->
-          <!--          </del>-->
-          <!--        </div>-->
-          <!--        <div v-else>-->
-          <!--          <span v-text="currency" class="display-3 font-weight-bold"></span>-->
-          <!--          <span class="pr-2 display-3 font-weight-bold" v-text="perpetualInfo[user-1].price"></span>-->
-          <!--          <del v-if="perpetualInfo[user-1].dPrice">-->
-          <!--            <span v-text="currency"></span>-->
-          <!--            <span v-text="perpetualInfo[user-1].dPrice"></span>-->
-          <!--          </del>-->
-          <!--        </div>-->
-          <!--      </div>-->
-          <!--    </div>-->
-          <!--    <div class="pb-4 text-center">-->
-          <!--      <div v-if="annual == 1" class="d-flex align-items-lg-stretch">-->
-          <!--        <a :href="annualInfo[user-1].url" :class="['btn btn-action  btn-uncap font-weight-bold border-radius-4 m-0 flex-fill', {'w-100': !annualInfo[user-1].paypal}]">Buy Now</a>-->
-          <!--        <a :href="annualInfo[user-1].paypal" v-if="annualInfo[user-1].paypal" class="border-radius-4 m-0 flex-fill">-->
-          <!--          <img class="img-fluid h-100" src="https://images.wondershare.com/images2021/btn-paypal-sm.png" alt="paypal" />-->
-          <!--        </a>-->
-          <!--      </div>-->
-          <!--      <div v-else>-->
-          <!--        <a :href="perpetualInfo[user-1].url" :class="['btn btn-action  btn-uncap font-weight-bold border-radius-4 m-0 flex-fill', {'w-100': !perpetualInfo[user-1].paypal}]">Buy Now</a>-->
-          <!--        <a :href="perpetualInfo[user-1].paypal" v-if="perpetualInfo[user-1].paypal" class="border-radius-4 m-0 flex-fill">-->
-          <!--          <img class="img-fluid h-100" src="https://images.wondershare.com/images2021/btn-paypal-sm.png" alt="paypal" />-->
-          <!--        </a>-->
-          <!--      </div>-->
-          <!--    </div>-->
-          <!--    <div class="mb-4 pb-3 px-3 text-center d-none" v-if="annual == 2">-->
-          <!--      <div class="custom-control custom-checkbox">-->
-          <!--        <input type="checkbox" class="custom-control-input" id="confirmRules" v-model="perpetualComfirm" :value="perpetualAdd" @click="setComfirm" />-->
-          <!--        <label class="custom-control-label text-left" for="confirmRules" style="color: #6d6e78">-->
-          <!--          Add upgrade fee for-->
-          <!--          <span class="font-weight-bold text-black">$10 per year to get the latest major version update.</span>-->
-          <!--        </label>-->
-          <!--      </div>-->
-          <!--    </div>-->
-          <!--    <div class="text-left">-->
-          <!--      <div class="py-2 d-flex align-items-center">-->
-          <!--        <i class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1" data-icon="symbol-checkmark"></i>-->
-          <!--        <span class="font-size-small">Everything you get with the Pro Membership Plan.</span>-->
-          <!--      </div>-->
-          <!--      <div class="py-2 d-flex align-items-center">-->
-          <!--        <i class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1" data-icon="symbol-checkmark"></i>-->
-          <!--        <span class="font-size-small">Multi-user control for both team and business.</span>-->
-          <!--      </div>-->
-          <!--      <div class="py-2 d-flex align-items-center">-->
-          <!--        <i class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1" data-icon="symbol-checkmark"></i>-->
-          <!--        <span class="font-size-small">Free update and upgrade for annual plan.</span>-->
-          <!--      </div>-->
-          <!--      <div class="py-2 d-flex align-items-center">-->
-          <!--        <i class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1" data-icon="symbol-checkmark"></i>-->
-          <!--        <span class="font-size-small">Free tech support</span>-->
-          <!--      </div>-->
-          <!--      <div class="py-2 d-flex align-items-center">-->
-          <!--        <i class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1" data-icon="symbol-checkmark"></i>-->
-          <!--        <span class="font-size-small">No attribution required</span>-->
-          <!--      </div>-->
-          <!--      <div class="py-2 d-flex align-items-center">-->
-          <!--        <i class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1" data-icon="symbol-checkmark"></i>-->
-          <!--        <span class="font-size-small">Volume discount</span>-->
-          <!--      </div>-->
-          <!--      <div class="py-2 d-flex align-items-center">-->
-          <!--        <i class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1" data-icon="symbol-checkmark"></i>-->
-          <!--        <span class="font-size-small">Flexible payment options</span>-->
-          <!--      </div>-->
-          <!--      <div class="py-2 d-flex align-items-center">-->
-          <!--        <i class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1" data-icon="symbol-checkmark"></i>-->
-          <!--        <span class="font-size-small">Support commercial use</span>-->
-          <!--      </div>-->
-          <!--    </div>-->
-          <!--  </div>-->
-          <!--</div>-->
-        </div>
-        <div class="col-lg-7 my-3 py-lg-3">
-          <div class="h-100  border-radius-10 p-3">
-            <div id="pardot-container" class="my-4 mx-3">
-              <img src="https://images.wondershare.com/democreator/product/Perpetual.png" alt="democreator price" style="width:100%;">
-            </div>
-            <div style="padding-left: 35%;
-    font-weight: 600;">
-              This plan is <span style="color: #af3bff;">DemoCreator 2021 (V5.X)</span> perpetual license for Windows OS
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="text-center font-size-tiny py-4">
-    <div class="container">
-      <span class="mr-2">We accept:</span>
-      <img src="https://images.wondershare.com/democreator/images2020/buy/we-accept.png" class="img-fluid" alt="DemoCreator">
-    </div>
-  </section>
-
-  <section class="py-5"><div class="container container-xl"><h2 class="text-center mb-3 pb-lg-3">See What Our Users Ask Frequently</h2> <div class="row justify-content-center"><div class="col-xl-10"><ul id="accordion" role="tablist"
-                                                                                                                                                                                                           class="list-group text-black"><li
-    class="list-group-item px-0 m-0 py-3"><div id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" role="tab" class="with-hand m-font-size-large position-relative d-flex align-items-center my-3"><span class="pr-3 flex-1 m-font-size-large font-weight-bold">Can I cancel my subscription plan?</span> <i data-icon="symbol-chevron-bottom" class="wsc-icon wsc-icon-sm list-right-plus wsc-icon-thick position-absolute text-black wsc-icon-loaded"><svg class="wsc-svg-symbol-chevron-bottom" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-    <path d="M30 12 L16 24 2 12"></path>
-  </svg></i></div> <div id="collapseOne" aria-labelledby="headingOne" data-parent="#accordion" class="collapse show" style=""><p class="mb-3">
-    Yes, of course, you can. All subscriptions allow you to use this product for the plan time and renew if you’re satisfied. You’ll receive an email notification 7 days before the end of the subscription, which will include
-    instructions to either renew the subscription or cancel it.
-  </p></div></li> <li class="list-group-item px-0 m-0 py-3"><div id="headingTwo" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" role="tab" class="with-hand collapsed m-font-size-large position-relative d-flex align-items-center my-3"><span class="pr-3 flex-1 m-font-size-large font-weight-bold">What’s the difference between free version and paid version?</span> <i data-icon="symbol-chevron-bottom" class="wsc-icon wsc-icon-sm list-right-plus wsc-icon-thick position-absolute text-black wsc-icon-loaded"><svg class="wsc-svg-symbol-chevron-bottom" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-    <path d="M30 12 L16 24 2 12"></path>
-  </svg></i></div> <div id="collapseTwo" aria-labelledby="headingTwo" data-parent="#accordion" class="collapse"><p class="mb-3">The trial version of Wondershare DemoCreator includes all the same features as the full version. The only difference is the exported videos in the trial version are watermarked.</p></div></li> <li class="list-group-item px-0 m-0 py-3"><div id="headingThree" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" role="tab" class="with-hand collapsed m-font-size-large position-relative d-flex align-items-center my-3"><span class="pr-3 flex-1 m-font-size-large font-weight-bold">Is there a limitation on recording length?</span> <i data-icon="symbol-chevron-bottom" class="wsc-icon wsc-icon-sm list-right-plus wsc-icon-thick position-absolute text-black wsc-icon-loaded"><svg class="wsc-svg-symbol-chevron-bottom" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-    <path d="M30 12 L16 24 2 12"></path>
-  </svg></i></div> <div id="collapseThree" aria-labelledby="headingThree" data-parent="#accordion" class="collapse"><p class="mb-3">
-    Actually, there is no limit on the duration of a recording. However, the recording could be limited by the capacity of free drive space where you save the recorded files. Also, be aware that a longer recording time period
-    will create very large files that may reduce system performance while working with them during editing and exporting.
-  </p></div></li> <li class="list-group-item px-0 m-0 py-3"><div id="headingFour" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour" role="tab" class="with-hand collapsed m-font-size-large position-relative d-flex align-items-center my-3"><span class="pr-3 flex-1 m-font-size-large font-weight-bold">Can I capture two PC display screens simultaneously?</span> <i data-icon="symbol-chevron-bottom" class="wsc-icon wsc-icon-sm list-right-plus wsc-icon-thick position-absolute text-black wsc-icon-loaded"><svg class="wsc-svg-symbol-chevron-bottom" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-    <path d="M30 12 L16 24 2 12"></path>
-  </svg></i></div> <div id="collapseFour" aria-labelledby="headingFour" data-parent="#accordion" class="collapse"><p class="mb-3">Currently, DemoCreator only supports to capture the main display screen only if you have two PC screens.</p></div></li> <li class="list-group-item px-0 m-0 py-3"><div id="headingFive" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive" role="tab" class="with-hand collapsed m-font-size-large position-relative d-flex align-items-center my-3"><span class="pr-3 flex-1 m-font-size-large font-weight-bold">How to record my computer screen &amp; webcam?</span> <i data-icon="symbol-chevron-bottom" class="wsc-icon wsc-icon-sm list-right-plus wsc-icon-thick position-absolute text-black wsc-icon-loaded"><svg class="wsc-svg-symbol-chevron-bottom" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-    <path d="M30 12 L16 24 2 12"></path>
-  </svg></i></div> <div id="collapseFive" aria-labelledby="headingFive" data-parent="#accordion" class="collapse"><p class="mb-3">
-    You can use DemoCreator to record your screen and webcam simultaneously. Run the software and click "New Recording", click Camera, then you will find some setting options for camera, resolution and frame rate.You can set
-    up them according to your needs. The computer screen capture and webcam recording will be displayed in different tracks. You can edit them separately.
-  </p></div></li> <li class="list-group-item px-0 m-0 py-3"><div id="headingSix" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix" role="tab" class="with-hand collapsed m-font-size-large position-relative d-flex align-items-center my-3"><span class="pr-3 flex-1 m-font-size-large font-weight-bold">How to register my DemoCreator after purchase?</span> <i data-icon="symbol-chevron-bottom" class="wsc-icon wsc-icon-sm list-right-plus wsc-icon-thick position-absolute text-black wsc-icon-loaded"><svg class="wsc-svg-symbol-chevron-bottom" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-    <path d="M30 12 L16 24 2 12"></path>
-  </svg></i></div> <div id="collapseSix" aria-labelledby="headingSix" data-parent="#accordion" class="collapse"><p class="mb-3">
-    The registration code will be sent in the confirmation email after your purchase. You can click Register and enter the registration code as well as your email address then it will show your DemoCreator has been activated
-    successfully.
-  </p></div></li> <li class="list-group-item px-0 m-0 py-3"><div id="headingSeven" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven" role="tab" class="with-hand collapsed m-font-size-large position-relative d-flex align-items-center my-3"><span class="pr-3 flex-1 m-font-size-large font-weight-bold">What is the difference between update and upgrade?</span> <i data-icon="symbol-chevron-bottom" class="wsc-icon wsc-icon-sm list-right-plus wsc-icon-thick position-absolute text-black wsc-icon-loaded"><svg class="wsc-svg-symbol-chevron-bottom" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-    <path d="M30 12 L16 24 2 12"></path>
-  </svg></i></div> <div id="collapseSeven" aria-labelledby="headingSeven" data-parent="#accordion" class="collapse"><p class="mb-3">
-    Update generally refers to a minor version release while upgrade refers to a major version release like DemoCreator V4 to DemoCreator V5. Perpetual plan includes all updates to the current major version, but doesn't
-    include upgrades to future major versions. And subscription plan includes all updates and upgrades during the subscription period.
-  </p></div></li></ul></div></div></div></section>
-</main>
+  $('input, textarea').on('input', function () {
+    var placeholder = $(this).parent().find('.placeholder')
+    $(this).val() ? placeholder.hide() : placeholder.show()
+  })
+  $('select').on('change', function () {
+    var placeholder = $(this).parent().find('.placeholder')
+    $(this).addClass('show')
+    placeholder.hide()
+  })
+</script>

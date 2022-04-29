@@ -1,33 +1,149 @@
-<div class="pt-4">
-  <div class="container container-lg text-center">
-    <div class="row row-cols-4 m-font-size-large font-weight-bold nav-border no-gutters">
-      <div class="col">
-        <div class="h-100">
-          <a href="#" class="nav-link py-2 px-2 px-md-3 text-black font-weight-bold active">Individual</a>
-        </div>
-      </div>
-      <div class="col">
-        <div class="h-100">
-          <a href="https://democreator.wondershare.com/store/perpetual.html" class=" nav-link py-2 px-2 px-md-3 text-black font-weight-bold">Perpetual</a>
-        </div>
-      </div>
-      <div class="col">
-        <div class="h-100">
-          <a href="https://democreator.wondershare.com/store/business.html" class="switch-business nav-link py-2 px-2 px-md-3 text-black font-weight-bold">Business</a>
-        </div>
-      </div>
-      <div class="col">
-        <div class="h-100">
-          <a href="https://www.jdoqocy.com/click-2369979-14335709?sid=US&url=https%3A%2F%2Fdc.wondershare.com%2Fstore%2Feducation.html" target="_blank" class="switch-education nav-link py-2 px-2 px-md-3 text-black font-weight-bold">
-            Education
-          </a>
-        </div>
-      </div>
-      <!--<div class="col">
-        <div class="h-100">
-          <a :href="bundleLink" target="_blank" class="nav-link py-2 px-2 px-md-3 text-black font-weight-bold">Bundles</a>
-        </div>
-      </div>-->
-    </div>
-  </div>
-</div>
+<script>
+  Function.prototype.bind =  function (ctx,...rest){
+    let self = this
+    let newFn = function (...args){
+      self.call(this instanceof newFn ? this : ctx, ...self, ... args)
+    }
+    if(self.prototype){
+      newFn.prototype = Object.create(self.prototype)
+    }
+    return newFn
+  }
+  Function.prototype.call =  function (ctx,...rest){
+    ctx = Object(ctx) || window
+    let fn = Symbol('fn')
+    ctx[fn] = this
+    let res = ctx[fn](...rest)
+    delete  ctx[fn]
+    return res
+  }
+  function curry(fn){
+    return function curried(...args){
+        if(args.length >= fn.length){
+            return fn(...args)
+        }else {
+           return function (...args2){
+             return curried(...args,...args2)
+           }
+        }
+    }
+  }
+  function _new(fn,...rest){
+    let newObj = Object.create(fn.prototype)
+    let result = fn.apply(newObj, rest)
+    return typeof result === 'object' ? result || newObj : newObj
+  }
+</script>
+<script>
+
+
+  class Promise {
+    constructor(fn) {
+      this.status = 'p'
+      this.value = undefined
+      this.reason = undefined
+      this.onResArr = []
+      this.onRejArr = []
+      let resolve =(val)=>{
+        if(this.status === 'p'){
+          this.status = 'f'
+          this.value = val
+          this.onResArr.forEach((fn)=>fn())
+        }
+      }
+      let reject = (val)=>{
+        if(this.status === 'p'){
+          this.status = 'r'
+          this.reason = val
+          this.onRejArr.forEach((fn)=>fn())
+        }
+      }
+      try{
+        fn(resolve, reject)
+      } catch(error){
+        reject(error)
+      }
+    }
+
+    then (onFulfilled, onRejected){
+      onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : (v)=>v
+      onRejected = typeof onRejected === 'function' ? onRejected : (err)=> { throw err}
+      let nextPromise = new Promise((resolve, reject)=>{
+        if(this.status === 'f'){
+          setTimeout(()=>{
+            try {
+              let res = onFulfilled(this.value)
+              resolve(res)
+            }catch(err){
+              reject(err)
+            }
+          })
+        }
+
+        if(this.status === 'r'){
+          setTimeout(()=>{
+            try{
+              let res = onRejected(this.reason)
+              this.resolvePromise(nextPromise, res, resolve, reject)
+            }catch(e){
+              reject(e)
+            }
+          })
+        }
+
+        if(this.status === 'p'){
+          this.onResArr.push(()=>{
+            setTimeout(()=>{
+              try{
+                let res = onFulfilled(this.value)
+                this.resolvePromise(nextPromise,res,resolve,reject)
+              }catch(e){
+                reject(e)
+              }
+            })
+          })
+          this.onRejArr.push(()=>{
+            setTimeout(()=>{
+              try{
+                let res = onRejected(this.value)
+                this.resolvePromise(nextPromise,res,resolve,reject)
+              }catch(e){
+                reject(e)
+              }
+            })
+          })
+        }
+      })
+      return nextPromise
+    }
+
+    resolvePromise(nextPromise, res, resolve, reject){
+        if(nextPromise === res) {return reject(new TypeError('xxxxxx'))}
+        let called
+      if(typeof res ==='object' && res!==null || typeof res === 'function'){
+        try{
+          let then = res.then
+          if(typeof then === 'function'){
+            then.call(res,val=>{
+              if(called) return
+              called = true
+              this.resolvePromise(nextPromise, val, resolve, reject)
+            },rej=>{
+              if(called) return
+              called = true
+              reject(rej)
+            })
+          }else {
+            resolve(res)
+          }
+        }catch (e){
+          if (called) return;
+          called = true;
+          reject(e)
+        }
+      }else {
+        resolve(res)
+      }
+    }
+  }
+</script>
