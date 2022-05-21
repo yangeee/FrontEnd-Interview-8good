@@ -14,11 +14,11 @@ const resolvePromise = (nextPromise, res, resolve, reject) => {
   if (nextPromise === res) {
     return reject(new TypeError('Chaining cycle detected for promise #<Promise>'))
   }
-  // 针对 return 时调用了别家的 promise 库的情况，别家的 promise 库有可能既调 resolve 又调 reject
-  // 用一个变量来标识 只能调用resolve或reject, 不能两者都调用，触发了某一个之后就返回递归
-  let called = false;
   // 如果是返回值是对象或者函数
   if ((typeof res === 'object' && res != null) || typeof res === 'function') {
+    // 针对 return 时调用了别家的 promise 库的情况，别家的 promise 库有可能既调 resolve 又调 reject
+    // 用一个变量来标识 只能调用resolve或reject, 不能两者都调用，触发了某一个之后就返回递归
+    let called = false;
     try {
       // 判断是否是 promise，有 then 的就视为 promise
       let then = res.then;
@@ -28,7 +28,7 @@ const resolvePromise = (nextPromise, res, resolve, reject) => {
           if (called) return;
           called = true;
           // 递归解析的过程（因为可能 promise 中还有 promise，直到在下面返回一个普通值）
-          resolvePromise(nextPromise, val, resolve, reject);
+          resolvePromise(nextPromise, val, resolve, reject); // 注意这里是val
         }, r => {
           // 只要失败就reject
           if (called) return;
@@ -61,7 +61,7 @@ class Promise {
     this.onResolvedCallbacks = [];
     this.onRejectedCallbacks= [];
     // 在构造函数中定义并且使用箭头函数，下面try调用就不需要绑定this了
-    let resolve = (val) => {
+    let resolveFn = (val) => {
       if(this.status ===  PENDING) {
         this.status = FULFILLED;
         this.value = val;
@@ -69,7 +69,7 @@ class Promise {
       }
     }
 
-    let reject = (reason) => {
+    let rejectFn = (reason) => {
       if(this.status ===  PENDING) {
         this.status = REJECTED;
         this.reason = reason;
@@ -78,9 +78,9 @@ class Promise {
     }
 
     try {
-      fn(resolve,reject)
+      fn(resolveFn,rejectFn)
     } catch (error) {
-      reject(error)
+      rejectFn(error)
     }
   }
 
@@ -91,25 +91,20 @@ class Promise {
     onRejected = typeof onRejected === 'function' ? onRejected : err => { throw err };
     // 每次调用 then 都返回一个新的 promise  Promise/A+ 2.2.7
     let nextPromise = new Promise((resolve, reject) => {
-
-      if (this.status === FULFILLED) {
-        //Promise/A+ 2.2.2
-        //Promise/A+ 2.2.4 --- setTimeout ,在下一次事件循环中处理（引擎实现不是这样）
+      let fulFn = ()=>{
         setTimeout(() => {
           try {
-            //Promise/A+ 2.2.7.1
-            let res = onFulfilled(this.value); // 计算出当前promise的值
-            // x可能是一个promise
-            resolvePromise(nextPromise, res, resolve, reject);
-          } catch (e) {
-            //Promise/A+ 2.2.7.2
-            reject(e)
-          }
-        }, 0);
+          //Promise/A+ 2.2.7.1
+          let res = onFulfilled(this.value); // 计算出当前promise的值
+          // x可能是一个promise
+          resolvePromise(nextPromise, res, resolve, reject);
+        } catch (e) {
+          //Promise/A+ 2.2.7.2
+          reject(e)
+        }
+        });
       }
-
-      if (this.status === REJECTED) {
-        //Promise/A+ 2.2.3
+      let rejFn = ()=>{
         setTimeout(() => {
           try {
             let res = onRejected(this.reason);
@@ -117,32 +112,23 @@ class Promise {
           } catch (e) {
             reject(e)
           }
-        }, 0);
+        });
+      }
+      if (this.status === FULFILLED) {
+        //Promise/A+ 2.2.2
+        //Promise/A+ 2.2.4 --- setTimeout ,在下一次事件循环中处理（引擎实现不是这样）
+          fulFn()
+      }
+
+      if (this.status === REJECTED) {
+        //Promise/A+ 2.2.3
+        rejFn()
       }
 
       // 如果是 PENDING 状态，就把延迟函数存入数组中
       if (this.status === PENDING) {
-        this.onResolvedCallbacks.push(() => {
-          setTimeout(() => {
-            try {
-              let res = onFulfilled(this.value);
-              resolvePromise(nextPromise, res, resolve, reject);
-            } catch (e) {
-              reject(e)
-            }
-          }, 0);
-        });
-
-        this.onRejectedCallbacks.push(()=> {
-          setTimeout(() => {
-            try {
-              let res = onRejected(this.reason);
-              resolvePromise(nextPromise, res, resolve, reject)
-            } catch (e) {
-              reject(e)
-            }
-          }, 0);
-        });
+        this.onResolvedCallbacks.push(fulFn);
+        this.onRejectedCallbacks.push(rejFn);
       }
     });
 

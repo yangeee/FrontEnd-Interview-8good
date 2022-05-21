@@ -261,7 +261,7 @@ data[0]Context = {
 
 1. 函数的所有形参 (如果是函数上下文)
 2. 函数声明，后声明的会覆盖之前的
-3. 变量声明，不会干扰已存在的同名**形参**或者**函数名**
+3. 变量声明，不会干扰已存在的同名**形参**或者**函数名**（注意变量重新赋值还是可以覆盖的）
 
 简单栗子
 
@@ -501,7 +501,7 @@ Function.prototype.bind2 = function (context) {
     return fBound; // 第一个特点，返回函数
 }
 // ES6 记
-Function.prototype.bind = function(ctx, ...args) {
+Function.prototype.bind = function(obj, ...args) {
   // 下面的this就是调用bind的原函数,保存给_self
   const _self = this
   // bind 要返回一个函数, 不会立即执行
@@ -509,8 +509,9 @@ Function.prototype.bind = function(ctx, ...args) {
     // 调用 call 修改 this 指向，如果是new调用我们返回的newFn的情况，this不应该变成ctx，所有这里需要判断
     // 直接调用newFn时的this是window，使用new的时候this是我们返回的newFn的实例对象
     // instanceof 找左边的实例对象的原型链上是否有右边的构造函数的prototype 
-    return _self.call(this instanceof newFn? this : ctx, ...args, ...rest)
+    return _self.call(this instanceof newFn? this : obj, ...args, ...rest)
   }
+  // 为什么用_self而不是ctx呢，因为我们的原函数是调用bind的函数，比如fn.bind(obj)的fn，这个时候this是fn
   if (_self.prototype) {
     // 复制源函数的prototype给newFn 一些情况下函数没有prototype，比如箭头函数
     newFn.prototype = Object.create(_self.prototype);
@@ -600,11 +601,11 @@ Function.length 表示**形参**的个数，不包括剩余参数个数，同时
 > 占位符根据多种不同情况用 if-else 处理，用一个数组保存占位符在总的参数列表中的位置，然后替换
 
 ```js
-function curry(targetFn) {
+function curry(fn) {
 
   return function curried(...args) {
    // 如果参数个数 达到 目标函数所需的参数，执行目标函数
-    if (args.length >= targetFn.length) {
+    if (args.length >= fn.length) {
       return fn(...args)// 这里和下面的绑定this没有什么用,写成null也行(已去掉apply，测试可用)
     } else {
     // 否则递归柯里化函数：将上次递归抛出的函数获得的参数 args2，和以前累计的参数 args 传递给柯里化函数
