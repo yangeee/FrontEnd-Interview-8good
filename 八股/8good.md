@@ -28,7 +28,7 @@ console.log(person.constructor === Person); // true
 ---
  
 <br>
-
+ 
 ## 2、继承
  
 原型链继承：子函数的原型是父函数的实例对象。  
@@ -43,7 +43,7 @@ Child.prototype = new Parent() // 核心
 function Child(name,like) {
     Parent.call(this,name);  // 核心
     this.like = like;
-}
+} 
 ```
 组合继承: 同时使用上面两种      
 缺点：调用两次父构造函数
