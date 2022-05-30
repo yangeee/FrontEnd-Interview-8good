@@ -14,7 +14,7 @@
 原生的 Number Object 这种都是构造函数，不是对象。直接调用函数会进行类型转换
 
 ```javascript
-
+ 
 function Person() {}
 var person = new Person();
 console.log(person.constructor === Person); // true
