@@ -56,14 +56,14 @@ function curry(fn){
       }
     }
   }
-}
+} 
 
 function news(fn,...rest){
   let newObj = Object.create(fn.prototype)
   let res = fn.apply(newObj,rest)
   return typeof res === 'object' ? res||newObj :newObj
 }
- 
+
 const PENDING = 'PENDING';
 const FULFILLED = 'FULFILLED';
 const REJECTED = 'REJECTED';
