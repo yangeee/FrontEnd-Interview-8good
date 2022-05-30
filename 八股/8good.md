@@ -1129,6 +1129,7 @@ flex: 2 === flex: 2 1 0% 单值语法只改变 grow
 2. top 负值就是以包含块（Containing Block）内容区域的上边 或 该元素上方相连元素 margin 的下边为参考线
 3. right 负值是以元素自身的 border-right 为参考线
 4. bottom 负值是以元素自身的 border-bottom 为参考线
+所有负值都会改变文档流，下面的元素会跟着移动
 
 多列等高布局原理
 1：通过 padding 撑开盒子，同时相同的 负margin 告诉浏览器计算文档流布局时减去对应的值，让下方的元素上来占据位置。同时父元素 overflow:hidden 形成 BFC 并且遮挡超出部分，以最高元素为准。
