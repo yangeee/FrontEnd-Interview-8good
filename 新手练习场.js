@@ -63,7 +63,7 @@ function news(fn,...rest){
   let res = fn.apply(newObj,rest)
   return typeof res === 'object' ? res||newObj :newObj
 }
-
+ 
 const PENDING = 'PENDING';
 const FULFILLED = 'FULFILLED';
 const REJECTED = 'REJECTED';
