@@ -10,7 +10,7 @@
 实例对象的`__proto__`指向原型对象
  
 因为实例对象没有constructor属性会通过原型链找（容易忽略，是个小陷阱）
-
+ 
 原生的 Number Object 这种都是构造函数，不是对象。直接调用函数会进行类型转换
 
 ```javascript
@@ -22,7 +22,7 @@ console.log(person.constructor === Person); // true
 ![img.png](img.png)
 
 `__proto__`
- 
+  
 隐式原型，来自于 Object.prototype,更像是一个 getter/setter，使用 `obj.__proto__` 时，可以理解成返回了 Object.getPrototypeOf(obj)
 
 ---
