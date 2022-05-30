@@ -30,7 +30,7 @@ console.log(person.constructor === Person); // true
 <br>
 
 ## 2、继承
-
+ 
 原型链继承：子函数的原型是父函数的实例对象。  
 缺点:不能传参，引用属性是共享，堆中地址相同
 ```js
