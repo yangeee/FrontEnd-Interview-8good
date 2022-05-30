@@ -26,7 +26,7 @@ console.log(person.constructor === Person); // true
 隐式原型，来自于 Object.prototype,更像是一个 getter/setter，使用 `obj.__proto__` 时，可以理解成返回了 Object.getPrototypeOf(obj)
 
 ---
-
+ 
 <br>
 
 ## 2、继承
