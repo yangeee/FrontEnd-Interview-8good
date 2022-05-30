@@ -56,8 +56,8 @@ function curry(fn){
       }
     }
   }
-} 
-
+}
+ 
 function news(fn,...rest){
   let newObj = Object.create(fn.prototype)
   let res = fn.apply(newObj,rest)
