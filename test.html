@@ -1,1804 +1,250 @@
-<main>
-  <section class="buy-banner pt-3" style="border-bottom: 1px solid #000">
-    <div class="container py-4 text-center">
-      <h1 class="font-size-title-48 mb-4 text-black d-md-flex align-items-md-center justify-content-md-center" style="font-family: inherit">
-        <span class="text-left ml-2 ml-md-4">
-          <span class="pr-2">Choose the plan that's best for you!</span>
-          <!--<a href="https://democreator.wondershare.com/" style="text-decoration: underline">DemoCreator</a> -->
-        </span>
-      </h1>
-      <a href="https://democreator.wondershare.com/store/mac-individuals.html" class="buy-switch-sys m-font-size-large d-inline-flex align-items-center text-action">
-        Switch to Mac
-        <i>
-          <svg class="ml-2" width="9" height="12" viewBox="0 0 9 12" fill="none" xmlns="https://www.w3.org/2000/svg">
-            <path d="M1 1L7 6L1 11" stroke="currentColor" stroke-width="1.5" />
-          </svg>
-        </i>
-      </a>
-    </div>
-    <div class="pt-4">
-      <div class="container container-lg text-center">
-        <div class="row row-cols-3 m-font-size-large font-weight-bold nav-border no-gutters">
-          <div class="col">
-            <div class="h-100">
-              <a href="#" class="nav-link py-2 px-2 px-md-3 text-black font-weight-bold active">Individual</a>
-            </div>
-          </div>
-          <!-- <div class="col">
-            <div class="h-100">
-              <a href="https://democreator.wondershare.com/store/perpetual.html" class=" nav-link py-2 px-2 px-md-3 text-black font-weight-bold">Perpetual</a>
-            </div>
-          </div> -->
-          <div class="col">
-            <div class="h-100">
-              <a href="https://democreator.wondershare.com/store/business.html" class="switch-business nav-link py-2 px-2 px-md-3 text-black font-weight-bold">Business</a>
-            </div>
-          </div>
-          <div class="col">
-            <div class="h-100">
-              <a href="https://www.jdoqocy.com/click-2369979-14335709?sid=US&url=https%3A%2F%2Fdc.wondershare.com%2Fstore%2Feducation.html" target="_blank" class="switch-education nav-link py-2 px-2 px-md-3 text-black font-weight-bold">
-                Education
-              </a>
-            </div>
-          </div>
-          <!--<div class="col">
-            <div class="h-100">
-              <a :href="bundleLink" target="_blank" class="nav-link py-2 px-2 px-md-3 text-black font-weight-bold">Bundles</a>
-            </div>
-          </div>-->
-        </div>
-      </div>
-    </div>
-  </section>
+<script>
+  // 获取url参数
+  function getQueryVariable(variable)
+  {
+    var query = window.location.search.substring(1);
+    var vars = query.split("&");
+    for (var i=0;i<vars.length;i++) {
+      var pair = vars[i].split("=");
+      if(pair[0] === variable){return pair[1];}
+    }
+    return false;
+  }
+  $(document).ready(function () {
+    // 可以选择半年价格为默认显示
+    let MONTHLY = 'monthly'
+    if(getQueryVariable('price') === MONTHLY) {
+      let ele = $('#choose-half-year')
+      $('#choose-bg').removeClass('active')
+      ele.addClass('active').siblings().removeClass('active')
+      $('.dropdown-switch-change-one').eq(0).children().eq(0).show().siblings().hide()
+      $('.dropdown-switch-change-two').eq(0).children().eq(0).show().siblings().hide()
+      $('.dropdown-switch-change-three').eq(0).children().eq(0).show().siblings().hide()
+    }else {
+      $('.dropdown-switch-change-one').eq(0).children().eq(1).show().siblings().hide()
+      $('.dropdown-switch-change-two').eq(0).children().eq(1).show().siblings().hide()
+      $('.dropdown-switch-change-three').eq(0).children().eq(1).show().siblings().hide()
+    }
+    $('.dropdown-btn-active').addClass('dropdown-btn-active');
+    // $('.dropdown-btn-active .btn-svg').show();
+    $(".dropdown-btn-active .btn-svg").css("display", "block");
+    $(".dropdown-btn").click(function () {
+      let liParent = $(this).parent();
+      let brother = liParent.children();
+      brother.removeClass("dropdown-btn-active");
+      brother.children().css("display", "none");
+      $(this).addClass("dropdown-btn-active");
+      $(this).children().css("display", "block");
+    });
+  });
+  function hideMonth(){
+    let arr = ['UK','US','AU','CA']
+    fetch('https://api.ipregistry.co/?key=n4nd5t68nwgvzhe7')
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (payload) {
+        console.log(payload.location.country.code.toUpperCase(),arr.indexOf(payload.location.country.code.toUpperCase()) === -1);
+        if(arr.indexOf(payload.location.country.code.toUpperCase()) === -1){
+          $('#monthAndYearWrap').show()
+        }
+      });
+  }
+  function removeHighlightTable(){
+    let head =  $('.btn-thead')
+    head.removeClass('active')
+    let tr = $('#table-content table table tr')
+    for(let i=0;i<tr.length;i++){
+      let child = $(tr[i]).children()
+      child.removeClass('table-background-active')
+    }
+    let platformTr = $('.platform-thead')
+    for(let i=0;i<platformTr.length;i++){
+      let child = $(platformTr[i])
+      child.removeClass('table-background-active')
+    }
+  }
 
-  <section class="py-5">
-    <div class='d-flex justify-content-center'>
-      <div class="d-flex mb-5 choose-parent">
-        <div id="choose-half-year" class='choose-btn'>Semi-Annual</div>
-        <div id="choose-year" class='choose-btn active'>Annual</div>
-        <div id='choose-bg' class='bg active'></div>
-      </div>
-    </div>
-    <div class="container pt-4">
-      <div class="row justify-content-between mb-n3">
-        <div class="col-12 col-md-6 col-xl-4 py-3">
-          <div class="buy-container h-100  border-radius-10 p-4 d-flex flex-column box-shadow">
-            <div class="flex-fill">
-              <h4 class="font-size-title-24 font-size-super mt-3 mb-4 text-black text-center">Standard</h4>
-              <!-- 价格及切换区域 -->
-              <div class=" btn-change-2022 d-none justify-center">
-                <button class="btn dropdown-btn dropdown-switch-item-one" style="flex:1;">
-                  Semi-annual
-                  <svg width="19" height="19" class="btn-svg" viewBox="0 0 19 19" fill="none" xmlns="https://www.w3.org/2000/svg" style="display: none;">
-                    <path d="M19.0008 0.659424V15C19.0008 17.2092 17.2099 19 15.0008 19H0.660156L19.0008 0.659424Z" fill="#006DFF"></path>
-                    <path d="M9.54102 12.6182L12.1089 15.1859L17.1417 10.1531" stroke="white" stroke-width="2"></path>
-                  </svg>
-                </button>
-                <button class="btn dropdown-btn dropdown-switch-item-one dropdown-btn-active" style="flex:1;">
-                  Annual
-                  <svg width="19" height="19" class="btn-svg" viewBox="0 0 19 19" fill="none" xmlns="https://www.w3.org/2000/svg" style="display: block;">
-                    <path d="M19.0008 0.659424V15C19.0008 17.2092 17.2099 19 15.0008 19H0.660156L19.0008 0.659424Z" fill="#006DFF"></path>
-                    <path d="M9.54102 12.6182L12.1089 15.1859L17.1417 10.1531" stroke="white" stroke-width="2"></path>
-                  </svg>
-                </button>
-              </div>
-              <div class="dropdown-switch-change-one">
-                <!--第一个价格内容-->
-                <div style="display:none;">
-                  <div class="display-1 font-weight-bold text-black py-4 d-flex align-items-start justify-content-center">
-                    <span class="font-size-extra font-weight-bold">US$</span><span class="text-nowrap"><span>32</span><span class="font-size-extra font-weight-bold text-black">/6 Months</span></span>
-                  </div>
-                  <p class="font-size-small mb-3 text-muted text-center">$5.3 per month, billed every 6
-                    months <span
-                      t="popover"
-                      data-original-title="This product is a paid subscription. You will be charged US$32 when your subscription auto-renews. You can <a class='text-decoration-underline text-white' href='https://accounts.wondershare.com/web/subscription' target='_blank'>cancel<a/> your subscription at any time."
-                      data-placement="top"
-                      data-html="true"
-                      class="with-hand"
-                    >
-                  <i data-icon="extra-exclamation-circle" class="wsc-icon wsc-icon-font text-black font-size-small"></i>
-                </span></p>
+  $(function () {
 
-                  <div class="custom-control custom-checkbox font-size-small mb-3 pb-lg-3">
-                    <input type="checkbox" id="customCheck1" name="receive" class="custom-control-input" checked />
-                    <label for="customCheck1" class="custom-control-label text-left" style="line-height: 17px">
-                      Get a 7-day free access to
-                      <a class="text-action text-decoration-underline" href="https://democreator.wondershare.com/effects.html" target="_blank">DemoCreator Effects</a>
-                      for unlimited downloads.
-                      <a class="text-action text-decoration-underline" href="https://accounts.wondershare.com/web/subscription" target="_blank">Cancel any time</a>
-                      or subscribe for $8.99/month.
-                    </label>
-                  </div>
-                  <!--第一个价格按钮组-->
-                  <div class="price-area btn-groups-1 text-center">
-                    <a href='https://store.wondershare.com/index.php?submod=checkout&method=index&currency=USD&language=English&sku_id=20015151&ver=v5&verify=05CE62017879E740C0FC3B00F1580EBA&additional_sku=100107122680&additional_activity=1302146541793185883&quick_batch=0' class="btn btn-lg btn-action " ga360location="content_2_buttonLink_2">Buy Now</a>
-                  </div>
-                  <div class="price-area btn-groups-2 hidden text-center">
-                    <a href='https://store.wondershare.com/index.php?submod=checkout&method=index&currency=USD&language=English&sku_id=20015151&ver=v5&verify=05CE62017879E740C0FC3B00F1580EBA' class="btn btn-lg btn-action " ga360location="content_2_buttonLink_2">Buy Now</a>
-                  </div>
-                </div>
-                <!--第二个价格内容-->
-                <div style="">
-                  <div class="display-1 font-weight-bold text-black py-4 d-flex align-items-start justify-content-center">
-                    <span class="font-size-extra font-weight-bold">US$</span><span class="text-nowrap"><span>46</span><span class="font-size-extra font-weight-bold text-black">/Year</span></span>
-                  </div>
-                  <p class="font-size-small mb-3 text-muted text-center">$3.83 per month, billed annually
-                    <span
-                      t="popover"
-                      data-original-title="This product is a paid subscription. You will be charged US$46 when your subscription auto-renews annually. You can <a class='text-decoration-underline text-white' href='https://accounts.wondershare.com/web/subscription' target='_blank'>cancel<a/> your subscription at any time."
-                      data-placement="top"
-                      data-html="true"
-                      class="with-hand"
-                    >
-                  <i data-icon="extra-exclamation-circle" class="wsc-icon wsc-icon-font text-black font-size-small"></i>
-                </span>
-                  </p>
+    // 切换年和半年
+    $('#choose-half-year').click(function(e){
+      console.log(e);
+      $(this).addClass('active').siblings().removeClass('active')
+      $('#choose-bg').removeClass('active')
+      $('.dropdown-switch-change-one').eq(0).children().eq($(this).index()).show().siblings().hide()
+      $('.dropdown-switch-change-two').eq(0).children().eq($(this).index()).show().siblings().hide()
+      $('.dropdown-switch-change-three').eq(0).children().eq($(this).index()).show().siblings().hide()
+      e.stopPropagation();
+    })
+    $('#choose-year').click(function(e){
+      $(this).addClass('active').siblings().removeClass('active')
+      $('#choose-bg').addClass('active')
+      $('.dropdown-switch-change-one').eq(0).children().eq($(this).index()).show().siblings().hide()
+      $('.dropdown-switch-change-two').eq(0).children().eq($(this).index()).show().siblings().hide()
+      $('.dropdown-switch-change-three').eq(0).children().eq($(this).index()).show().siblings().hide()
+      e.stopPropagation();
+    })
 
-                  <div class="custom-control custom-checkbox font-size-small mb-3 pb-lg-3">
-                    <input type="checkbox" id="customCheck11" name="receive" class="custom-control-input" checked />
-                    <label for="customCheck11" class="custom-control-label text-left" style="line-height: 17px">
-                      Get a 7-day free access to
-                      <a class="text-action text-decoration-underline" href="https://democreator.wondershare.com/effects.html" target="_blank">DemoCreator Effects</a>
-                      for unlimited downloads.
-                      <a class="text-action text-decoration-underline" href="https://accounts.wondershare.com/web/subscription" target="_blank">Cancel any time</a>
-                      or subscribe for $8.99/month.
-                    </label>
-                  </div>
-                  <!--第二个价格按钮组-->
-                  <div class="price-area btn-groups-1 text-center">
-                    <a href="https://store.wondershare.com/index.php?submod=checkout&method=index&currency=USD&language=English&sku_id=20014911&ver=v5&verify=719F335E7DDA9D7302D7C1B8B584799B&additional_sku=100107122680&additional_activity=1302146541793185883&quick_batch=0" class="btn btn-lg btn-action " ga360location="content_2_buttonLink_2">Buy Now</a>
-                  </div>
-                  <div class="price-area btn-groups-2 hidden text-center">
-                    <a href='https://store.wondershare.com/index.php?submod=checkout&method=index&currency=USD&language=English&sku_id=20014911&ver=v5&verify=719F335E7DDA9D7302D7C1B8B584799B' class="btn btn-lg btn-action " ga360location="content_2_buttonLink_2">Buy Now</a>
-                  </div>
-                </div>
-              </div>
-              <div >
-              </div>
+    // 点击价格或者表头高亮对应的权益列表
+    // $('#table-content').mousemove(function (e){
+    //   let index = $(e.target).index()
+    //   console.log(index === 0);
+    //   if(index === 0) return
+    //   let head =  $('.btn-thead')
+    //   head.addClass('active').siblings().removeClass('active')
+    //   head.eq(index-1).addClass('active')
+    //   let tr = $('#table-content table table tr')
+    //   for(let i=0;i<tr.length;i++){
+    //     let child = $(tr[i]).children()
+    //     child.removeClass('table-background-active')
+    //     child.eq(index).addClass('table-background-active')
+    //   }
+    // }).mouseout(function (e){
+    //   removeHighlightTable()
+    // })
+    $('.btn-thead').click(function (e){e.stopPropagation();})
+    $('.btn-thead').mouseenter(function (e){
+      e.stopPropagation();
+      removeHighlightTable()
+      $(this).addClass('active').siblings().removeClass('active')
+      $(this).addClass('active')
+      let index = $(this).index()
+      let tr = $('#table-content table table tr')
+      for(let i=0;i<tr.length;i++){
+        let child = $(tr[i]).children()
+        child.removeClass('table-background-active')
+        child.eq(index).addClass('table-background-active')
+      }
+      let platformTr = $('.platform-thead')
+      for(let i=0;i<platformTr.length;i++){
+        let child = $(platformTr[i])
+        index === i ? child.addClass('table-background-active') : child.removeClass('table-background-active')
+      }
+    })
+    // 点击价格或者表头高亮对应的权益列表
+    $('div.buy-container').click(function (e){
+      e.stopPropagation();
+      let head =  $('.btn-thead')
+      let index = $(this).parent().index()
+      head.addClass('active').siblings().removeClass('active')
+      head.eq(index+1).addClass('active')
+      let tr = $('#table-content table table tr')
+      for(let i=0;i<tr.length;i++){
+        let child = $(tr[i]).children()
+        child.removeClass('table-background-active')
+        child.eq(index+2).addClass('table-background-active')
+      }
+      let platformTr = $('.platform-thead')
+      for(let i=0;i<platformTr.length;i++){
+        let child = $(platformTr[i])
+        index + 2=== i ? child.addClass('table-background-active') : child.removeClass('table-background-active')
+      }
+    })
 
-            </div>
-            <!-- 按钮及特性 -->
-            <div>
-              <!--<div class="text-center mt-3 mb-5 pb-3 ">-->
-              <!--  <a-->
-              <!--    href="https://store.wondershare.com/index.php?submod=checkout&method=index&currency=USD&language=English&sku_id=20014911&ver=v5&verify=719F335E7DDA9D7302D7C1B8B584799B&additional_sku=100107122680&additional_activity=1302146541793185883&quick_batch=0"-->
-              <!--    class="buy-link btn btn-lg m-font-size-large btn-action font-weight-bold btn-rounded btn-uncap text-center m-0 w-100 btn-groups-1"-->
-              <!--    style="max-width: 206px; border-radius: 4px"-->
-              <!--  >-->
-              <!--    Buy Now-->
-              <!--  </a>-->
-              <!--  <a-->
-              <!--    href="https://store.wondershare.com/index.php?submod=checkout&method=index&currency=USD&language=English&sku_id=20014911&ver=v5&verify=719F335E7DDA9D7302D7C1B8B584799B"-->
-              <!--    class="buy-link btn btn-lg m-font-size-large btn-action font-weight-bold btn-rounded btn-uncap text-center m-0 w-100 btn-groups-2 hidden"-->
-              <!--    style="max-width: 206px; border-radius: 4px"-->
-              <!--  >-->
-              <!--    Buy Now-->
-              <!--  </a>-->
-              <!--</div>-->
-              <!-- 这一层div不可删，根据底部文案不同调整 -->
-              <div class="mb-3 mt-n2">
-                <div class="d-flex align-items-center py-2  ">
-                  <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1"></i>
-                  <span class="font-size-small text-black">All DemoCreator features</span>
-                </div>
-                <div class="d-flex align-items-center py-2  ">
-                  <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1"></i>
-                  <span class="font-size-small text-black">Extra DemoAir Chrome extension and online recorder included</span>
-                </div>
-                <!-- <div class="d-flex align-items-center py-2  ">
-                   <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1"></i>
-                   <span class="font-size-small text-black">No watermark export</span>
-                 </div> -->
-                <div class="btn-groups-1">
-                  <div class="d-flex align-items-center py-2  ">
-                    <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1 align-self-start mt-1"></i>
-                    <span class="font-size-small text-black">
-                      7-day unlimited downloads from DemoCreator Effect Store
-                      <span
-                        t="popover"
-                        data-original-title="<a class='font-size-small text-action' href='https://democreator.wondershare.com/effects.html' target='_blank'>DemoCreator Effects Store</a> is your one-stop-shop for royalty-free video effects, audio, and transitions. You can <a class='text-decoration-underline text-action' href='https://democreator.wondershare.com/effects/store.html' target='_blank'>subscribe to it</a> to enjoy unlimited downloads from Effects Store."
-                        data-placement="top"
-                        data-html="true"
-                      >
-                        <i data-icon="extra-exclamation-circle" class="wsc-icon wsc-icon-font text-action font-size-small"></i>
-                      </span>
-                    </span>
-                  </div>
-                </div>
-                <div class="btn-groups-2 hidden">
-                  <div class="d-flex align-items-center py-2  ">
-                    <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1 align-self-start mt-1" style="visibility: hidden"></i>
+    //   $('body').on('click', '.dropdown-switch-item-one', function () {
+    //     $(this).parent().parent().parent().find('.dropdown-value').text($(this).html())
+    //     console.log($(this).index())
+    //     $('.dropdown-switch-change-one').eq(0).children().eq($(this).index()).show().siblings().hide()
+    //   })
+    //   $('body').on('click', '.dropdown-switch-item-two', function () {
+    //   $(this).parent().parent().parent().find('.dropdown-value').text($(this).html())
+    //   console.log($(this).index())
+    //   $('.dropdown-switch-change-two').eq(0).children().eq($(this).index()).show().siblings().hide()
+    // })
+    //   $('body').on('click', '.dropdown-switch-item-three', function () {
+    //   $(this).parent().parent().parent().find('.dropdown-value').text($(this).html())
+    //   console.log($(this).index())
+    //   $('.dropdown-switch-change-three').eq(0).children().eq($(this).index()).show().siblings().hide()
+    // })
+    $(document).click(function (e){
+      if($(e.target).closest('#table-content').length === 0){
+        removeHighlightTable()
+      }
+    })
+  })
 
-                    <span class="font-size-small text-black" style="opacity: 0.5">
-                      7-day unlimited downloads from DemoCreator Effect Store
-                      <span
-                        t="popover"
-                        data-original-title="<a class='font-size-small text-action' href='https://democreator.wondershare.com/effects.html' target='_blank'>DemoCreator Effects Store</a> is your one-stop-shop for royalty-free video effects, audio, and transitions. You can <a class='text-decoration-underline text-action' href='https://democreator.wondershare.com/effects/store.html' target='_blank'>subscribe to it</a> to enjoy unlimited downloads from Effects Store."
-                        data-placement="top"
-                        data-html="true"
-                      ></span>
-                    </span>
-                  </div>
-                </div>
+  $(function(){
+    getHeight()
+    // let one = $('#headingTableOne')
+    // let two = $('#headingTableTwo')
+    // let three = $('#headingTableThree')
+    $(document).on('shown.bs.collapse', function (e) {
 
-                <div class="d-flex align-items-center py-2   invisible">
-                  <a href="#more-privileges" class="font-size-small text-action">Know More</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div style='margin-top: -2.8rem;' class="col-12 col-md-6 col-xl-4 py-3 ">
-          <div style="background: #1f73fa;" class="premium-container box-shadow buy-container h-100 border-1 border-radius-10 p-4 position-relative  d-flex flex-column ">
-            <div class="most-popular most-popular-2">Best Value</div>
-            <div class="flex-fill">
-              <h4 class="font-size-title-24 font-size-super mt-3 mb-4 text-white text-center">Premium</h4>
-              <!-- 价格及切换区域 -->
-              <div class=" btn-change-2022 d-none justify-center ">
-                <button class="btn dropdown-btn dropdown-switch-item-two" style="flex:1;">
-                  Semi-annual
-                  <svg width="19" height="19" class="btn-svg" viewBox="0 0 19 19" fill="none" xmlns="https://www.w3.org/2000/svg" style="display: none;">
-                    <path d="M19.0008 0.659424V15C19.0008 17.2092 17.2099 19 15.0008 19H0.660156L19.0008 0.659424Z" fill="#006DFF"></path>
-                    <path d="M9.54102 12.6182L12.1089 15.1859L17.1417 10.1531" stroke="white" stroke-width="2"></path>
-                  </svg>
-                </button>
-                <button class="btn dropdown-btn dropdown-switch-item-two dropdown-btn-active" style="flex:1;">
-                  Annual
-                  <svg width="19" height="19" class="btn-svg" viewBox="0 0 19 19" fill="none" xmlns="https://www.w3.org/2000/svg" style="display: block;">
-                    <path d="M19.0008 0.659424V15C19.0008 17.2092 17.2099 19 15.0008 19H0.660156L19.0008 0.659424Z" fill="#006DFF"></path>
-                    <path d="M9.54102 12.6182L12.1089 15.1859L17.1417 10.1531" stroke="white" stroke-width="2"></path>
-                  </svg>
-                </button>
-              </div>
-              <div class="dropdown-switch-change-two">
-                <!--第一个价格内容-->
-                <div style="display:none;">
-                  <div class="display-1 font-weight-bold text-white py-3 d-flex align-items-start justify-content-center">
-                    <span class="font-size-extra font-weight-bold">US$</span><span class="text-nowrap"><span>47</span><span class="font-size-extra font-weight-bold text-white">/6 Months</span></span>
-                  </div>
-                  <p class="font-size-small mb-3 text-white text-center">$7.83 per month, billed every 6
-                    months <span
-                      t="popover"
-                      data-original-title="This product is a paid subscription. You will be charged US$47 when your subscription auto-renews semi-annually. You can <a class='text-decoration-underline text-white' href='https://accounts.wondershare.com/web/subscription' target='_blank'>cancel<a/> your subscription at any time."
-                      data-placement="top"
-                      data-html="true"
-                      class="with-hand"
-                    >
-                  <i data-icon="extra-exclamation-circle" class="wsc-icon wsc-icon-font text-white font-size-small"></i>
-                </span></p>
+      getHeight()
+    })
+    $(document).on('hidden.bs.collapse', function (e) {
 
-                  <div class="custom-control custom-checkbox font-size-small mb-3 pb-lg-3">
-                    <input type="checkbox" id="customCheck2" name="receive" class="custom-control-input" checked />
-                    <label for="customCheck2" class="custom-control-label text-left text-white" style="line-height: 17px">
-                      Get a 7-day free access to
-                      <a class="text-white text-decoration-underline" href="https://democreator.wondershare.com/effects.html" target="_blank">DemoCreator Effects</a>
-                      for unlimited downloads.
-                      <a class="text-white text-decoration-underline" href="https://accounts.wondershare.com/web/subscription" target="_blank">Cancel any time</a>
-                      or subscribe for $8.99/month.
-                    </label>
-                  </div>
-                  <!--第一个价格按钮组-->
-                  <div class="price-area btn-groups-1 text-center">
-                    <a class="btn btn-lg btn-premium " href="https://store.wondershare.com/index.php?submod=checkout&method=index&currency=USD&language=English&sku_id=20015161&ver=v5&verify=6392EF516480B344EF5BFF219E648099&additional_sku=100107122680&additional_activity=1302146541793185883&quick_batch=0" ga360location="content_2_buttonLink_2">Buy Now</a>
-                  </div>
-                  <div class="price-area btn-groups-2 hidden text-center">
-                    <a href='https://store.wondershare.com/index.php?submod=checkout&method=index&currency=USD&language=English&sku_id=20015161&ver=v5&verify=6392EF516480B344EF5BFF219E648099' class="btn btn-lg btn-premium " ga360location="content_2_buttonLink_2">Buy Now</a>
-                  </div>
-                </div>
-                <!--第二个价格内容-->
-                <div style="">
-                  <div class="display-1 font-weight-bold text-white py-3 d-flex align-items-start justify-content-center">
-                    <span class="font-size-extra font-weight-bold">US$</span><span class="text-nowrap"><span>68</span><span class="font-size-extra font-weight-bold text-white">/Year</span></span>
-                  </div>
-                  <p class="font-size-small mb-3 text-white text-center">$5.66 per month, billed annually <span
-                    t="popover"
-                    data-original-title="This product is a paid subscription. You will be charged US$68 when your subscription auto-renews annually. You can <a class='text-decoration-underline text-white' href='https://accounts.wondershare.com/web/subscription' target='_blank'>cancel<a/> your subscription at any time."
-                    data-placement="top"
-                    data-html="true"
-                    class="with-hand"
-                  >
-                  <i data-icon="extra-exclamation-circle" class="wsc-icon wsc-icon-font text-white font-size-small"></i>
-                </span>
-                  </p>
+      getHeight()
+    })
+  });
+  function getHeight(){
+    let table_header_off_top,
+      table_content_off_top,
+      table_content_height
+    let vwith = window.innerWidth;
+    table_content_off_top = $('#table-content').offset().top
+    let fixFn = throttle(function() {
+      if(vwith > 576) {
+        table_header_off_top = table_content_off_top-60
+        table_content_height = $('#table-content').height()
+        var s_top = $(window).scrollTop();
+        if (s_top + 72 > table_header_off_top && s_top + 72 < table_content_off_top + table_content_height) {
+          $('#table-head').addClass('table-head-fixed');
+        } else {
+          $('#table-head').removeClass('table-head-fixed');
+        }
+      }
+    })
+    $(window).off('scroll');
+    $(window).on('scroll', fixFn);
+  }
+  // 设置表头悬浮效果
+  function throttle(fn, delay) {
+    var run = true
+    return function() {
+      if (!run) return
+      run = false
+      setTimeout(function() {
+        fn.apply()
 
-                  <div class="custom-control custom-checkbox font-size-small mb-3 pb-lg-3">
-                    <input type="checkbox" id="customCheck22" name="receive" class="custom-control-input" checked />
-                    <label for="customCheck22" class="custom-control-label text-left text-white" style="line-height: 17px">
-                      Get a 7-day free access to
-                      <a class="text-white text-decoration-underline" href="https://democreator.wondershare.com/effects.html" target="_blank">DemoCreator Effects</a>
-                      for unlimited downloads.
-                      <a class="text-white text-decoration-underline" href="https://accounts.wondershare.com/web/subscription" target="_blank">Cancel any time</a>
-                      or subscribe for $8.99/month.
-                    </label>
-                  </div>
-                  <!--第二个价格按钮组-->
-                  <div class="price-area btn-groups-1 text-center">
-                    <a class="btn btn-lg btn-premium "
-                       href="https://store.wondershare.com/index.php?submod=checkout&method=index&currency=USD&language=English&sku_id=20014921&ver=v5&verify=031212005C71B87E03AB555D68EEFB10&additional_sku=100107122680&additional_activity=1302146541793185883&quick_batch=0"  ga360location="content_2_buttonLink_2">Buy Now</a>
-                  </div>
-                  <div class="price-area btn-groups-2 hidden text-center">
-                    <a href='https://store.wondershare.com/index.php?submod=checkout&method=index&currency=USD&language=English&sku_id=20014921&ver=v5&verify=031212005C71B87E03AB555D68EEFB10' class="btn btn-lg btn-premium " ga360location="content_2_buttonLink_2">Buy Now</a>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-            <!-- 按钮及特性 -->
-            <div>
-              <div class="d-flex justify-content-between mb-4" style="padding-left: 5rem !important;padding-right: 5rem !important; cursor: default;">
-                <span
-                  t="popover"
-                  data-original-title="DemoCreator"
-                  data-placement="top"
-                  data-html="true"
-                >
-                 <img src="https://neveragain.allstatics.com/2019/assets/icon/logo/democreator-square.svg" alt="democreator" style="height: 3rem;">
-                </span>
-                <span
-                  t="popover"
-                  data-original-title="Anireel"
-                  data-placement="top"
-                  data-html="true"
-                >
-                <img src="https://neveragain.allstatics.com/2019/assets/icon/logo/anireel-square.svg" alt="anireel" style="height: 3rem;">
-                </span>
-                <span
-                  t="popover"
-                  data-original-title="DemoAir"
-                  data-placement="top"
-                  data-html="true"
-                >
-                <img src="https://neveragain.allstatics.com/2019/assets/icon/logo/demoair-square.svg" alt="demoair" style="height: 3rem;">
-                </span>
-              </div>
-              <!--<div class="text-center mt-3 mb-5 pb-3">-->
-              <!--  <a-->
-              <!--    data-judge="0"-->
-              <!--    class="btn-buy btn btn-lg m-font-size-large btn-action font-weight-bold btn-rounded btn-uncap text-center m-0 w-100 btn-groups-1"-->
-              <!--    style="max-width: 206px; border-radius: 4px"-->
-              <!--    href="https://store.wondershare.com/index.php?submod=checkout&method=index&currency=USD&language=English&sku_id=20014921&ver=v5&verify=031212005C71B87E03AB555D68EEFB10&additional_sku=100107122680&additional_activity=1302146541793185883&quick_batch=0"-->
-              <!--    href-win32="#"-->
-              <!--    ga360location="content_3_buttonLink_4"-->
-              <!--  >-->
-              <!--    <span class="text-white">Buy Now</span>-->
-              <!--  </a>-->
-              <!--  <a-->
-              <!--    data-judge="0"-->
-              <!--    class="btn-buy btn btn-lg m-font-size-large btn-action font-weight-bold btn-rounded btn-uncap text-center m-0 w-100 btn-groups-2 hidden"-->
-              <!--    style="max-width: 206px; border-radius: 4px"-->
-              <!--    href="https://store.wondershare.com/index.php?submod=checkout&method=index&currency=USD&language=English&sku_id=20014921&ver=v5&verify=031212005C71B87E03AB555D68EEFB10"-->
-              <!--    href-win32="#"-->
-              <!--    ga360location="content_3_buttonLink_4"-->
-              <!--  >-->
-              <!--    <span class="text-white">Buy Now</span>-->
-              <!--  </a>-->
-              <!--</div>-->
-              <!-- 这一层div不可删，根据底部文案不同调整 -->
-              <div class="mb-3 mt-n2">
-                <div class="d-flex align-items-center pt-1 pb-2  ">
-                  <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-white flex-shrink-0 mr-2 pr-1"></i>
-                  <span class="font-size-small text-white">Enjoy three products on one plan</span>
-                  <span
-                    t="popover"
-                    data-original-title="Enjoy DemoCreator, Anireel, and DemoAir, three products in one subscription plan."
-                    data-placement="top"
-                    data-html="true"
-                    class="with-hand"
-                  >
-                    <i data-icon="extra-exclamation-circle" class="wsc-icon wsc-icon-font text-white font-size-small"></i>
-                  </span>
-                </div>
-                <div class="d-flex align-items-center py-2  ">
-                  <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-white flex-shrink-0 mr-2 pr-1"></i>
-                  <span class="font-size-small text-white">Everything you get with the Standard</span>
-                </div>
-                <div class="d-flex align-items-center py-2  ">
-                  <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-white flex-shrink-0 mr-2 pr-1"></i>
-                  <span class="font-size-small text-white">Extra animated explainer video maker</span>
-                </div>
-                <div class="d-flex align-items-center py-2  ">
-                  <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-white flex-shrink-0 mr-2 pr-1"></i>
-                  <span class="font-size-small text-white">Extra text-to-speech supported</span>
-                </div>
-
-                <div class="btn-groups-1">
-                  <div class="d-flex align-items-center py-2  ">
-                    <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-white flex-shrink-0 mr-2 pr-1 align-self-start mt-1"></i>
-
-                    <span class="font-size-small text-white">
-                      7-day unlimited downloads from DemoCreator Effect Store
-                      <span
-                        t="popover"
-                        data-original-title="<a class='font-size-small text-white' href='https://democreator.wondershare.com/effects.html' target='_blank'>DemoCreator Effects Store</a> is your one-stop-shop for royalty-free video effects, audio, and transitions. You can <a class='text-decoration-underline text-white' href='https://democreator.wondershare.com/effects/store.html' target='_blank'>subscribe to it</a> to enjoy unlimited downloads from Effects Store."
-                        data-placement="top"
-                        data-html="true"
-                      >
-                        <i data-icon="extra-exclamation-circle" class="wsc-icon wsc-icon-font text-white font-size-small"></i>
-                      </span>
-                    </span>
-
-                  </div>
-                </div>
-                <div class="btn-groups-2 hidden">
-                  <div class="d-flex align-items-center py-2  ">
-                    <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-white flex-shrink-0 mr-2 pr-1 align-self-start mt-1" style="visibility: hidden"></i>
-                    <span class="font-size-small text-white" style="opacity: 0.5">
-                      7-day unlimited downloads from DemoCreator Effect Store
-                      <span
-                        t="popover"
-                        data-original-title="<a class='font-size-small text-white' href='https://democreator.wondershare.com/effects.html' target='_blank'>DemoCreator Effects Store</a> is your one-stop-shop for royalty-free video effects, audio, and transitions. You can <a class='text-decoration-underline text-white' href='https://democreator.wondershare.com/effects/store.html' target='_blank'>subscribe to it</a> to enjoy unlimited downloads from Effects Store."
-                        data-placement="top"
-                        data-html="true"
-                      ></span>
-                    </span>
-                  </div>
-                </div>
-
-                <div class="d-flex align-items-center py-2  ">
-                  <a href="#more-privileges" class="font-size-small text-white">And more...</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-md-6 col-xl-4 py-3">
-          <div class="buy-container h-100  border-radius-10 p-4 position-relative d-flex flex-column box-shadow">
-            <div class="flex-fill">
-              <h4 class="font-size-title-24 font-size-super mt-3 mb-4 text-black text-center">Pro</h4>
-              <!-- 价格及切换区域 -->
-              <div class=" btn-change-2022 d-none justify-center">
-                <button class="btn dropdown-btn dropdown-switch-item-three" style="flex:1;">
-                  Semi-annual
-                  <svg width="19" height="19" class="btn-svg" viewBox="0 0 19 19" fill="none" xmlns="https://www.w3.org/2000/svg" style="display: none;">
-                    <path d="M19.0008 0.659424V15C19.0008 17.2092 17.2099 19 15.0008 19H0.660156L19.0008 0.659424Z" fill="#006DFF"></path>
-                    <path d="M9.54102 12.6182L12.1089 15.1859L17.1417 10.1531" stroke="white" stroke-width="2"></path>
-                  </svg>
-                </button>
-                <button class="btn dropdown-btn dropdown-switch-item-three dropdown-btn-active" style="flex:1;">
-                  Annual
-                  <svg width="19" height="19" class="btn-svg" viewBox="0 0 19 19" fill="none" xmlns="https://www.w3.org/2000/svg" style="display: block;">
-                    <path d="M19.0008 0.659424V15C19.0008 17.2092 17.2099 19 15.0008 19H0.660156L19.0008 0.659424Z" fill="#006DFF"></path>
-                    <path d="M9.54102 12.6182L12.1089 15.1859L17.1417 10.1531" stroke="white" stroke-width="2"></path>
-                  </svg>
-                </button>
-              </div>
-              <div class="dropdown-switch-change-three">
-                <!--第一个价格内容-->
-                <div style="display:none;">
-                  <div class="display-1 font-weight-bold text-black py-4 d-flex align-items-start justify-content-center">
-                    <span class="font-size-extra font-weight-bold">US$</span><span class="text-nowrap"><span>83</span><span class="font-size-extra font-weight-bold text-black">/6 Months</span></span>
-                  </div>
-                  <p class="font-size-small mb-3 text-muted text-center">$13.8 per month, billed every 6
-                    months <span
-                      t="popover"
-                      data-original-title="This product is a paid subscription. You will be charged US$83 when your subscription auto-renews semi-annually. You can <a class='text-decoration-underline text-white' href='https://accounts.wondershare.com/web/subscription' target='_blank'>cancel<a/> your subscription at any time."
-                      data-placement="top"
-                      data-html="true"
-                      class="with-hand"
-                    >
-                  <i data-icon="extra-exclamation-circle" class="wsc-icon wsc-icon-font text-black font-size-small"></i>
-                </span></p>
+        run = true
+      }, delay || 100)
+    }
+  }
+</script>
 
 
-                  <div class="custom-control custom-checkbox font-size-small mb-3 pb-lg-3">
-                    <input type="checkbox" id="customCheck3" name="receive" class="custom-control-input" checked />
-                    <label for="customCheck3" class="custom-control-label text-left" style="line-height: 17px">
-                      Get a 7-day free access to
-                      <a class="text-action text-decoration-underline" href="https://democreator.wondershare.com/effects.html" target="_blank">DemoCreator Effects</a>
-                      for unlimited downloads.
-                      <a class="text-action text-decoration-underline" href="https://accounts.wondershare.com/web/subscription" target="_blank">Cancel any time</a>
-                      or subscribe for $8.99/month.
-                    </label>
-                  </div>
-                  <!--第一个价格按钮组-->
-                  <div class="price-area btn-groups-1 text-center">
-                    <a href="https://store.wondershare.com/index.php?submod=checkout&method=index&currency=USD&language=English&sku_id=20015171&ver=v5&verify=C08D0AD2F977F7842D051C18CC221D67&additional_sku=100107122680,20015181&additional_activity=1302146541793185883,0&quick_batch=0" class="btn btn-lg btn-action " ga360location="content_2_buttonLink_2">Buy Now</a>
-                  </div>
-                  <div class="price-area btn-groups-2 hidden text-center">
-                    <a href='https://store.wondershare.com/index.php?submod=checkout&method=index&currency=USD&language=English&sku_id=20015171&ver=v5&verify=C08D0AD2F977F7842D051C18CC221D67&additional_sku=20015181' class="btn btn-lg btn-action " ga360location="content_2_buttonLink_2">Buy Now</a>
-                  </div>
-                </div>
-                <!--第二个价格内容-->
-                <div style="">
-                  <div class="display-1 font-weight-bold text-black py-4 d-flex align-items-start justify-content-center">
-                    <span class="font-size-extra font-weight-bold">US$</span><span class="text-nowrap"><span>119</span><span class="font-size-extra font-weight-bold text-black">/Year</span></span>
-                  </div>
-                  <p class="font-size-small mb-3 text-muted text-center">$9.9 per month, billed annually
-                    <span
-                      t="popover"
-                      data-original-title="This product is a paid subscription. You will be charged US$119 when your subscription auto-renews annually. You can <a class='text-decoration-underline text-white' href='https://accounts.wondershare.com/web/subscription' target='_blank'>cancel<a/> your subscription at any time."
-                      data-placement="top"
-                      data-html="true"
-                      class="with-hand"
-                    >
-                  <i data-icon="extra-exclamation-circle" class="wsc-icon wsc-icon-font text-black font-size-small"></i>
-                </span>
-                  </p>
-
-                  <div class="custom-control custom-checkbox font-size-small mb-3 pb-lg-3">
-                    <input type="checkbox" id="customCheck33" name="receive" class="custom-control-input" checked />
-                    <label for="customCheck33" class="custom-control-label text-left" style="line-height: 17px">
-                      Get a 7-day free access to
-                      <a class="text-action text-decoration-underline" href="https://democreator.wondershare.com/effects.html" target="_blank">DemoCreator Effects</a>
-                      for unlimited downloads.
-                      <a class="text-action text-decoration-underline" href="https://accounts.wondershare.com/web/subscription" target="_blank">Cancel any time</a>
-                      or subscribe for $8.99/month.
-                    </label>
-                  </div>
-                  <!--第二个价格按钮组-->
-                  <div class="price-area btn-groups-1 text-center">
-                    <a href="https://store.wondershare.com/index.php?submod=checkout&method=index&currency=USD&language=English&sku_id=20014931&ver=v5&verify=58C0038F0256F07E802D4FC61620E82E&additional_sku=100107122680,20015051&additional_activity=1302146541793185883,0&quick_batch=0" class="btn btn-lg btn-action " ga360location="content_2_buttonLink_2">Buy Now</a>
-                  </div>
-                  <div class="price-area btn-groups-2 hidden text-center">
-                    <a href='https://store.wondershare.com/index.php?submod=checkout&method=index&currency=USD&language=English&sku_id=20014931&ver=v5&verify=58C0038F0256F07E802D4FC61620E82E&additional_sku=20015051' class="btn btn-lg btn-action " ga360location="content_2_buttonLink_2">Buy Now</a>
-                  </div>
-                </div>
-              </div>
 
 
-            </div>
-            <!-- 按钮及特性 -->
-            <div>
-              <!--<div class="text-center mt-3 mb-5 pb-3">-->
-              <!--  <a-->
-              <!--    data-judge="0"-->
-              <!--    class="btn-buy btn btn-lg m-font-size-large btn-action font-weight-bold btn-rounded btn-uncap text-center m-0 w-100 btn-groups-1"-->
-              <!--    style="max-width: 206px; border-radius: 4px"-->
-              <!--    href="https://store.wondershare.com/index.php?submod=checkout&method=index&currency=USD&language=English&sku_id=20014931&ver=v5&verify=58C0038F0256F07E802D4FC61620E82E&additional_sku=100107122680,20015051&additional_activity=1302146541793185883,0&quick_batch=0"-->
-              <!--    href-win32="#"-->
-              <!--    ga360location="content_3_buttonLink_4"-->
-              <!--  >-->
-              <!--    <span class="text-white">Buy Now</span>-->
-              <!--  </a>-->
-              <!--  <a-->
-              <!--    data-judge="0"-->
-              <!--    class="btn-buy btn btn-lg m-font-size-large btn-action font-weight-bold btn-rounded btn-uncap text-center m-0 w-100 btn-groups-2 hidden"-->
-              <!--    style="max-width: 206px; border-radius: 4px"-->
-              <!--    href="https://store.wondershare.com/index.php?submod=checkout&method=index&currency=USD&language=English&sku_id=20014931&ver=v5&verify=58C0038F0256F07E802D4FC61620E82E&additional_sku=20015051"-->
-              <!--    href-win32="#"-->
-              <!--    ga360location="content_3_buttonLink_4"-->
-              <!--  >-->
-              <!--    <span class="text-white">Buy Now</span>-->
-              <!--  </a>-->
-              <!--  &lt;!&ndash; <a data-judge="0" href="https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2652&sub_lid=0&coupon_id=8817&currency=USD&language=English&verify=5b1548775339f6377d8408aff76e2dca&flush=paypal" class="btn-buy m-1" json="paypal_url"><img src="https://images.wondershare.com/democreator/article/btn-paypal.png" class="img-fluid" style="max-width: 206px;border-radius: 4px;" alt="paypal"></a>&ndash;&gt;-->
-              <!--</div>-->
-              <!-- 这一层div不可删，根据底部文案不同调整 -->
-              <div class="mb-3 mt-n2">
-                <div class="d-flex align-items-center pt-1 pb-2  ">
-                  <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1"></i>
-                  <span class="font-size-small text-black">Enjoy three products on one plan</span>
-                  <span
-                    t="popover"
-                    data-original-title="Enjoy DemoCreator, Anireel, and DemoAir, three products in one subscription plan."
-                    data-placement="top"
-                    data-html="true"
-                    class="with-hand"
-                  >
-                    <i data-icon="extra-exclamation-circle" class="wsc-icon wsc-icon-font text-action font-size-small"></i>
-                  </span>
-                </div>
-                <div class="d-flex align-items-center py-2  ">
-                  <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1"></i>
-                  <span class="font-size-small text-black">Everything you get with the Premium</span>
-                </div>
-                <div class="d-flex align-items-center py-2  ">
-                  <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1"></i>
-                  <span class="font-size-small text-black">Extra cloud storage service</span>
-                </div>
-                <div class="d-flex align-items-center py-2  ">
-                  <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1"></i>
-                  <span class="font-size-small text-black">Extra speech-to-text auto-caption supported</span>
-                </div>
 
-                <div class="btn-groups-1">
-                  <div class="d-flex align-items-center py-2  ">
-                    <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1 align-self-start mt-1"></i>
-                    <span class="font-size-small text-black">
-                      7-day unlimited downloads from DemoCreator Effect Store
-                      <span
-                        t="popover"
-                        data-original-title="<a class='font-size-small text-action' href='https://democreator.wondershare.com/effects.html' target='_blank'>DemoCreator Effects Store</a> is your one-stop-shop for royalty-free video effects, audio, and transitions. You can <a class='text-decoration-underline text-action' href='https://democreator.wondershare.com/effects/store.html' target='_blank'>subscribe to it</a> to enjoy unlimited downloads from Effects Store."
-                        data-placement="top"
-                        data-html="true"
-                      >
-                        <i data-icon="extra-exclamation-circle" class="wsc-icon wsc-icon-font text-action font-size-small"></i>
-                      </span>
-                    </span>
-                  </div>
-                </div>
-                <div class="btn-groups-2 hidden">
-                  <div class="d-flex align-items-center py-2  ">
-                    <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1 align-self-start mt-1" style="visibility: hidden"></i>
-                    <span class="font-size-small text-black" style="opacity: 0.5">
-                      7-day unlimited downloads from DemoCreator Effect Store
-                      <span
-                        t="popover"
-                        data-original-title="<a class='font-size-small text-action' href='https://democreator.wondershare.com/effects.html' target='_blank'>DemoCreator Effects Store</a> is your one-stop-shop for royalty-free video effects, audio, and transitions. You can <a class='text-decoration-underline text-action' href='https://democreator.wondershare.com/effects/store.html' target='_blank'>subscribe to it</a> to enjoy unlimited downloads from Effects Store."
-                        data-placement="top"
-                        data-html="true"
-                      ></span>
-                    </span>
-                  </div>
-                </div>
-
-                <div class="d-flex align-items-center py-2 border-bottom justify-content-between invisible">
-                  <a href="#more-privileges" class="font-size-small text-action">And more...</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <a name="more-privileges"></a>
-    </div>
-
-  </section>
-
-  <section class="py-4">
-    <div class="container">
-      <h2 class="text-center mb-4">Explore Detailed Features for Different Plans</h2>
-
-    </div>
-    <div id="table-head" class="bg-white w-100 text-white">
-      <div class="container table-responsive-sm">
-        <table class="d-lg-table d-none table-style w-100 text-center" style="min-height: 72px; z-index: 10;">
-          <tbody>
-          <tr>
-            <th height="25" class="border bg-black py-4" style="width: 36%; min-width: 240px; background-color: #EAE9E9;">Features</th>
-            <th class="border bg-black py-4" style="width: 16%; min-width: 120px; background-color: #EAE9E9;">Free</th>
-            <th class="border bg-black py-4" style="width: 16%; min-width: 120px; background-color: #EAE9E9;">Basic</th>
-            <th class="border py-4" style="width: 16%; min-width: 120px; background-color: #FF4D13;">Premium</th>
-            <th class="border bg-black py-4" style="width: 16%; min-width: 120px; background-color: #EAE9E9;">
-              Pro
-            </th>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div class="container">
-      <div id="table-content" class="table-responsive table-integration">
-        <table class="table w-100 text-center mb-0">
-          <thead class="font-size-super text-white d-none">
-          <tr>
-            <th height="25" class="border bg-black py-4" style="width: 36%; min-width: 240px; background-color: #EAE9E9;">Features</th>
-            <th class="border bg-black py-4" style="width: 16%; min-width: 120px; background-color: #EAE9E9;">Free</th>
-            <th class="border bg-black py-4" style="width: 16%; min-width: 120px; background-color: #EAE9E9;">Basic</th>
-            <th class="border py-4" style="width: 16%; min-width: 120px; background-color: #FF4D13;">Premium</th>
-            <th class="border bg-black py-4" style="width: 16%; min-width: 120px; background-color: #EAE9E9;">
-              Pro
-              <!--<span
-                t="popover"
-                data-original-title="<a class='font-size-small text-action' href='https://democreator.wondershare.com/effects.html' target='_blank'>DemoCreator Effects Store</a> is your one-stop-shop for royalty-free video effects, audio, and transitions. You can <a class='text-decoration-underline text-action' href='https://democreator.wondershare.com/effects/store.html' target='_blank'>subscribe to it</a> to enjoy unlimited downloads from Effects Store."
-                data-placement="top"
-                data-html="true"
-              >
-                <svg class="wsc-svg-extra-exclamation-circle" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 512 512" height="16">
-                  <path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"></path>
-                </svg>
-              </span> -->
-            </th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td colspan="5" class="p-0 border-0">
-              <table id="headingTableOne" class="with-hand w-100" data-toggle="collapse" data-target="#collapseTableOne" aria-expanded="true" aria-controls="collapseTableOne">
-                <tr>
-                  <td class="text-black" style="width: 36%; min-width: 240px;">
-                     <span
-                       title="DemoCreator"
-                     >
-                    <img src="https://neveragain.allstatics.com/2019/assets/icon/logo/democreator-square.svg" alt="democreator" style="height: 2rem;">
-                     </span>
-                    <span class="ml-2"><strong>Screen / Webcam Recording & Editing</strong></span>
-                    <span class="ml-2">
-                        <svg class="wsc-svg-extra-angle-down" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 320 512" style="height: 1.5rem;">
-                          <path d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z"></path>
-                        </svg>
-                      </span>
-                  </td>
-                  <td style="width: 16%; min-width: 120px;"><div class="aria-expanded-false-show">--</div></td>
-                  <td style="width: 16%; min-width: 120px;">
-                    <div class="aria-expanded-false-show">
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </div>
-                  </td>
-                  <td style="width: 16%; min-width: 120px;">
-                    <div class="aria-expanded-false-show">
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </div>
-                  </td>
-                  <td style="width: 16%; min-width: 120px;">
-                    <div class="aria-expanded-false-show">
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </div>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          <tr>
-            <td colspan="5" class="p-0 border-0">
-              <div id="collapseTableOne" class="collapse multi-collapse show" aria-expanded="true" aria-labelledby="headingTableOne">
-                <table class="collapse-table w-100">
-                  <tr>
-                    <td style="width: 36%; min-width: 240px;">Recording time limits</td>
-                    <td style="width: 16%; min-width: 120px;">Limited</td>
-                    <td style="width: 16%; min-width: 120px;">
-                      Unlimited
-                    </td>
-                    <td style="width: 16%; min-width: 120px;">
-                      Unlimited
-                    </td>
-                    <td style="width: 16%; min-width: 120px;">
-                      Unlimited
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      Video editing toolkit
-                      <!--<span
-                        t="popover"
-                        data-original-title="<a class='font-size-small text-action' href='https://demoair.wondershare.com/app/online-screen-recorder' target='_blank'>DemoAir online screen recorder</a> can record your screen, webcam online, then share video messages instantly. It is an essential tool for team communication."
-                        data-placement="top"
-                        data-html="true"
-                      >
-                        <svg class="wsc-svg-extra-exclamation-circle" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 512 512" height="16">
-                          <path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"></path>
-                        </svg>
-                      </span>-->
-                    </td>
-                    <td>Basic</td>
-                    <td>
-                      Full Access
-                    </td>
-                    <td>
-                      Full Access
-                    </td>
-                    <td>
-                      Full Access
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Animated text</td>
-                    <td style="width: 16%; min-width: 120px;">Basic</td>
-                    <td style="width: 16%; min-width: 120px;">Full Access</td>
-                    <td style="width: 16%; min-width: 120px;">Full Access</td>
-                    <td style="width: 16%; min-width: 120px;">Full Access</td>
-                  </tr>
-                  <!--<tr>
-                    <td>
-                      DemoCreator Effects Store
-                      <span
-                        t="popover"
-                        data-original-title="<a class='font-size-small text-action' href='https://democreator.wondershare.com/effects.html' target='_blank'>DemoCreator Effects Store</a> is your one-stop-shop for royalty-free video effects, audio, and transitions. You can <a class='text-decoration-underline text-action' href='https://democreator.wondershare.com/effects/store.html' target='_blank'>subscribe to it</a> to enjoy unlimited downloads from Effects Store."
-                        data-placement="top"
-                        data-html="true"
-                      >
-                          <svg class="wsc-svg-extra-exclamation-circle" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 512 512" height="16">
-                            <path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"></path>
-                          </svg>
-                        </span>
-                    </td>
-                    <td>Basic</td>
-                    <td><a href="https://democreator.wondershare.com/effects/store.html" target="_blank" ><div class="text-action">Subscribe To It</div></a></td>
-                    <td><a href="https://democreator.wondershare.com/effects/store.html" target="_blank"><div class="text-action">Subscribe To It</div></a></td>
-                    <td><a href="https://democreator.wondershare.com/effects/store.html" target="_blank"><div class="text-action">Subscribe To It</div></a></td>
-                  </tr>-->
-                  <tr>
-                    <td>Auto-caption (STT)
-                      <span
-                        t="popover"
-                        data-original-title="<a class='font-size-small text-action' href='https://democreator.wondershare.com/store/windows-auto-caption.html' target='_blank'>DemoCreator auto-caption</a> is a great way to make content accessible for viewers. You can use speech recognition technology to automatically create captions for your videos."
-                        data-placement="top"
-                        data-html="true"
-                      >
-                          <svg class="wsc-svg-extra-exclamation-circle" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 512 512" height="16">
-                            <path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"></path>
-                          </svg>
-                        </span>
-                    </td>
-                    <td>
-                      <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                        <path d="M2 30 L30 2 M30 30 L2 2"></path>
-                      </svg>
-                    </td>
-                    <td>
-                      <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                        <path d="M2 30 L30 2 M30 30 L2 2"></path>
-                      </svg>
-                    </td>
-                    <td>
-                      <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                        <path d="M2 30 L30 2 M30 30 L2 2"></path>
-                      </svg>
-                    </td>
-                    <td>
-                      1h/month
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Facial recognition</td>
-                    <td>
-                      <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                        <path d="M2 30 L30 2 M30 30 L2 2"></path>
-                      </svg>
-                    </td>
-                    <td>
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                    <td>
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                    <td>
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      Customizable watermark
-                      <!--<span
-                        t="popover"
-                        data-original-title="<a class='font-size-small text-action' href='https://democreator.wondershare.com/effects.html' target='_blank'>DemoCreator Effects Store</a> is your one-stop-shop for royalty-free video effects, audio, and transitions. You can <a class='text-decoration-underline text-action' href='https://democreator.wondershare.com/effects/store.html' target='_blank'>subscribe to it</a> to enjoy unlimited downloads from Effects Store."
-                        data-placement="top"
-                        data-html="true"
-                      >
-                        <svg class="wsc-svg-extra-exclamation-circle" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 512 512" height="16">
-                          <path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"></path>
-                        </svg>
-                      </span> -->
-                    </td>
-                    <td>
-                      <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                        <path d="M2 30 L30 2 M30 30 L2 2"></path>
-                      </svg>
-                    </td>
-                    <td>
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                    <td>
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                    <td>
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                  </tr>
-                </table>
-              </div>
-            </td>
-          </tr>
-
-          <!--<tr>
-            <td colspan="5" class="p-0 border-0">
-              <table id="headingTableTwo" class="with-hand w-100 " data-toggle="collapse" data-target="#collapseTableTwo" aria-expanded="true" aria-controls="collapseTableTwo">
-                <tr>
-                  <td class="text-black" style="width: 36%; min-width: 240px;">
-                    <!--<img src="https://neveragain.allstatics.com/2019/assets/icon/logo/democreator-square.svg" alt="" style="height: 2rem;">-->
-          <!--<span class="ml-2"><strong>Video Editing</strong></span>
-          <span class="ml-2">
-            <svg class="wsc-svg-extra-angle-down" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 320 512" style="height: 1.5rem;">
-              <path d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z"></path>
-            </svg>
-          </span>
-        </td>
-        <td style="width: 16%; min-width: 120px;"><div class="aria-expanded-false-show">--</div></td>
-        <td style="width: 16%; min-width: 120px;">
-          <div class="aria-expanded-false-show">
-            <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-              <path d="M2 20 L12 28 30 4"></path>
-            </svg>
-          </div>
-        </td>
-        <td style="width: 16%; min-width: 120px;">
-          <div class="aria-expanded-false-show">
-            <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-              <path d="M2 20 L12 28 30 4"></path>
-            </svg>
-          </div>
-        </td>
-        <td style="width: 16%; min-width: 120px;">
-          <div class="aria-expanded-false-show">
-            <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-              <path d="M2 20 L12 28 30 4"></path>
-            </svg>
-          </div>
-        </td>
-      </tr>
-    </table>
-  </td>
-</tr>-->
-          <!--<tr>
-            <td colspan="5" class="p-0 border-0">
-              <div id="collapseTableTwo" class="collapse multi-collapse show" aria-labelledby="headingTableTwo">
-                <table class="collapse-table w-100">
-                  <tr>
-                    <td style="width: 36%; min-width: 240px;">
-                      Video editing toolkit
-                    </td>
-                    <td style="width: 16%; min-width: 120px;">Basic</td>
-                    <td style="width: 16%; min-width: 120px;">Full Access</td>
-                    <td style="width: 16%; min-width: 120px;">Full Access</td>
-                    <td style="width: 16%; min-width: 120px;">Full Access</td>
-                  </tr>
-                  <tr>
-                    <td>Facial recognition</td>
-                    <td>
-                      <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                        <path d="M2 30 L30 2 M30 30 L2 2"></path>
-                      </svg>
-                    </td>
-                    <td>
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                    <td>
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                    <td>
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                  </tr>
-                   <tr>
-                    <td>Chroma key (Remove scene background)</td>
-                    <td>
-                      <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                        <path d="M2 30 L30 2 M30 30 L2 2"></path>
-                      </svg>
-                    </td>
-                    <td>
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                    <td>
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                    <td>
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Animations for text or clips</td>
-                    <td style="width: 16%; min-width: 120px;">Basic</td>
-                    <td style="width: 16%; min-width: 120px;">Full Access</td>
-                    <td style="width: 16%; min-width: 120px;">Full Access</td>
-                    <td style="width: 16%; min-width: 120px;">Full Access</td>
-                  </tr>
-                   <tr>
-                    <td>Pan and Zoom</td>
-                    <td>
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                    <td>
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                    <td>
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                    <td>
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                  </tr>
-                   <tr>
-                    <td>Auto-caption (STT)
-                     <span
-                        t="popover"
-                        data-original-title="<a class='font-size-small text-action' href='https://democreator.wondershare.com/store/windows-auto-caption.html' target='_blank'>DemoCreator auto-caption</a> is a great way to make content accessible for viewers. You can use speech recognition technology to automatically create captions for your videos."
-                        data-placement="top"
-                        data-html="true"
-                      >
-                        <svg class="wsc-svg-extra-exclamation-circle" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 512 512" height="16">
-                          <path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"></path>
-                        </svg>
-                      </span>
-                    </td>
-                    <td>
-                      <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                        <path d="M2 30 L30 2 M30 30 L2 2"></path>
-                      </svg>
-                    </td>
-                    <td>
-                      <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                        <path d="M2 30 L30 2 M30 30 L2 2"></path>
-                      </svg>
-                    </td>
-                    <td>
-                      <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                        <path d="M2 30 L30 2 M30 30 L2 2"></path>
-                      </svg>
-                    </td>
-                    <td>
-                     1h/month
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      DemoCreator Effects Store
-                      <span
-                        t="popover"
-                        data-original-title="<a class='font-size-small text-action' href='https://democreator.wondershare.com/effects.html' target='_blank'>DemoCreator Effects Store</a> is your one-stop-shop for royalty-free video effects, audio, and transitions. You can <a class='text-decoration-underline text-action' href='https://democreator.wondershare.com/effects/store.html' target='_blank'>subscribe to it</a> to enjoy unlimited downloads from Effects Store."
-                        data-placement="top"
-                        data-html="true"
-                      >
-                        <svg class="wsc-svg-extra-exclamation-circle" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 512 512" height="16">
-                          <path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"></path>
-                        </svg>
-                      </span>
-                    </td>
-                    <td>Basic</td>
-                    <td>Full Access with DemoCreator Effects licensed</td>
-                    <td>Full Access with DemoCreator Effects licensed</td>
-                    <td>Full Access with DemoCreator Effects licensed</td>
-                  </tr>
-                </table>
-              </div>
-            </td>
-          </tr>-->
-          <tr>
-            <td colspan="5" class="p-0 border-0">
-              <table id="headingTableThree" class="with-hand w-100 " data-toggle="collapse" data-target="#collapseTableThree" aria-expanded="true" aria-controls="collapseTableThree">
-                <tr>
-                  <td class="text-black" style="width: 36%; min-width: 240px;">
-                    <span
-                      title="Anireel"
-                    >
-                    <img src="https://neveragain.allstatics.com/2019/assets/icon/logo/anireel-square.svg" alt="" style="height: 2rem;">
-                    </span>
-                    <span class="ml-2"><strong>Animated Explainer Video Maker</strong></span>
-                    <span class="ml-2">
-                        <svg class="wsc-svg-extra-angle-down" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 320 512" style="height: 1.5rem;">
-                          <path d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z"></path>
-                        </svg>
-                      </span>
-                  </td>
-                  <td style="width: 16%; min-width: 120px;"><div class="aria-expanded-false-show">--</div></td>
-                  <td style="width: 16%; min-width: 120px;">
-                    <div class="aria-expanded-false-show">
-                      <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                        <path d="M2 30 L30 2 M30 30 L2 2"></path>
-                      </svg>
-                    </div>
-                  </td>
-                  <td style="width: 16%; min-width: 120px;">
-                    <div class="aria-expanded-false-show">
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </div>
-                  </td>
-                  <td style="width: 16%; min-width: 120px;">
-                    <div class="aria-expanded-false-show">
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </div>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          <tr>
-            <td colspan="5" class="p-0 border-0">
-              <div id="collapseTableThree" class="collapse multi-collapse show" aria-labelledby="headingTableThree">
-                <table class="collapse-table w-100">
-                  <tr>
-                    <td>Watermark-free</td>
-                    <td>
-                      <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                        <path d="M2 30 L30 2 M30 30 L2 2"></path>
-                      </svg>
-                    </td>
-                    <td>
-                      <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                        <path d="M2 30 L30 2 M30 30 L2 2"></path>
-                      </svg>
-                    </td>
-                    <td>
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-
-                    <td>
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="width: 36%; min-width: 240px;">
-                      Avatar customization
-                    </td>
-                    <td style="width: 16%; min-width: 120px;">
-                      <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                        <path d="M2 30 L30 2 M30 30 L2 2"></path>
-                      </svg>
-                    </td>
-                    <td style="width: 16%; min-width: 120px;">
-                      <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                        <path d="M2 30 L30 2 M30 30 L2 2"></path>
-                      </svg>
-                    </td>
-                    <td style="width: 16%; min-width: 120px;">
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                    <td style="width: 16%; min-width: 120px;">
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Script-to-Animation</td>
-                    <td>
-                      <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                        <path d="M2 30 L30 2 M30 30 L2 2"></path>
-                      </svg>
-                    </td>
-                    <td>
-                      <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                        <path d="M2 30 L30 2 M30 30 L2 2"></path>
-                      </svg>
-                    </td>
-                    <td>
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                    <td>
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      Text-to-Speech
-                      <span
-                        t="popover"
-                        data-original-title="<a class='font-size-small text-action' href='https://anireel.wondershare.com/text-to-speech/store/individuals.html' target='_blank'>Anireel Text to Speech</a> can convert text to AI synthetic voice in one click."
-                        data-placement="top"
-                        data-html="true"
-                      >
-                          <svg class="wsc-svg-extra-exclamation-circle" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 512 512" height="16">
-                            <path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"></path>
-                          </svg>
-                        </span>
-                    </td>
-                    <td>
-                      <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                        <path d="M2 30 L30 2 M30 30 L2 2"></path>
-                      </svg>
-                    </td>
-                    <td>
-                      <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                        <path d="M2 30 L30 2 M30 30 L2 2"></path>
-                      </svg>
-                    </td>
-                    <td><div class="text-action">5000</div> characters per month</td>
-                    <td><div class="text-action">50000</div> characters per month</td>
-                  </tr>
-                  <tr>
-                    <td>Video export quality</td>
-                    <td>720P</td>
-                    <td>720P</td>
-                    <td>1080P</td>
-                    <td>1080P</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      Animation video assets and ready-made templates
-                      <!--<span
-                        t="popover"
-                        data-original-title="<a class='font-size-small text-action' href='https://democreator.wondershare.com/effects.html' target='_blank'>DemoCreator Effects Store</a> is your one-stop-shop for royalty-free video effects, audio, and transitions. You can <a class='text-decoration-underline text-action' href='https://democreator.wondershare.com/effects/store.html' target='_blank'>subscribe to it</a> to enjoy unlimited downloads from Effects Store."
-                        data-placement="top"
-                        data-html="true"
-                      >
-                        <svg class="wsc-svg-extra-exclamation-circle" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 512 512" height="16">
-                          <path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"></path>
-                        </svg>
-                      </span>-->
-                    </td>
-                    <td>Basic</td>
-                    <td>Basic</td>
-                    <td>Full Access</td>
-                    <td>Full Access</td>
-                  </tr>
-                </table>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td colspan="5" class="p-0 border-0">
-              <table id="headingTableFour" class="with-hand w-100 collapsed" data-toggle="collapse" data-target="#collapseTableFour" aria-expanded="true" aria-controls="collapseTableFour">
-                <tr>
-                  <td class="text-black" style="width: 36%; min-width: 240px;">
-                    <span
-                      title="DemoAir"
-                    >
-                    <img src="https://neveragain.allstatics.com/2019/assets/icon/logo/demoair-square.svg" alt="" style="height: 2rem;">
-                    </span>
-                    <span class="ml-2"><strong>Cloud Service</strong></span>
-                    <span class="ml-2">
-                        <svg class="wsc-svg-extra-angle-down" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 320 512" style="height: 1.5rem;">
-                          <path d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z"></path>
-                        </svg>
-                      </span>
-                  </td>
-                  <td style="width: 16%; min-width: 120px;"><div class="aria-expanded-false-show">--</div></td>
-                  <td style="width: 16%; min-width: 120px;">
-                    <div class="aria-expanded-false-show">
-                      <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                        <path d="M2 30 L30 2 M30 30 L2 2"></path>
-                      </svg>
-                    </div>
-                  </td>
-                  <td style="width: 16%; min-width: 120px;">
-                    <div class="aria-expanded-false-show">
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </div>
-                  </td>
-                  <td style="width: 16%; min-width: 120px;">
-                    <div class="aria-expanded-false-show">
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </div>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          <tr>
-            <td colspan="5" class="p-0 border-0">
-              <div id="collapseTableFour" class="collapse multi-collapse show" aria-labelledby="headingTableFour">
-                <table class="collapse-table w-100">
-                  <tr>
-                    <td style="width: 36%; min-width: 240px;">Cloud storage</td>
-                    <td style="width: 16%; min-width: 120px;">
-                      <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                        <path d="M2 30 L30 2 M30 30 L2 2"></path>
-                      </svg>
-                    </td>
-                    <td style="width: 16%; min-width: 120px;">1G</td>
-                    <td style="width: 16%; min-width: 120px;">1G</td>
-                    <td style="width: 16%; min-width: 120px;"><div class="text-action">20G</div</td>
-                  </tr>
-                  <tr>
-                    <td>Maximum upload file size</td>
-                    <td>
-                      <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                        <path d="M2 30 L30 2 M30 30 L2 2"></path>
-                      </svg>
-                    </td>
-                    <td>
-                      100MB
-                    </td>
-                    <td>
-                      100MB
-                    </td>
-                    <td>
-                      500MB
-                    </td>
-                  </tr>
-                  <!-- <tr>
-                     <td>Video access control</td>
-                     <td>
-                       <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                         <path d="M2 30 L30 2 M30 30 L2 2"></path>
-                       </svg>
-                     </td>
-                     <td>
-                       <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                         <path d="M2 30 L30 2 M30 30 L2 2"></path>
-                       </svg>
-                     </td>
-                     <td>
-                       <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                         <path d="M2 30 L30 2 M30 30 L2 2"></path>
-                       </svg>
-                     </td>
-                     <td>
-                       <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                         <path d="M2 20 L12 28 30 4"></path>
-                       </svg>
-                     </td>
-                   </tr>-->
-                  <tr>
-                    <td>Video sharing control</td>
-                    <td>
-                      <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                        <path d="M2 30 L30 2 M30 30 L2 2"></path>
-                      </svg>
-                    </td>
-                    <td>
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                    <td>
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                    <td>
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="width: 36%; min-width: 240px;">Commercial use</td>
-                    <td>
-                      <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                        <path d="M2 30 L30 2 M30 30 L2 2"></path>
-                      </svg>
-                    </td>
-                    <td>
-                      <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                        <path d="M2 30 L30 2 M30 30 L2 2"></path>
-                      </svg>
-                    </td>
-                    <td style="width: 16%; min-width: 120px;">
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                    <td style="width: 16%; min-width: 120px;">
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                  </tr>
-                </table>
-              </div>
-            </td>
-          </tr>
-          <!-- <tr>
-             <td colspan="5" class="p-0 border-0">
-               <table id="headingTableFive" class="with-hand w-100 collapsed" data-toggle="collapse" data-target="#collapseTableFive" aria-expanded="true" aria-controls="collapseTableFive">
-                 <tr>
-                   <td class="text-black" style="width: 36%; min-width: 240px;">
-                     <svg class="wsc-svg-extra-shield-alt" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 512 512" style="height: 1.5rem;">
-                       <path d="M466.5 83.7l-192-80a48.15 48.15 0 0 0-36.9 0l-192 80C27.7 91.1 16 108.6 16 128c0 198.5 114.5 335.7 221.5 380.3 11.8 4.9 25.1 4.9 36.9 0C360.1 472.6 496 349.3 496 128c0-19.4-11.7-36.9-29.5-44.3zM256.1 446.3l-.1-381 175.9 73.3c-3.3 151.4-82.1 261.1-175.8 307.7z"></path>
-                     </svg>
-                     <span class="ml-2">
-                       <strong>Other Offers</strong>
-                       <span
-                         t="popover"
-                         data-original-title="<a class='font-size-small text-action' href='https://democreator.wondershare.com/effects.html' target='_blank'>DemoCreator Effects Store</a> is your one-stop-shop for royalty-free video effects, audio, and transitions. You can <a class='text-decoration-underline text-action' href='https://democreator.wondershare.com/effects/store.html' target='_blank'>subscribe to it</a> to enjoy unlimited downloads from Effects Store."
-                         data-placement="top"
-                         data-html="true"
-                       >
-                         <svg class="wsc-svg-extra-exclamation-circle" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 512 512" height="16">
-                           <path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"></path>
-                         </svg>
-                       </span>
-                       <span class="ml-2">
-                         <svg class="wsc-svg-extra-angle-down" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 320 512" style="height: 1.5rem;">
-                           <path d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z"></path>
-                         </svg>
-                       </span>
-                     </span>
-                   </td>
-                   <td style="width: 16%; min-width: 120px;"><div class="aria-expanded-false-show">--</div></td>
-                   <td style="width: 16%; min-width: 120px;">
-                     <div class="aria-expanded-false-show">
-                       <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                         <path d="M2 30 L30 2 M30 30 L2 2"></path>
-                       </svg>
-                     </div>
-                   </td>
-                   <td style="width: 16%; min-width: 120px;">
-                     <div class="aria-expanded-false-show">
-                       <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                         <path d="M2 20 L12 28 30 4"></path>
-                       </svg>
-                     </div>
-                   </td>
-                   <td style="width: 16%; min-width: 120px;">
-                     <div class="aria-expanded-false-show">
-                       <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                         <path d="M2 20 L12 28 30 4"></path>
-                       </svg>
-                     </div>
-                   </td>
-                 </tr>
-               </table>
-             </td>
-           </tr>-->
-          <!--<tr>
-            <td colspan="5" class="p-0 border-0">
-              <div id="collapseTableFive" class="collapse multi-collapse show" aria-labelledby="headingTableFive">
-                <table class="collapse-table w-100">
-                  <tr>
-                    <td style="width: 36%; min-width: 240px;">Product and effects update</td>
-                    <td style="width: 16%; min-width: 120px;">
-                      <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                        <path d="M2 30 L30 2 M30 30 L2 2"></path>
-                      </svg>
-                    </td>
-                    <td style="width: 16%; min-width: 120px;">
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                    <td style="width: 16%; min-width: 120px;">
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                    <td style="width: 16%; min-width: 120px;">
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="width: 36%; min-width: 240px;">Invoice service</td>
-                    <td style="width: 16%; min-width: 120px;">
-                      <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                        <path d="M2 30 L30 2 M30 30 L2 2"></path>
-                      </svg>
-                    </td>
-                    <td style="width: 16%; min-width: 120px;">
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                    <td style="width: 16%; min-width: 120px;">
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                    <td style="width: 16%; min-width: 120px;">
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>24/7 tech support</td>
-                    <td>
-                      <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                        <path d="M2 30 L30 2 M30 30 L2 2"></path>
-                      </svg>
-                    </td>
-                    <td>
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                    <td>
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                    <td>
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                  </tr>
-
-                </table>
-              </div>
-            </td>
-          </tr>-->
-          <!-- <tr>
-             <td colspan="5" class="p-0 border-0">
-               <table id="headingTableSix" class="with-hand w-100 collapsed" data-toggle="collapse" data-target="#collapseTableSix" aria-expanded="true" aria-controls="collapseTableSix">
-                 <tr>
-                   <td class="text-black" style="width: 36%; min-width: 240px;">
-                     <svg class="wsc-svg-extra-gem-outline" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 576 512" style="height: 1.5rem;">
-                       <path d="M464 0H112c-4 0-7.8 2-10 5.4L2 152.6c-2.9 4.4-2.6 10.2.7 14.2l276 340.8c4.8 5.9 13.8 5.9 18.6 0l276-340.8c3.3-4.1 3.6-9.8.7-14.2L474.1 5.4C471.8 2 468.1 0 464 0zm-19.3 48l63.3 96h-68.4l-51.7-96h56.8zm-202.1 0h90.7l51.7 96H191l51.6-96zm-111.3 0h56.8l-51.7 96H68l63.3-96zm-43 144h51.4L208 352 88.3 192zm102.9 0h193.6L288 435.3 191.2 192zM368 352l68.2-160h51.4L368 352z"></path>
-                     </svg>
-                     <span class="ml-2">VIP权益</span>
-                     <span class="ml-2">
-                       <svg class="wsc-svg-extra-angle-down" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 320 512" style="height: 1.5rem;">
-                         <path d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z"></path>
-                       </svg>
-                     </span>
-                   </td>
-                   <td style="width: 16%; min-width: 120px;"><div class="aria-expanded-false-show">--</div></td>
-                   <td style="width: 16%; min-width: 120px;">
-                     <div class="aria-expanded-false-show">
-                       <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                         <path d="M2 20 L12 28 30 4"></path>
-                       </svg>
-                     </div>
-                   </td>
-                   <td style="width: 16%; min-width: 120px;">
-                     <div class="aria-expanded-false-show">
-                       <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                         <path d="M2 20 L12 28 30 4"></path>
-                       </svg>
-                     </div>
-                   </td>
-                   <td style="width: 16%; min-width: 120px;">
-                     <div class="aria-expanded-false-show">
-                       <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                         <path d="M2 20 L12 28 30 4"></path>
-
-                       </svg>
-                     </div>
-                   </td>
-                 </tr>
-               </table>
-             </td>
-           </tr> -->
-          <!--<tr>
-            <td colspan="5" class="p-0 border-0">
-              <div id="collapseTableSix" class="collapse multi-collapse show" aria-labelledby="headingTableSix">
-                <table class="collapse-table w-100">
-                  <tr>
-                    <td style="width: 36%; min-width: 240px;">开票报销</td>
-                    <td style="width: 16%; min-width: 120px;">
-                      <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                        <path d="M2 30 L30 2 M30 30 L2 2"></path>
-                      </svg>
-                    </td>
-                    <td style="width: 16%; min-width: 120px;">
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                    <td style="width: 16%; min-width: 120px;">
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                    <td style="width: 16%; min-width: 120px;">
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>专业售后服务</td>
-                    <td>
-                      <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                        <path d="M2 30 L30 2 M30 30 L2 2"></path>
-                      </svg>
-                    </td>
-                    <td>
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                    <td>
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                    <td>
-                      <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
-                        <path d="M2 20 L12 28 30 4"></path>
-                      </svg>
-                    </td>
-                  </tr>
-                </table>
-              </div>
-            </td>
-          </tr>-->
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  <section class="text-center font-size-tiny py-4">
-    <div class="container">
-      <span class="mr-2">We accept:</span>
-      <img src="https://images.wondershare.com/democreator/images2020/buy/we-accept.png" class="img-fluid" alt="DemoCreator" />
-    </div>
-
-  </section>
-
-
-  <section class="py-5 text-center text-lg-left">
-    <div class="container">
-      <div class="row border mx-0 pl-0 pl-md-3 pl-lg-5 pr-md-3 py-md-2">
-        <div class="col-md-6 col-lg-3 py-4">
-          <div class="mb-3"><i class="wsc-icon wsc-icon-xl" data-path="https://images.wondershare.com/images2020/icon/secure.svg"></i></div>
-          <p class="mb-1 font-size-super">Secure</p>
-          <p class="mr-lg-5">We value your privacy and protect your financial/personal info with advanced encryption and advanced fraud protection.</p>
-        </div>
-        <div class="col-md-6 col-lg-3 py-4">
-          <div class="mb-3"><i class="wsc-icon wsc-icon-xl" data-path="https://images.wondershare.com/images2020/icon/supportservice.svg"></i></div>
-          <p class="mb-1 font-size-super">Support service</p>
-          <p class="mr-lg-5">
-            Knowledgeable representatives available to assist you through instant live chat and email response within 24 hours by submitting requests in
-            <a href="https://support.wondershare.com/" target="_blank">Support Center</a>
-            .
-          </p>
-        </div>
-        <div class="col-md-6 col-lg-3 py-4">
-          <div class="mb-3"><i class="wsc-icon wsc-icon-xl" data-path="https://images.wondershare.com/images2020/icon/moneybackguarantee.svg"></i></div>
-          <p class="mb-1 font-size-super">Money-back guarantee</p>
-          <p class="mr-lg-5">All of our products come with a 30-day money-back guarantee.</p>
-        </div>
-        <div class="col-md-6 col-lg-3 py-4">
-          <div class="mb-3"><i class="wsc-icon wsc-icon-xl" data-path="https://images.wondershare.com/images2020/icon/updateskeycode.svg"></i></div>
-          <p class="mb-1 font-size-super">Updates</p>
-          <p class="mr-lg-5">Free software update within the valid period of the software.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="py-5">
-    <div class="container">
-      <h2 class="text-center mb-3 pb-lg-3">See What Our Users Ask Frequently</h2>
-      <div class="row justify-content-center">
-        <div class="col-xl-10">
-          <ul class="list-group text-black" id="accordion" role="tablist">
-            <li class="list-group-item px-0 m-0 py-3">
-              <div id="headingOne" class="with-hand m-font-size-large position-relative d-flex align-items-center my-3" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" role="tab">
-                <span class="pr-3 flex-1 m-font-size-large font-weight-bold">Can I cancel my subscription plan?</span>
-                <i class="wsc-icon wsc-icon-sm list-right-plus wsc-icon-thick position-absolute text-black wsc-icon-loaded" data-icon="symbol-chevron-bottom"><svg class="wsc-svg-symbol-chevron-bottom" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                  <path d="M30 12 L16 24 2 12"></path>
-                </svg></i>
-              </div>
-
-              <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion" style="">
-                <p class="mb-3">
-                  Yes, of course, you can. All subscriptions allow you to use this product for the plan time and renew if you’re satisfied. You’ll receive an email notification 7 days before the end of the subscription, which will include
-                  instructions to either renew the subscription or cancel it.
-                </p>
-              </div>
-            </li>
-            <li class="list-group-item px-0 m-0 py-3">
-              <div id="headingTwo" class="with-hand m-font-size-large position-relative d-flex align-items-center my-3 collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" role="tab">
-                <span class="pr-3 flex-1 m-font-size-large font-weight-bold">What’s the difference between free version and paid version?</span>
-                <i class="wsc-icon wsc-icon-sm list-right-plus wsc-icon-thick position-absolute text-black wsc-icon-loaded" data-icon="symbol-chevron-bottom"><svg class="wsc-svg-symbol-chevron-bottom" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                  <path d="M30 12 L16 24 2 12"></path>
-                </svg></i>
-              </div>
-              <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion" style="">
-                <p class="mb-3">The trial version of Wondershare DemoCreator includes all the basic features, but the exported videos in the trial version are watermarked.</p>
-              </div>
-            </li>
-            <li class="list-group-item px-0 m-0 py-3">
-              <div id="headingThree" class="with-hand m-font-size-large position-relative d-flex align-items-center my-3 collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" role="tab">
-                <span class="pr-3 flex-1 m-font-size-large font-weight-bold">Is there a limitation on recording length?</span>
-                <i class="wsc-icon wsc-icon-sm list-right-plus wsc-icon-thick position-absolute text-black wsc-icon-loaded" data-icon="symbol-chevron-bottom"><svg class="wsc-svg-symbol-chevron-bottom" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                  <path d="M30 12 L16 24 2 12"></path>
-                </svg></i>
-              </div>
-              <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion" style="">
-                <p class="mb-3">
-                  There have a 10 mins / per record limit on the duration of a recording with a free version. However, the recording could be limited by the capacity of free drive space where you save the recorded files. Also, be aware that a longer recording
-                  time period will create very large files that may reduce system performance while working with them during editing and exporting.
-                </p>
-              </div>
-            </li>
-            <li class="list-group-item px-0 m-0 py-3">
-              <div id="headingFour" class="with-hand collapsed m-font-size-large position-relative d-flex align-items-center my-3" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour" role="tab">
-                <span class="pr-3 flex-1 m-font-size-large font-weight-bold">Can I capture two PC display screens simultaneously?</span>
-                <i class="wsc-icon wsc-icon-sm list-right-plus wsc-icon-thick position-absolute text-black wsc-icon-loaded" data-icon="symbol-chevron-bottom"><svg class="wsc-svg-symbol-chevron-bottom" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                  <path d="M30 12 L16 24 2 12"></path>
-                </svg></i>
-              </div>
-              <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
-                <p class="mb-3">Currently, DemoCreator only supports to capture the main display screen only if you have two PC screens.</p>
-              </div>
-            </li>
-            <li class="list-group-item px-0 m-0 py-3">
-              <div id="headingFive" class="with-hand collapsed m-font-size-large position-relative d-flex align-items-center my-3" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive" role="tab">
-                <span class="pr-3 flex-1 m-font-size-large font-weight-bold">How to record my computer screen &amp; webcam?</span>
-                <i class="wsc-icon wsc-icon-sm list-right-plus wsc-icon-thick position-absolute text-black wsc-icon-loaded" data-icon="symbol-chevron-bottom"><svg class="wsc-svg-symbol-chevron-bottom" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                  <path d="M30 12 L16 24 2 12"></path>
-                </svg></i>
-              </div>
-              <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
-                <p class="mb-3">
-                  You can use DemoCreator to record your screen and webcam simultaneously. Run the software and click "New Recording", click Camera, then you will find some setting options for camera, resolution and frame rate.You can set
-                  up them according to your needs. The computer screen capture and webcam recording will be displayed in different tracks. You can edit them separately.
-                </p>
-              </div>
-            </li>
-            <li class="list-group-item px-0 m-0 py-3">
-              <div id="headingSix" class="with-hand collapsed m-font-size-large position-relative d-flex align-items-center my-3" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix" role="tab">
-                <span class="pr-3 flex-1 m-font-size-large font-weight-bold">How to register my DemoCreator after purchase?</span>
-                <i class="wsc-icon wsc-icon-sm list-right-plus wsc-icon-thick position-absolute text-black wsc-icon-loaded" data-icon="symbol-chevron-bottom"><svg class="wsc-svg-symbol-chevron-bottom" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                  <path d="M30 12 L16 24 2 12"></path>
-                </svg></i>
-              </div>
-              <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
-                <p class="mb-3">
-                  The registration messages will be sent in the confirmation email after your purchase. You can click Register and enter the Wondershare account as well as your email address then it will show your DemoCreator has been activated
-                  successfully.
-                </p>
-              </div>
-            </li>
-            <li class="list-group-item px-0 m-0 py-3">
-              <div id="headingSeven" class="with-hand collapsed m-font-size-large position-relative d-flex align-items-center my-3" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven" role="tab">
-                <span class="pr-3 flex-1 m-font-size-large font-weight-bold">What is the difference between update and upgrade?</span>
-                <i class="wsc-icon wsc-icon-sm list-right-plus wsc-icon-thick position-absolute text-black wsc-icon-loaded" data-icon="symbol-chevron-bottom"><svg class="wsc-svg-symbol-chevron-bottom" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
-                  <path d="M30 12 L16 24 2 12"></path>
-                </svg></i>
-              </div>
-              <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordion">
-                <p class="mb-3">
-                  Update generally refers to a minor version release while upgrade refers to a major version release like DemoCreator V4 to DemoCreator V5. Perpetual plan includes all updates to the current major version, but doesn't
-                  include upgrades to future major versions. And subscription plan includes all updates and upgrades during the subscription period.
-                </p>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-  <aside>
-    <div class="modal fade" id="modal-buy" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-          </div>
-          <div class="modal-body">
-            <div class="text-center py-4">
-              <div class="font-size-extra">
-                <span>You're purchasing the</span>
-                <span id="pageSys" class="font-weight-bolder text-capitalize"></span>
-                <span>version</span>
-              </div>
-              <div class="font-size-small mt-3">
-                <a class="btn btn-primary text-white" id="continue">Continue</a>
-                <a class="btn btn-outline-primary" id="needOther">
-                  <span>I need a</span>
-                  <span id="currSys" class="font-weight-bolder text-capitalize"></span>
-                  <span>version</span>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </aside>
-</main>
+<script>
+  // 点击备注icon
+  $(function () {
+  // 点击popover icon
+  let timer1 = null
+  $('[t="popover"]').on('mouseover', function (e) {
+    e.stopPropagation()
+    var $this = $(this)
+    $this.popover('show')
+    $('.bs-popover-top').on('mouseover', function (e) {
+      clearTimeout(timer1)
+    })
+    $('.bs-popover-top').on('mouseleave', function (e) {
+      $this.popover('hide')
+    })
+    $('.bs-popover-right').on('mouseover', function (e) {
+      clearTimeout(timer1)
+    })
+    $('.bs-popover-right').on('mouseleave', function (e) {
+      $this.popover('hide')
+    })
+  })
+  $('[t="popover"]').on('mouseleave', function (e) {
+    var $this = $(this)
+    timer1 = setTimeout(()=>{
+      $this.popover('hide')
+    },300)
+  })
+  })
+</script>

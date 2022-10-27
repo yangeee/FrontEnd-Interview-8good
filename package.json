@@ -2,7 +2,7 @@
   "name": "wondershare-demoair",
   "version": "0.1.0",
   "scripts": {
-    "promise": "promises-aplus-tests promise.js"
+    "promise": "promises-aplus-tests Promise源码/promise-a.js"
   },
   "dependencies": {
     "electron": "^14.0.1",

@@ -1,0 +1,372 @@
+<script>
+  // 获取url参数
+  function getQueryVariable(variable)
+  {
+    var query = window.location.search.substring(1);
+    var vars = query.split("&");
+    for (var i=0;i<vars.length;i++) {
+      var pair = vars[i].split("=");
+      if(pair[0] === variable){return pair[1];}
+    }
+    return false;
+  }
+  $(document).ready(function () {
+    // 可以选择半年价格为默认显示
+    let MONTHLY = 'monthly'
+    if(getQueryVariable('price') === MONTHLY) {
+      let ele = $('#choose-half-year')
+      $('#choose-bg').removeClass('active')
+      ele.addClass('active').siblings().removeClass('active')
+      $('.dropdown-switch-change-one').eq(0).children().eq(0).show().siblings().hide()
+      $('.dropdown-switch-change-two').eq(0).children().eq(0).show().siblings().hide()
+      $('.dropdown-switch-change-three').eq(0).children().eq(0).show().siblings().hide()
+    }else {
+      $('.dropdown-switch-change-one').eq(0).children().eq(1).show().siblings().hide()
+      $('.dropdown-switch-change-two').eq(0).children().eq(1).show().siblings().hide()
+      $('.dropdown-switch-change-three').eq(0).children().eq(1).show().siblings().hide()
+    }
+  $('.dropdown-btn-active').addClass('dropdown-btn-active');
+  // $('.dropdown-btn-active .btn-svg').show();
+  $(".dropdown-btn-active .btn-svg").css("display", "block");
+  $(".dropdown-btn").click(function () {
+  let liParent = $(this).parent();
+  let brother = liParent.children();
+  brother.removeClass("dropdown-btn-active");
+  brother.children().css("display", "none");
+  $(this).addClass("dropdown-btn-active");
+  $(this).children().css("display", "block");
+});
+});
+  function removeHighlightTable(){
+  let head =  $('.btn-thead')
+  head.removeClass('active')
+  let tr = $('#table-content table table tr')
+  for(let i=0;i<tr.length;i++){
+  let child = $(tr[i]).children()
+  child.removeClass('table-background-active')
+}
+  let platformTr = $('.platform-thead')
+  for(let i=0;i<platformTr.length;i++){
+  let child = $(platformTr[i])
+  child.removeClass('table-background-active')
+}
+}
+
+  $(function () {
+
+  // 切换年和半年
+  $('#choose-half-year').click(function(e){
+    console.log(e);
+    $(this).addClass('active').siblings().removeClass('active')
+    $('#choose-bg').removeClass('active')
+    $('.dropdown-switch-change-one').eq(0).children().eq($(this).index()).show().siblings().hide()
+    $('.dropdown-switch-change-two').eq(0).children().eq($(this).index()).show().siblings().hide()
+    $('.dropdown-switch-change-three').eq(0).children().eq($(this).index()).show().siblings().hide()
+    e.stopPropagation();
+  })
+  $('#choose-year').click(function(e){
+  $(this).addClass('active').siblings().removeClass('active')
+  $('#choose-bg').addClass('active')
+  $('.dropdown-switch-change-one').eq(0).children().eq($(this).index()).show().siblings().hide()
+  $('.dropdown-switch-change-two').eq(0).children().eq($(this).index()).show().siblings().hide()
+  $('.dropdown-switch-change-three').eq(0).children().eq($(this).index()).show().siblings().hide()
+  e.stopPropagation();
+})
+
+  // 点击价格或者表头高亮对应的权益列表
+  // $('#table-content').mousemove(function (e){
+  //   let index = $(e.target).index()
+  //   console.log(index === 0);
+  //   if(index === 0) return
+  //   let head =  $('.btn-thead')
+  //   head.addClass('active').siblings().removeClass('active')
+  //   head.eq(index-1).addClass('active')
+  //   let tr = $('#table-content table table tr')
+  //   for(let i=0;i<tr.length;i++){
+  //     let child = $(tr[i]).children()
+  //     child.removeClass('table-background-active')
+  //     child.eq(index).addClass('table-background-active')
+  //   }
+  // }).mouseout(function (e){
+  //   removeHighlightTable()
+  // })
+  $('.btn-thead').click(function (e){e.stopPropagation();})
+  $('.btn-thead').mouseenter(function (e){
+  e.stopPropagation();
+  removeHighlightTable()
+  $(this).addClass('active').siblings().removeClass('active')
+  $(this).addClass('active')
+  let index = $(this).index()
+  let tr = $('#table-content table table tr')
+  for(let i=0;i<tr.length;i++){
+  let child = $(tr[i]).children()
+  child.removeClass('table-background-active')
+  child.eq(index).addClass('table-background-active')
+}
+  let platformTr = $('.platform-thead')
+  for(let i=0;i<platformTr.length;i++){
+  let child = $(platformTr[i])
+  index === i ? child.addClass('table-background-active') : child.removeClass('table-background-active')
+}
+})
+  // 点击价格或者表头高亮对应的权益列表
+  $('div.buy-container').click(function (e){
+  e.stopPropagation();
+  let head =  $('.btn-thead')
+  let index = $(this).parent().index()
+  head.addClass('active').siblings().removeClass('active')
+  head.eq(index+1).addClass('active')
+  let tr = $('#table-content table table tr')
+  for(let i=0;i<tr.length;i++){
+  let child = $(tr[i]).children()
+  child.removeClass('table-background-active')
+  child.eq(index+2).addClass('table-background-active')
+}
+  let platformTr = $('.platform-thead')
+  for(let i=0;i<platformTr.length;i++){
+  let child = $(platformTr[i])
+  index + 2=== i ? child.addClass('table-background-active') : child.removeClass('table-background-active')
+}
+})
+
+  //   $('body').on('click', '.dropdown-switch-item-one', function () {
+  //     $(this).parent().parent().parent().find('.dropdown-value').text($(this).html())
+  //     console.log($(this).index())
+  //     $('.dropdown-switch-change-one').eq(0).children().eq($(this).index()).show().siblings().hide()
+  //   })
+  //   $('body').on('click', '.dropdown-switch-item-two', function () {
+  //   $(this).parent().parent().parent().find('.dropdown-value').text($(this).html())
+  //   console.log($(this).index())
+  //   $('.dropdown-switch-change-two').eq(0).children().eq($(this).index()).show().siblings().hide()
+  // })
+  //   $('body').on('click', '.dropdown-switch-item-three', function () {
+  //   $(this).parent().parent().parent().find('.dropdown-value').text($(this).html())
+  //   console.log($(this).index())
+  //   $('.dropdown-switch-change-three').eq(0).children().eq($(this).index()).show().siblings().hide()
+  // })
+  $(document).click(function (e){
+  if($(e.target).closest('#table-content').length === 0){
+  removeHighlightTable()
+}
+})
+})
+
+  $(function(){
+  getHeight()
+  // let one = $('#headingTableOne')
+  // let two = $('#headingTableTwo')
+  // let three = $('#headingTableThree')
+  $(document).on('shown.bs.collapse', function (e) {
+
+  getHeight()
+})
+  $(document).on('hidden.bs.collapse', function (e) {
+
+  getHeight()
+})
+});
+  function getHeight(){
+  let table_header_off_top,
+  table_content_off_top,
+  table_content_height
+  let vwith = window.innerWidth;
+  table_content_off_top = $('#table-content').offset().top
+  let fixFn = throttle(function() {
+  if(vwith > 576) {
+  table_header_off_top = table_content_off_top-60
+  table_content_height = $('#table-content').height()
+  var s_top = $(window).scrollTop();
+  if (s_top + 72 > table_header_off_top && s_top + 72 < table_content_off_top + table_content_height) {
+  $('#table-head').addClass('table-head-fixed');
+} else {
+  $('#table-head').removeClass('table-head-fixed');
+}
+}
+})
+  $(window).off('scroll');
+  $(window).on('scroll', fixFn);
+}
+  // 设置表头悬浮效果
+  function throttle(fn, delay) {
+  var run = true
+  return function() {
+  if (!run) return
+  run = false
+  setTimeout(function() {
+  fn.apply()
+
+  run = true
+}, delay || 100)
+}
+}
+</script>
+
+
+
+
+
+<script>
+  $(function () {
+  // 若系统不一致则弹出弹窗
+  function showModal(pageSys, currSys) {
+    var site = {
+      mac: 'https://democreator.wondershare.com/store/mac-individuals.html',
+      win: 'https://democreator.wondershare.com/store/windows-individuals.html'
+    }
+
+    $('#continue').on('click', function () {
+      $('#continue').attr('href', '#')
+      $('#modal-buy').modal('hide')
+    })
+
+    if (pageSys !== currSys) {
+      $('#pageSys').text(pageSys)
+      $('#currSys').text(currSys)
+      $('#needOther').attr('href', site[currSys])
+      $('#modal-buy').modal('show')
+    }
+  }
+  // 调用goSystemJudge获取操作系统及当前页面的系统
+  if (wsc.is.desktop) {
+  goSystemJudge(showModal)
+}
+
+  // 点击checkbox按钮
+  $('[id^="customCheck"]').on('change', function () {
+  var parent = $(this).parents('.buy-container')
+  if ($(this).is(':checked')) {
+  $(parent).find('.btn-groups-1').removeClass('hidden')
+  $(parent).find('.btn-groups-2').addClass('hidden')
+  $('#specialEffects').removeClass('hidden')
+} else {
+  $(parent).find('.btn-groups-1').addClass('hidden')
+  $(parent).find('.btn-groups-2').removeClass('hidden')
+  $('#specialEffects').addClass('hidden')
+}
+})
+
+  $('#customCheck1').on('change', function () {
+  if ($(this).is(':checked')) {
+  $('.td-nochecked').addClass('d-none')
+  $('.td-checked').removeClass('d-none')
+} else {
+  $('.td-nochecked').removeClass('d-none')
+  $('.td-checked').addClass('d-none')
+}
+})
+
+
+  // bundle价格
+  var bundleInfo = {
+  'democreator-filmora': [
+{
+  title: 'Annual plan - US$71.98/year',
+  price: '$5.99',
+  del_price: '$71.98/year',
+  link: 'https://store.wondershare.com/index.php?submod=checkout&method=sku_combine&is_combine=1&sku_id=102000001854&coupon_id=9206&currency=USD&language=English&verify=83678B9F736954FD0DFF091F907EC77A'
+}
+  ],
+  'democreator-mockitt': [
+{
+  title: 'Annual plan - US$81.59/year',
+  price: '$6.8',
+  del_price: '$81.59/year',
+  link: 'https://store.wondershare.com/index.php?submod=checkout&method=sku_combine&is_combine=1&sku_id=102000001778&coupon_id=9127&currency=USD&language=English&verify=84AAC542978FF0ED610B5181CEEF7905'
+}
+  ]
+}
+  // 合并产品购买信息和bundle购买信息
+  // 如果页面中只有站点产品或只有bundle可使用下面两行代码
+  // var List = productInfo;
+  var List = bundleInfo
+  var Menus = {
+  current: null,
+  currentKey: '',
+  sys: '',
+  handleCollapse: function (el) {
+  var h = el.children[0].getBoundingClientRect().height
+  el.style.transition = 'height .3s'
+  el.style.height = (el.classList.contains('active') ? 0 : h) + 'px'
+  el.classList.toggle('active')
+},
+  createList: function (list, parent) {
+  if (!list) return
+  var html = ''
+  list.forEach(function (item, index) {
+  html += '<div class="select-item" data-index="' + index + '">' + item.title + '</div>'
+})
+  parent.innerHTML += html
+}
+}
+
+  // 切换不同的license
+  document.querySelector('body').addEventListener('click', function (e) {
+  var target = e.target
+  var el = null
+
+  if (target.classList.contains('select-custom-control')) {
+  el = target.querySelector('.list-wrapper')
+
+  Menus.currentKey = target.getAttribute('data-match')
+
+  // 系统
+  var key = target.getAttribute('data-select-sys') || this.getAttribute('data-sys'),
+  parent = target.querySelector('.select-list')
+
+  if (key !== Menus.sys) {
+  parent.innerHTML = ''
+}
+  !parent.innerHTML.trim() && Menus.createList(List[Menus.currentKey], parent)
+  Menus.sys = key
+  Menus.handleCollapse(el)
+
+  requestAnimationFrame(function () {
+  Menus.current = el
+})
+}
+
+  if (target.classList.contains('select-item')) {
+  var index = target.getAttribute('data-index')
+
+  obj = List[Menus.currentKey][index]
+  var parent = $(target).parents('.buy-container')
+  $(parent).find('.title').text(obj.title)
+  $(parent).find('.price').text(obj.price)
+  $(parent).find('.period').text(obj.period)
+  $(parent).find('.buy-link').attr('href', obj.link)
+  $(parent).find('.buy-link_paypal').attr('href', obj.link_paypal)
+}
+
+  if (!Menus.current || el === Menus.current) return
+  Menus.current.style.height = 0
+  Menus.current.classList.remove('active')
+})
+})
+
+  // 点击popover icon
+  let timer1 = null
+  $('[t="popover"]').on('mouseover', function (e) {
+  e.stopPropagation()
+  var $this = $(this)
+  $this.popover('show')
+  $('.bs-popover-top').on('mouseover', function (e) {
+  clearTimeout(timer1)
+})
+  $('.bs-popover-top').on('mouseleave', function (e) {
+  $this.popover('hide')
+})
+  $('.bs-popover-right').on('mouseover', function (e) {
+  clearTimeout(timer1)
+})
+  $('.bs-popover-right').on('mouseleave', function (e) {
+  $this.popover('hide')
+})
+})
+  $('[t="popover"]').on('mouseleave', function (e) {
+  var $this = $(this)
+  timer1 = setTimeout(()=>{
+  $this.popover('hide')
+},300)
+})
+
+</script>

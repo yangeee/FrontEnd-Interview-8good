@@ -1,689 +1,1464 @@
-<script src="https://neveragain.allstatics.com/2019/assets/vendor/vue.min.js"></script>
-<script src="https://pdf.wondershare.com/pfah/pardot-form.js"></script>
-<script>
-  var buttonText = {
-    win: 'Switch to Mac',
-    mac: 'Switch to Windows'
-  }
-  var productInfo = {
-    win: {
-      license: [
-        { name: 'Annual Plan', label: 'annual', value: '1' },
-        // { name: 'Perpetual Plan', label: 'perpetual', value: '2' }
-      ],
+<meta charset="utf-8">
 
-      priceInfo: {
-        annualInfo: [
-          {
-            user: 1,
-            price: 29.99,
-            dPrice: 49.99,
-            url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=164&sub_lid=0&coupon_id=9922&currency=USD&language=English&verify=c70b5582c7bf08c96a66c03ecf6747bf',
-            paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=164&sub_lid=0&coupon_id=9922&currency=USD&language=English&verify=c70b5582c7bf08c96a66c03ecf6747bf&flush=paypal'
-          },
-          // {
-          //   user: 2,
-          //  price: 137.18,
-          //
-          //	dPrice: 139.98,
-          //   url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2345&sub_lid=0&currency=USD&language=English&verify=7cee2b5e651b360c8fdb61254344c235',
-          //   paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2345&sub_lid=0&currency=USD&language=English&verify=7cee2b5e651b360c8fdb61254344c235&flush=paypal'
-          //  },
-          //  {
-          //   user: 3,
-          //   price: 203.67,
-          //    dPrice: 209.97,
-          //    url: 'https://store.wondershare.com/index.php?submod=checkout&method=index&pid=7743&license_id=2346&sub_lid=0&currency=USD&language=English&verify=45cd72fe43191987cb1cee982d20a026',
-          //    paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2346&sub_lid=0&currency=USD&language=English&verify=45cd72fe43191987cb1cee982d20a026&flush=paypal'
-          //  },
-          //  {
-          //    user: 4,
-          //    price: 268.76,
-          //   dPrice: 279.96,
-          //    url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2347&sub_lid=0&currency=USD&language=English&verify=840c7ca5035440fde3f1e9d419144da4',
-          //    paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2347&sub_lid=0&currency=USD&language=English&verify=840c7ca5035440fde3f1e9d419144da4&flush=paypal'
-          //   },
-          //  {
-          //     user: 5,
-          //     price: 332.45,
-          //     dPrice: 349.95,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=406&sub_lid=0&currency=USD&language=English&verify=21fb1c3d73f645999cc3e9d61a1dc421',
-          //     paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=406&sub_lid=0&currency=USD&language=English&verify=21fb1c3d73f645999cc3e9d61a1dc421&flush=paypal'
-          //   },
-          //   {
-          //      user: 6,
-          //     price: 394.74,
-          //      dPrice: 419.94,
-          //       url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2951&sub_lid=0&currency=USD&language=English&verify=973279a0eaff1b8577b27ed851f9564d',
-          //      paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2951&sub_lid=0&currency=USD&language=English&verify=973279a0eaff1b8577b27ed851f9564d&flush=paypal'
-          //    },
-          //    {
-          //        user: 7,
-          //       price: 455.63,
-          //        dPrice: 489.93,
-          //       url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2950&sub_lid=0&currency=USD&language=English&verify=9c41b28cf425c9af19ae30ba13807651',
-          //       paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2950&sub_lid=0&currency=USD&language=English&verify=9c41b28cf425c9af19ae30ba13807651&flush=paypal'
-          //      },
-          //      {
-          //       user: 8,
-          //        price: 515.12,
-          //        dPrice: 559.92,
-          //        url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2949&sub_lid=0&currency=USD&language=English&verify=5b6294f375db21927aa05256e4bd803b',
-          //        paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2949&sub_lid=0&currency=USD&language=English&verify=5b6294f375db21927aa05256e4bd803b&flush=paypal'
-          //      },
-          //      {
-          //        user: 9,
-          //       price: 573.21,
-          //       dPrice: 629.91,
-          //       url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2948&sub_lid=0&currency=USD&language=English&verify=2cb8339c61b905c1e9053d83e658a00f',
-          //       paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2948&sub_lid=0&currency=USD&language=English&verify=2cb8339c61b905c1e9053d83e658a00f&flush=paypal'
-          //      },
-          //     {
-          //        user: 10,
-          //        price: 629.91,
-          //         dPrice: 699.9,
-          //         url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2947&sub_lid=0&currency=USD&language=English&verify=9a429e021f48fd204c483f98a3df5d95',
-          //         paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2947&sub_lid=0&currency=USD&language=English&verify=9a429e021f48fd204c483f98a3df5d95&flush=paypal'
-          //       },
-          //       {
-          //        user: 11,
-          //          price: 677.5,
-          //          dPrice: 769.89,
-          //          url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2946&sub_lid=0&currency=USD&language=English&verify=95c4265a9eef2e20fb9ff1fde5d9849c',
-          //           paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2946&sub_lid=0&currency=USD&language=English&verify=95c4265a9eef2e20fb9ff1fde5d9849c&flush=paypal'
-          //       },
-          //        {
-          //         user: 12,
-          //         price: 722.29,
-          //         dPrice: 839.88,
-          //        url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2945&sub_lid=0&currency=USD&language=English&verify=8a3467b167241b6bc466e1a785389a20',
-          //        paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2945&sub_lid=0&currency=USD&language=English&verify=8a3467b167241b6bc466e1a785389a20&flush=paypal'
-          //      },
-          //     {
-          //       user: 13,
-          //       price: 764.29,
-          //        dPrice: 909.87,
-          //       url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2944&sub_lid=0&currency=USD&language=English&verify=4f25b5f2cc9f8a146941433c02777a7d',
-          //       paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2944&sub_lid=0&currency=USD&language=English&verify=4f25b5f2cc9f8a146941433c02777a7d&flush=paypal'
-          //     },
-          //    {
-          //      user: 14,
-          //      price: 803.48,
-          //      dPrice: 979.86,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2943&sub_lid=0&currency=USD&language=English&verify=13d6a1076698d6331124607f57acfb46',
-          //    paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2943&sub_lid=0&currency=USD&language=English&verify=13d6a1076698d6331124607f57acfb46&flush=paypal'
-          //   },
-          //   {
-          //     user: 15,
-          //     price: 839.88,
-          //    dPrice: 1049.85,
-          //    url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2942&sub_lid=0&currency=USD&language=English&verify=7437cef54a06db2794260fdb7ea0f638',
-          //    paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2942&sub_lid=0&currency=USD&language=English&verify=7437cef54a06db2794260fdb7ea0f638&flush=paypal'
-          //   },
-          //   {
-          //    user: 16,
-          //   price: 873.47,
-          //    dPrice: 1119.84,
-          //    url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2941&sub_lid=0&currency=USD&language=English&verify=8340bdeaeaf12ebf2bb63f6fdad47096',
-          //    paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2941&sub_lid=0&currency=USD&language=English&verify=8340bdeaeaf12ebf2bb63f6fdad47096&flush=paypal'
-          //  },
-          //   {
-          //    user: 17,
-          //    price: 904.27,
-          //    dPrice: 1189.83,
-          //    url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2940&sub_lid=0&currency=USD&language=English&verify=fe904dad32a68833ff6e4bae344b3105',
-          //    paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2940&sub_lid=0&currency=USD&language=English&verify=fe904dad32a68833ff6e4bae344b3105&flush=paypal'
-          //  },
-          // {
-          //    user: 18,
-          //   price: 932.26,
-          //   dPrice: 1259.82,
-          //   url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2939&sub_lid=0&currency=USD&language=English&verify=f1a24cf6a5726a4ea265c7328765fc94',
-          //    paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2939&sub_lid=0&currency=USD&language=English&verify=f1a24cf6a5726a4ea265c7328765fc94&flush=paypal'
-          //  },
-          //  {
-          //   user: 19,
-          //  price: 957.46,
-          //   dPrice: 1329.81,
-          //  url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2938&sub_lid=0&currency=USD&language=English&verify=68fa74b20dd93ff667cc994f8b698757',
-          //   paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2938&sub_lid=0&currency=USD&language=English&verify=68fa74b20dd93ff667cc994f8b698757&flush=paypal'
-          //   },
-          //  {
-          //    user: 20,
-          //    price: 979.86,
-          //    dPrice: 1399.8,
-          //   url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2937&sub_lid=0&currency=USD&language=English&verify=b59a84bd762f51446b31b70f0e2e4989',
-          //    paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2937&sub_lid=0&currency=USD&language=English&verify=b59a84bd762f51446b31b70f0e2e4989&flush=paypal'
-          //  }
-          // ],
-          // perpetualInfo: [
-          //   {
-          //     user: 1,
-          //     price: 99.99,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2651&sub_lid=0&currency=USD&language=English&verify=13a32fc63da5e254fceb6d840b2cf56a'
-          //   },
-          //   {
-          //     user: 2,
-          //     price: 195.98,
-          //     dPrice: 199.98,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2426&sub_lid=0&currency=USD&language=English&verify=ed86ce93cb637e83186e5fe40f9ba441'
-          //   },
-          //   {
-          //     user: 3,
-          //     price: 290.97,
-          //     dPrice: 299.97,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2424&sub_lid=0&currency=USD&language=English&verify=12d85e09fa020c929f346c3ee377b130'
-          //   },
-          //   {
-          //     user: 4,
-          //     price: 383.96,
-          //     dPrice: 399.96,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2425&sub_lid=0&currency=USD&language=English&verify=0879b15113eae3a6fcd7fc68573c0f94'
-          //   },
-          //   {
-          //     user: 5,
-          //     price: 474.95,
-          //     dPrice: 499.95,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2423&sub_lid=0&currency=USD&language=English&verify=4dea282dd43666b4493264df66a9a15b'
-          //   },
-          //   {
-          //     user: 6,
-          //     price: 563.94,
-          //     dPrice: 599.94,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2965&sub_lid=0&currency=USD&language=English&verify=13f7315d9b64d8a664a49924feadc400'
-          //   },
-          //   {
-          //     user: 7,
-          //     price: 650.93,
-          //     dPrice: 699.93,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2965&sub_lid=0&currency=USD&language=English&verify=13f7315d9b64d8a664a49924feadc400'
-          //   },
-          //   {
-          //     user: 8,
-          //     price: 735.92,
-          //     dPrice: 799.92,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2963&sub_lid=0&currency=USD&language=English&verify=a00f57979dc3dbc18ff965e72273a5d9'
-          //   },
-          //   {
-          //     user: 9,
-          //     price: 818.91,
-          //     dPrice: 899.91,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2963&sub_lid=0&currency=USD&language=English&verify=a00f57979dc3dbc18ff965e72273a5d9'
-          //   },
-          //   {
-          //     user: 10,
-          //     price: 899.91,
-          //     dPrice: 999.9,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2962&sub_lid=0&currency=USD&language=English&verify=0410ac546b9aa149951717468d008d9e'
-          //   },
-          //   {
-          //     user: 11,
-          //     price: 967.9,
-          //     dPrice: 1099.89,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2961&sub_lid=0&currency=USD&language=English&verify=c9b78e9a3f3e2e60c4d878e4ffb77fca'
-          //   },
-          //   {
-          //     user: 12,
-          //     price: 1031.89,
-          //     dPrice: 1199.88,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2960&sub_lid=0&currency=USD&language=English&verify=aedb8d76656e343b78c7af180453fa8b'
-          //   },
-          //   {
-          //     user: 13,
-          //     price: 1091.89,
-          //     dPrice: 1299.87,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2959&sub_lid=0&currency=USD&language=English&verify=2b691a55c83cc738b0254daead975462'
-          //   },
-          //   {
-          //     user: 14,
-          //     price: 1147.88,
-          //     dPrice: 1399.86,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2958&sub_lid=0&currency=USD&language=English&verify=e2ffe8091062d37a23336c6c93030a4f'
-          //   },
-          //   {
-          //     user: 15,
-          //     price: 1199.88,
-          //     dPrice: 1499.85,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2957&sub_lid=0&currency=USD&language=English&verify=a3a1d84414053ea2ba06162871cc1e43'
-          //   },
-          //   {
-          //     user: 16,
-          //     price: 1247.87,
-          //     dPrice: 1599.84,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2956&sub_lid=0&currency=USD&language=English&verify=bc3c33c5206ae0b2f53e820c8f475e10'
-          //   },
-          //   {
-          //     user: 17,
-          //     price: 1291.87,
-          //     dPrice: 1699.83,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2956&sub_lid=0&currency=USD&language=English&verify=bc3c33c5206ae0b2f53e820c8f475e10'
-          //   },
-          //   {
-          //     user: 18,
-          //     price: 1331.86,
-          //     dPrice: 1799.82,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2954&sub_lid=0&currency=USD&language=English&verify=a4fa1a5f5d1eb8ca54e3db0637111bcb'
-          //   },
-          //   {
-          //     user: 19,
-          //     price: 1367.86,
-          //     dPrice: 1899.81,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2953&sub_lid=0&currency=USD&language=English&verify=5c5a3a723202af9ddca467cad4ca34de'
-          //   },
-          //   {
-          //     user: 20,
-          //     price: 1399.86,
-          //     dPrice: 1999.8,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7743&license_id=2952&sub_lid=0&currency=USD&language=English&verify=67546ca9985c3547805f7e85367517a0'
-          //   }
-        ]
-      }
-    },
-    mac: {
-      license: [
-        { name: 'Annual Plan', label: 'annual', value: '1' },
-        // { name: 'Perpetual Plan', label: 'perpetual', value: '2' }
-      ],
-      priceInfo: {
-        annualInfo: [
-          {
-            user: 1,
-            price: 29.99,
-            dPrice: 49.99,
-            url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=164&sub_lid=0&coupon_id=9922&currency=USD&language=English&verify=2603e37d96626d62690ffd239d43a2c9',
-            paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=164&sub_lid=0&coupon_id=9922&currency=USD&language=English&verify=2603e37d96626d62690ffd239d43a2c9&flush=paypal'
-          },
-          // {
-          //     user: 2,
-          //     price: 137.18,
-          //      dPrice: 139.98,
-          //    url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2345&sub_lid=0&currency=USD&language=English&verify=388297b95fb197f9fa55aa4332986ca5'
-          //  },
-          //   {
-          //     user: 3,
-          //    price: 203.67,
-          //    dPrice: 209.97,
-          //    url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2346&sub_lid=0&currency=USD&language=English&verify=1c1d535acd04c87866e77a1354ed851e'
-          //  },
-          //   {
-          //     user: 4,
-          //     price: 268.76,
-          //     dPrice: 279.96,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2347&sub_lid=0&currency=USD&language=English&verify=c409efe997065b53d0f0dd83986db60b'
-          //   },
-          //   {
-          //     user: 5,
-          //    price: 332.45,
-          //    dPrice: 349.95,
-          //    url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=406&sub_lid=0&currency=USD&language=English&verify=96725994d9a59464361aaacad5a7247c'
-          //  },
-          //  {
-          //    user: 6,
-          //   price: 394.74,
-          //    dPrice: 419.94,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2951&sub_lid=0&currency=USD&language=English&verify=82fc08396a24ce01eaaea4afb73cc7ca',
-          //    paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2951&sub_lid=0&currency=USD&language=English&verify=82fc08396a24ce01eaaea4afb73cc7ca&flush=paypal'
-          //   },
-          //   {
-          //     user: 7,
-          //     price: 455.63,
-          //    dPrice: 489.93,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2950&sub_lid=0&currency=USD&language=English&verify=23d1bfe28538dac3255cd513cd5b1004',
-          //   paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2950&sub_lid=0&currency=USD&language=English&verify=23d1bfe28538dac3255cd513cd5b1004&flush=paypal'
-          // },
-          //  {
-          //    user: 8,
-          //   price: 515.12,
-          //   dPrice: 559.92,
-          //   url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2949&sub_lid=0&currency=USD&language=English&verify=47f563dd3af2cf24d13636ed4f5899fc',
-          //  paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2949&sub_lid=0&currency=USD&language=English&verify=47f563dd3af2cf24d13636ed4f5899fc&flush=paypal'
-          //  },
-          //  {
-          //    user: 9,
-          //   price: 573.21,
-          //   dPrice: 629.91,
-          //    url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2948&sub_lid=0&currency=USD&language=English&verify=3d85ef183ea88840ecdf7b0002341924',
-          //    paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2948&sub_lid=0&currency=USD&language=English&verify=3d85ef183ea88840ecdf7b0002341924&flush=paypal'
-          //   },
-          //   {
-          //    user: 10,
-          //    price: 629.91,
-          //   dPrice: 699.9,
-          //  url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2947&sub_lid=0&currency=USD&language=English&verify=cedbed28ec639ab94bf413da95d5909c',
-          //   paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2947&sub_lid=0&currency=USD&language=English&verify=cedbed28ec639ab94bf413da95d5909c&flush=paypal'
-          //  },
-          //  {
-          //    user: 11,
-          //    price: 677.5,
-          //   dPrice: 769.89,
-          //    url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2946&sub_lid=0&currency=USD&language=English&verify=9287e7061c4f8b0e54082da44fe4f628',
-          //    paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2946&sub_lid=0&currency=USD&language=English&verify=9287e7061c4f8b0e54082da44fe4f628&flush=paypal'
-          //   },
-          //   {
-          //     user: 12,
-          //     price: 722.29,
-          //     dPrice: 839.88,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2945&sub_lid=0&currency=USD&language=English&verify=79c1712ffb1e440081d4f17a6372cf5d',
-          //      paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2945&sub_lid=0&currency=USD&language=English&verify=79c1712ffb1e440081d4f17a6372cf5d&flush=paypal'
-          //     },
-          //    {
-          //      user: 13,
-          //      price: 764.29,
-          //     dPrice: 909.87,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2944&sub_lid=0&currency=USD&language=English&verify=efdfe112527579f51ae1da3a9f7be803',
-          //     paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2944&sub_lid=0&currency=USD&language=English&verify=efdfe112527579f51ae1da3a9f7be803&flush=paypal'
-          //   },
-          //   {
-          //     user: 14,
-          //      price: 803.48,
-          //      dPrice: 979.86,
-          //      url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2943&sub_lid=0&currency=USD&language=English&verify=62812335564c368c2b23550486e96415',
-          //      paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2943&sub_lid=0&currency=USD&language=English&verify=62812335564c368c2b23550486e96415&flush=paypal'
-          //     },
-          //    {
-          //      user: 15,
-          //      price: 839.88,
-          //      dPrice: 1049.85,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2942&sub_lid=0&currency=USD&language=English&verify=b50d6966215c66e24b97c1438a788d02',
-          //     paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2942&sub_lid=0&currency=USD&language=English&verify=b50d6966215c66e24b97c1438a788d02&flush=paypal'
-          //    },
-          //    {
-          //     user: 16,
-          //     price: 873.47,
-          //    dPrice: 1119.84,
-          //    url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2941&sub_lid=0&currency=USD&language=English&verify=0f79ae3cf82ccd75ae0c92afb93494d6',
-          //   paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2941&sub_lid=0&currency=USD&language=English&verify=0f79ae3cf82ccd75ae0c92afb93494d6&flush=paypal'
-          //  },
-          //   {
-          //    user: 17,
-          //    price: 904.27,
-          //   dPrice: 1189.83,
-          //    url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2940&sub_lid=0&currency=USD&language=English&verify=73a950dea4355ab2eebb170bed686333',
-          //    paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2940&sub_lid=0&currency=USD&language=English&verify=73a950dea4355ab2eebb170bed686333&flush=paypal'
-          //   },
-          //   {
-          //    user: 18,
-          //    price: 932.26,
-          //    dPrice: 1259.82,
-          //    url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2939&sub_lid=0&currency=USD&language=English&verify=50350fc867f6074ad010eee9fe12ccdd',
-          //     paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2939&sub_lid=0&currency=USD&language=English&verify=50350fc867f6074ad010eee9fe12ccdd&flush=paypal'
-          //   },
-          //   {
-          //    user: 19,
-          //    price: 957.46,
-          //    dPrice: 1329.81,
-          //    url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2938&sub_lid=0&currency=USD&language=English&verify=c5e9c79ce027595b0ba4ae18c80a7c94',
-          //     paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2938&sub_lid=0&currency=USD&language=English&verify=c5e9c79ce027595b0ba4ae18c80a7c94&flush=paypal'
-          //   },
-          //   {
-          //    user: 20,
-          //    price: 979.86,
-          //    dPrice: 1399.8,
-          //    url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2937&sub_lid=0&currency=USD&language=English&verify=893c29da9bd26cd9c2fbaea24a96131c',
-          //     paypal: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2937&sub_lid=0&currency=USD&language=English&verify=893c29da9bd26cd9c2fbaea24a96131c&flush=paypal'
-          //    }
-          //  ],
-          // perpetualInfo: [
-          //   {
-          //     user: 1,
-          //     price: 99.99,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2651&sub_lid=0&currency=USD&language=English&verify=6eada4a1bd9fb4a199ba7cda4f9b9c2c'
-          //   },
-          //   {
-          //     user: 2,
-          //     price: 195.98,
-          //     dPrice: 199.98,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2426&sub_lid=0&currency=USD&language=English&verify=213076866ee376cf8d708d67e66e3bd0'
-          //   },
-          //   {
-          //     user: 3,
-          //     price: 290.97,
-          //     dPrice: 299.97,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2424&sub_lid=0&currency=USD&language=English&verify=8fab4d9b5dd5caa43774042d07ecf6b8'
-          //   },
-          //   {
-          //     user: 4,
-          //     price: 383.96,
-          //     dPrice: 399.96,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2425&sub_lid=0&currency=USD&language=English&verify=9a0d85f0e6d68ba426a8204a82bd034d'
-          //   },
-          //   {
-          //     user: 5,
-          //     price: 474.95,
-          //     dPrice: 499.95,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2423&sub_lid=0&currency=USD&language=English&verify=4f0550c92082cba8abb04e41a68d10b5'
-          //   },
-          //   {
-          //     user: 6,
-          //     price: 563.94,
-          //     dPrice: 599.94,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2965&sub_lid=0&currency=USD&language=English&verify=e101a4e4685a04b64a7ea2d0391860ac'
-          //   },
-          //   {
-          //     user: 7,
-          //     price: 650.93,
-          //     dPrice: 699.93,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2964&sub_lid=0&currency=USD&language=English&verify=b69d3daa3b419d93301afa608760c623'
-          //   },
-          //   {
-          //     user: 8,
-          //     price: 735.92,
-          //     dPrice: 799.92,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2963&sub_lid=0&currency=USD&language=English&verify=986fa766164fa8b49014ed0c7c7b7c3e'
-          //   },
-          //   {
-          //     user: 9,
-          //     price: 818.91,
-          //     dPrice: 899.91,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2962&sub_lid=0&currency=USD&language=English&verify=47c23b1b3943e6b38653445ca543dd67'
-          //   },
-          //   {
-          //     user: 10,
-          //     price: 899.91,
-          //     dPrice: 999.9,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2966&sub_lid=0&currency=USD&language=English&verify=951ce13f6d5149e1bc8f10fa4b16a4a8'
-          //   },
-          //   {
-          //     user: 11,
-          //     price: 967.9,
-          //     dPrice: 1099.89,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2961&sub_lid=0&currency=USD&language=English&verify=7c674eaa29486712add4ec34d84a335a'
-          //   },
-          //   {
-          //     user: 12,
-          //     price: 1031.89,
-          //     dPrice: 1199.88,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2960&sub_lid=0&currency=USD&language=English&verify=efc65788c3d1216a44e55674bde37c85'
-          //   },
-          //   {
-          //     user: 13,
-          //     price: 1091.89,
-          //     dPrice: 1299.87,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2959&sub_lid=0&currency=USD&language=English&verify=126d0d28621b565c2aa66ba7aa51a592'
-          //   },
-          //   {
-          //     user: 14,
-          //     price: 1147.88,
-          //     dPrice: 1399.86,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2958&sub_lid=0&currency=USD&language=English&verify=6018899ecce76ae78dfdbeebcceb79f9'
-          //   },
-          //   {
-          //     user: 15,
-          //     price: 1199.88,
-          //     dPrice: 1499.85,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2957&sub_lid=0&currency=USD&language=English&verify=4513426626a2218b75f5241fafc7eb95'
-          //   },
-          //   {
-          //     user: 16,
-          //     price: 1247.87,
-          //     dPrice: 1599.84,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2956&sub_lid=0&currency=USD&language=English&verify=dacb8283dd2ca4c635f311a92636e229'
-          //   },
-          //   {
-          //     user: 17,
-          //     price: 1291.87,
-          //     dPrice: 1699.83,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2955&sub_lid=0&currency=USD&language=English&verify=08eb4d3c68f3222f673a6330ded78b8e'
-          //   },
-          //   {
-          //     user: 18,
-          //     price: 1331.86,
-          //     dPrice: 1799.82,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2954&sub_lid=0&currency=USD&language=English&verify=bd6d2ab15eb1775043c8560eb8eb710f'
-          //   },
-          //   {
-          //     user: 19,
-          //     price: 1367.86,
-          //     dPrice: 1899.81,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2953&sub_lid=0&currency=USD&language=English&verify=1b7ec813b413a00a04c9b755e7b58c76'
-          //   },
-          //   {
-          //     user: 20,
-          //     price: 1399.86,
-          //     dPrice: 1999.8,
-          //     url: 'https://store.wondershare.com/index.php?method=index&submod=checkout&pid=7744&license_id=2952&sub_lid=0&currency=USD&language=English&verify=0f1de728b080bf2eb0ce86e212293d19'
-          //   }
-        ]
-      }
-    }
-  }
+<meta charset="utf-8">
 
-  new Vue({
-    el: '#vue-container',
-    data: {
-      pageSys: 'win',
-      buttonText: '',
-      target: '',
-      currency: '$', // 货币，多语言可更改为自己的
-      annual: 1, // 默认展示年，默认选择终身此处设为2
-      user: 1, // 默认1个用户，1-10
-      maxNum: 1, // 最多可选人数5,
-      perpetualComfirm: false, // 终身价是否默认勾选升级价格，false不勾选，true勾选
-      perpetualAdd: 10, // 附加价格
-      productLicense: [],
-      annualInfo: [],
-      perpetualInfo: [],
-      buyLink: '',
-      educationLink: '',
+<main class="wsc-main p-0" data-page="pricing" data-toggle="alert" data-nav="mac">
+  <div class="py-3 text-center">
+    <div class="container">
+      <h1 class="display-4 m-display-4 mb-0 font-weight-normal">DemoCreator Mac版のプランをお選び下さい。<br>
+        <span style="color:rgba(239,34,38,1.00)">人気プランが1,000円OFF！！</span> </h1>
 
-      bundleLink: ''
-    },
-    created() {
-      var _this = this
-      goSystemJudge(function (pageSys, currSys) {
-        _this.pageSys = pageSys
-        _this.buttonText = buttonText[pageSys]
-        _this.setPrice()
-        _this.setLink()
-      })
-    },
-    mounted() {
-      var _this = this
-      _this.setParams('auth_code')
-      _this.annualInfo.forEach(function (e) {
-        e.url = e.url + (e.url.indexOf('?') > -1 ? '&' : '?') + _this.target
-      })
-      // _this.perpetualInfo.forEach(function (e) {
-      //   e.url = e.url + (e.url.indexOf('?') > -1 ? '&' : '?') + _this.target
-      // })
-      this.setHeight()
-    },
-    updated() {
-      this.setHeight()
-    },
-    methods: {
-      setHeight() {
-        // 计算pardot表单的textarea高度
-        var buyListHeight = document.querySelector('#buy-list').offsetHeight
-        var pardotContainerHeight = document.querySelector('#pardot-container').offsetHeight
-        var pardotTextHeight = document.querySelector('.pardot-text').offsetHeight
-        var pardotFormHeight = document.querySelector('.pfah-form').offsetHeight
-        var pardotTextAreaHeight = document.querySelector('.pardot-textarea').offsetHeight
+      <div class="d-flex align-items-center justify-content-center py-2 flex-md-row flex-column font-size-tiny"><div class="d-flex align-items-center justify-content-center"><span class="d-inline-flex align-items-center ml-2"><img src="https://images.wondershare.com/images2020/icon/secure2.svg" alt="安全・安心" width="24" class="mr-1">
+                        100%安全・安心 | マルウェアなし | 広告なし </span> <span class="d-inline-flex align-items-center ml-2"><img src="https://images.wondershare.com/images2020/icon/24h.svg" alt="年中24時間サポート" width="24" class="mr-1">
+                        年中24時間サポート </span></div></div>
 
-        console.log(buyListHeight, pardotContainerHeight)
-        if (buyListHeight > pardotContainerHeight) {
-          var height = buyListHeight - pardotTextHeight - pardotFormHeight
-          document.querySelector('.pardot-textarea').style.height = pardotTextAreaHeight + height - 24 + 'px'
-        } else {
-          var height = pardotContainerHeight - buyListHeight
-          document.querySelector('.pardot-textarea').style.height = pardotTextAreaHeight - height - 24 + 'px'
-        }
-      },
-      setLink() {
-        var pageSys = this.pageSys
-        let link = setLink(pageSys)
-        this.buyLink = link.buyLink
-        this.educationLink = link.educationLink
-        this.bundleLink = link.bundleLink
-      },
-      switchSys() {
-        var pageSys = this.pageSys
-        if (pageSys == 'win') {
-          this.pageSys = 'mac'
-        } else {
-          this.pageSys = 'win'
-        }
-        this.annual = 1
-        this.user = 1
-        this.buttonText = buttonText[this.pageSys]
-        this.setPrice()
-        this.setLink()
-      },
-      setPrice() {
-        var sys = this.pageSys
-        var info
-        if (sys !== 'default') {
-          info = productInfo[sys]
-        } else {
-          info = productInfo
-        }
-        ;(this.productLicense = info.license), (this.annualInfo = info.priceInfo.annualInfo), (this.perpetualInfo = info.priceInfo.perpetualInfo)
-      },
-      setComfirm() {
-        if (!this.perpetualComfirm) {
-          this.comfirmHref = this.target ? this.perpetualAddList[this.user - 1] + (this.perpetualAddList[this.user - 1].indexOf('?') > -1 ? '&' : '?') + this.target : this.perpetualAddList[this.user - 1]
-        }
-      },
-      getParams(aim) {
-        var url = location.search
-        var param = {}
-        if (url.indexOf('?') != -1) {
-          var str = url.substr(1)
-          strs = str.split('&')
-          for (var i = 0; i < strs.length; i++) {
-            if (strs[i].split('=')[0] == aim) {
-              param[strs[i].split('=')[0]] = unescape(strs[i].split('=')[1])
-            }
-          }
-        }
-        return param
-      },
-      setParams(param) {
-        if (JSON.stringify(this.getParams(param)) != '{}') {
-          this.target = param + '=' + this.getParams(param)[param]
-        }
-      }
-    }
-  })
-</script>
-<script>
-  $('body').on('pfah.callback', function (e, id, result) {
-    if (id === 'pfah-8vscjy') {
-      setTimeout(function () {
-        $('[data-id="' + id + '"]')
-          .find('[type="submit"]')
-          .attr('disabled', 'disabled')
-      }, 200)
-    }
-  })
 
-  $('input, textarea').on('input', function () {
-    var placeholder = $(this).parent().find('.placeholder')
-    $(this).val() ? placeholder.hide() : placeholder.show()
-  })
-  $('select').on('change', function () {
-    var placeholder = $(this).parent().find('.placeholder')
-    $(this).addClass('show')
-    placeholder.hide()
-  })
-</script>
+      <div class="pt-3 text-center">
+        <div class="d-flex align-items-center justify-content-center"> <i class="wsc-icon mr-2" data-icon="brand-macos"></i><span class="font-weight-bold">こちらはMac版です。
+     </span> </div>
+        <a href="https://dc.wondershare.jp/buy/democreator-windows-ts.html" class="font-size-small text-action">Windows版はこちらへ</a>
+      </div>
+    </div>
+
+  </div>
+  <ul class="nav nav-tabs nav-tabs-border border-primary flex-nowrap justify-content-center text-center font-size-large m-font-size-normal" role="tablist">
+    <li class="nav-item mx-1 mx-md-3"> <a href="#nav-store-buy" class="h-100 nav-link py-1 py-md-2 px-md-4 border border-bottom-0 text-primary active" id="nav-store-buy-tab" data-toggle="tab" role="tab" aria-controls="nav-store-buy" aria-selected="true"> <span class="d-flex justify-content-center align-items-center h-100 px-lg-5">個人向け</span> </a> </li>
+    <li class="nav-item mx-1 mx-md-3"> <a href="#nav-store-buy-business" class="h-100 nav-link py-1 py-md-2 px-md-4 border border-bottom-0" id="nav-store-buy-business-tab" data-toggle="tab" role="tab" aria-controls="nav-store-buy-business" aria-selected="true"> <span class="d-flex justify-content-center align-items-center h-100 px-xl-4">法人・商用向け</span> </a> </li>
+    <li class="nav-item mx-1 mx-md-3"> <a href="#nav-store-buy-students" class="h-100 nav-link py-1 py-md-2 px-md-4 border border-bottom-0" id="nav-store-buy-students-tab" data-toggle="tab" role="tab" aria-controls="nav-store-buy-students" aria-selected="false"> <span class="d-flex justify-content-center align-items-center h-100 px-xl-4">学生向け</span> </a> </li>
+  </ul>
+  <div class="tab-content">
+    <!-- store-buy -->
+    <div class="tab-pane fade show active" id="nav-store-buy" role="tabpanel" aria-labelledby="nav-store-buy-tab">
+      <div class="py-5 mt-lg-5">
+        <div class="container container-xl">
+          <div class="row justify-content-center">
+
+            <div class="col col-md-7 col-lg-4 py-3 bundle-price mt-middle" >
+              <div style="background-color: #1f73fa;" class="text-white buy-container dropdown-switch-change-two most-popular-container h-100 border-1 border-radius-10 p-4 position-relative d-flex flex-column">
+                <div class="most-popular most-popular-2 btn-groups-1">1,000円 OFF</div>
+                <div class="most-popular most-popular-2 btn-groups-2 hidden">1,000円 OFF</div>
+                <div class="mx-3">
+                  <h4 class="font-size-title-24 font-size-super mt-3 mb-4  text-center text-white">永続ライセンス</h4>
+                  <!-- 价格区域 -->
+                  <div class="price-area">
+                    <div class="text-center">
+                      <del class="btn-groups-1">6,480円(税込)</del>
+                      <del class="btn-groups-2 hidden">6,480円(税込)</del>
+                    </div>
+                    <div class="text-center font-size-lg-huge mb-5 pb-4">
+                      <big class="price font-weight-bold display-4 btn-groups-1">5,480円(税込)</big><span class="period"></span>
+                      <big class="price font-weight-bold display-4 btn-groups-2 hidden">5,480円(税込)</big><span class="period"></span>
+                    </div>
+                  </div>
+
+                  <div class="custom-control custom-checkbox pb-4 text-center">
+                    <input type="checkbox" id="customCheck3" name="receive" class="custom-control-input" checked>
+                    <label for="customCheck3" class="custom-control-label font-weight-bold "><a class='text-decoration-underline ' target='_blank' style="color: #f8bf2b;" href='https://dc.wondershare.jp/effects/store.html'>DemoCreator Effectsプラン</a>を7日間無料プレゼント。8日目以降、毎月980円で自動更新されます。
+                      <span t="popover" data-original-title="<a class='text-decoration-underline text-action' target='_blank'  href='https://dc.wondershare.jp/effects/store.html'>DemoCreator Effects </a>7日間無料プランを追加した場合、最初の7日間は全てのエフェクトを無料でご利用いただけます。8日目以降、毎月980円で自動更新されます。DemoCreator Effectsの自動更新の停止をご希望される場合、<a class='text-decoration-underline text-action' target='_blank' href='https://accounts.wondershare.jp/web/subscription'>こちら </a>よりお手続きいただけます。" data-placement="top" data-html="true" class="with-hand">
+                            <i data-icon="extra-exclamation-circle" class="wsc-icon wsc-icon-font  font-size-small"></i>
+                        </span></label>
+                  </div>
+                </div>
+                <div class="mx-3">
+                  <div class="text-center pb-3 mb-4">
+                    <a
+                      href="https://store.wondershare.jp/index.php?submod=checkout&method=index&currency=JPY&language=ja_jp&sku_id=20022701&ver=v5&verify=FF3240024BACA5B639415FC0C1CEEA99&additional_sku=100107172680&additional_activity=1338403388187349072&quick_batch=0" class="buy-link btn btn-lg m-font-size-large btn-premium font-weight-bold btn-rounded btn-uncap text-center m-0 w-100 btn-groups-1 text-action" style="max-width: 206px;border-radius: 4px;">購入する</a>
+                    <a href="https://store.wondershare.jp/index.php?submod=checkout&method=index&currency=JPY&language=ja_jp&sku_id=20022701&ver=v5&verify=FF3240024BACA5B639415FC0C1CEEA99"
+                       class="buy-link btn btn-lg m-font-size-large btn-premium font-weight-bold btn-rounded btn-uncap text-center m-0 w-100 btn-groups-2 hidden text-action" style="max-width: 206px;border-radius: 4px;">購入する</a>
+                  </div>
+                  <!-- 这一层div不可删，根据底部文案不同调整 -->
+                  <div class="mb-3 mt-n2">
+                    <div class="d-flex align-items-center py-2 border-bottom-1">
+                      <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-white flex-shrink-0 mr-2 pr-1 "></i>
+                      <span class="font-size-small " >利用可能なOS：</span><span style="color: #f8bf2b;">Mac</span>
+                    </div>
+
+                    <div class="d-flex align-items-center py-2 border-bottom-1">
+                      <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-white flex-shrink-0 mr-2 pr-1 "></i>
+                      <span class="font-size-small " >録画時間無制限。</span>
+                    </div>
+
+
+                    <div class="d-flex align-items-center py-2 border-bottom-1">
+                      <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-white flex-shrink-0 mr-2 pr-1 "></i>
+                      <span class="font-size-small " >すべての機能を利用可能。<br>（自動キャプションを除く）</span>
+                    </div>
+
+                    <div class="d-flex align-items-center py-2 border-bottom-1">
+                      <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-white flex-shrink-0 mr-2 pr-1 "></i>
+                      <span class="font-size-small " >バージョン5.X内で無料バージョンアップ可能。</span>
+                      <span t="popover" data-original-title="ナンバリングの主要な桁が変わる大型メジャーアップデートが行われ、新バージョンをお使いになりたい場合は、新バージョンに対応する永続ライセンスが必要です。（旧バージョンは永続的にお使い頂けます）。" data-placement="top" data-html="true" class="with-hand">
+                              <i data-icon="extra-exclamation-circle" class="wsc-icon wsc-icon-font  font-size-small"></i>
+                            </span>
+                    </div>
+
+                    <div class="btn-groups-1">
+                      <div class="d-flex align-items-center py-2 border-bottom-1">
+                        <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-white flex-shrink-0 mr-2 pr-1 align-self-start mt-1 text-action"></i>
+                        <span class="font-size-small " >7日間DemoCreator全てのエフェクトを無制限に利用可能。
+                                <span t="popover" data-original-title="<a class=&quot;font-size-small text-action&quot; target='_blank' href=&quot;https://dc.wondershare.jp/effects.html&quot; target=&quot;_blank&quot;>DemoCreator Effects</a>には、著作権フリーなエフェクト素材（タイトルやサウンド、トランジションなど）が豊富に搭載されています。" data-placement="top" data-html="true" class="with-hand">
+                                        <i data-icon="extra-exclamation-circle" class="wsc-icon wsc-icon-font  font-size-small"></i>
+                                </span>
+                                </span>
+                      </div>
+                    </div>
+                    <div class="btn-groups-2 hidden">
+                      <div class="d-flex align-items-center py-2 border-bottom-1">
+                        <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-white flex-shrink-0 mr-2 pr-1 " style="visibility: hidden;"></i>
+                        <span class="font-size-small " style="opacity: 0.5;">7日間DemoCreator全てのエフェクトを無制限に利用可能。</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+            <div class="col col-md-7 col-lg-4 py-3">
+              <div class="buy-container h-100 border-1 most-popular-container border-radius-10 p-4 d-flex flex-column">
+
+                <div class="mx-3">
+                  <h4 class="font-size-title-24 font-size-super mt-3 mb-4 text-black text-center">年間スタンダードプラン</h4>
+                  <!-- 价格及切换区域 -->
+                  <div class="price-area">
+                    <div class="text-center">
+
+                    </div>
+                    <div class="text-center font-size-lg-huge mb-3 btn-groups-1">
+                      <big class="price font-weight-bold display-4">2,980円(税込)</big>/<span class="period">年</span>
+                    </div>
+                    <div class="text-center font-size-lg-huge mb-3 btn-groups-2 hidden">
+                      <big class="price font-weight-bold display-4">2,980円(税込)</big>/<span class="period">年</span>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-center align-items-center mb-3 pb-lg-3">
+                    <span class="font-size-small">自動更新タイプ</span>
+                    <span t="popover" data-original-title="「クレジットカード決済」、「Paypal」のみ自動更新されます。その他の決済方法でお支払いの場合は、自動更新されませんので、ご注意ください。" data-placement="top" data-html="true" class="with-hand">
+                                <i data-icon="extra-exclamation-circle" class="wsc-icon wsc-icon-font text-black font-size-small"></i>
+                            </span>
+                  </div>
+                  <div class="custom-control custom-checkbox pb-4 text-center">
+                    <input type="checkbox" id="customCheck1" name="receive" class="custom-control-input" checked>
+                    <label for="customCheck1" class="custom-control-label font-weight-bold text-black"><a class='text-decoration-underline text-action' target='_blank'  href='https://dc.wondershare.jp/effects/store.html'>DemoCreator Effectsプラン</a>を7日間無料プレゼント。8日目以降、毎月980円で自動更新されます。
+                      <span t="popover" data-original-title="<a class='text-decoration-underline text-action' target='_blank'  href='https://dc.wondershare.jp/effects/store.html'>DemoCreator Effects </a>7日間無料プランを追加した場合、最初の7日間は全てのエフェクトを無料でご利用いただけます。8日目以降、毎月980円で自動更新されます。DemoCreator Effectsの自動更新の停止をご希望される場合、<a class='text-decoration-underline text-action' target='_blank' href='https://accounts.wondershare.jp/web/subscription'>こちら </a>よりお手続きいただけます。" data-placement="top" data-html="true" class="with-hand">
+                              <i data-icon="extra-exclamation-circle" class="wsc-icon wsc-icon-font text-black font-size-small"></i>
+                          </span></label>
+                  </div>
+                  <!-- <div class="font-size-small mb-3 pb-lg-3" style="line-height: 17px;">
+
+                  </div> -->
+                </div>
+                <!-- 按钮及特性 -->
+                <div class="mx-3">
+                  <div class="pb-3 mb-4 text-center">
+                    <a data-judge="1" class="btn-buy btn btn-lg m-font-size-large btn-action font-weight-bold btn-rounded btn-uncap text-center m-0 w-100 btn-groups-1" style="max-width: 206px;border-radius: 4px;" href="https://store.wondershare.jp/index.php?submod=checkout&method=index&currency=JPY&language=Japanese&sku_id=20022661&ver=v5&verify=3722849DDACDC53B14EA042EAE9AA247&additional_sku=100107172680&additional_activity=1338403388187349072&quick_batch=0" ga360location="content_3_buttonLink_3"><span class="text-white">購入する</span></a>
+                    <a data-judge="0" class="btn-buy btn btn-lg m-font-size-large btn-action font-weight-bold btn-rounded btn-uncap text-center m-0 w-100 btn-groups-2 hidden" style="max-width: 206px;border-radius: 4px;" href="https://store.wondershare.jp/index.php?submod=checkout&method=index&currency=JPY&language=Japanese&sku_id=20022661&ver=v5&verify=3722849DDACDC53B14EA042EAE9AA247" href-win32="#" ga360location="content_3_buttonLink_4"><span class="text-white">購入する</span></a>
+                  </div>
+                  <!-- 这一层div不可删，根据底部文案不同调整 -->
+                  <div class="mb-3 mt-n2">
+                    <div class="d-flex align-items-center py-2 border-bottom-1">
+                      <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1"></i>
+                      <span class="font-size-small text-black" >利用可能なOS：</span><span class="text-action">Mac</span>
+                    </div>
+
+                    <div class="d-flex align-items-center py-2 border-bottom-1">
+                      <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1"></i>
+                      <span class="font-size-small text-black" >録画時間無制限。</span>
+                    </div>
+
+                    <div class="d-flex align-items-center py-2 border-bottom-1">
+                      <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1"></i>
+                      <span class="font-size-small text-black" >ライセンス有効期限内で無料バージョンアップ。</span>
+                    </div>
+
+                    <div class="btn-groups-1">
+                      <div class="d-flex align-items-center py-2 border-bottom-1">
+                        <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1 align-self-start mt-1"></i>
+                        <span class="font-size-small text-black" >7日間DemoCreator全てのエフェクトを無制限に利用可能。
+                                  <span t="popover" data-original-title="<a class=&quot;font-size-small text-action&quot; target='_blank' href=&quot;https://dc.wondershare.jp/effects.html&quot; target=&quot;_blank&quot;>DemoCreator Effects                                    </a>には、著作権フリーなエフェクト素材（タイトルやサウンド、トランジションなど）が豊富に搭載されています。" data-placement="top" data-html="true" class="with-hand">
+                                          <i data-icon="extra-exclamation-circle" class="wsc-icon wsc-icon-font text-black font-size-small"></i>
+
+                                  </span>
+                                  </span>
+                      </div>
+                    </div>
+                    <div class="btn-groups-2 hidden">
+                      <div class="d-flex align-items-center py-2 border-bottom-1">
+                        <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick text-action flex-shrink-0 mr-2 pr-1" style="visibility: hidden;"></i>
+                        <span class="font-size-small text-black" style="opacity: 0.5;">7日間DemoCreator全てのエフェクトを無制限に利用可能。</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 中间栏 -->
+            <div class="col col-md-7 col-lg-4 py-3 ">
+              <div class="buy-container  h-100 border-1 border-radius-10 p-4 position-relative most-popular-container d-flex flex-column text-black">
+                <div class="most-popular most-popular-2 btn-groups-1">500円 OFF </div>
+                <div class="most-popular most-popular-2 btn-groups-2 hidden">500円 OFF </div>
+                <div class="mx-3">
+                  <h4 class="font-size-title-24 font-size-super mt-3 mb-4  text-center">年間プレミアムプラン</h4>
+                  <!-- 价格及切换区域 -->
+                  <div class="price-area">
+                    <div class="text-center">
+                      <del class="btn-groups-1">4,480円(税込)</del>
+                      <del class="btn-groups-2 hidden">4,480円(税込)</del>
+                    </div>
+                    <div class="text-center font-size-lg-huge mb-3 btn-groups-1">
+                      <big class="price font-weight-bold display-4">3,980円(税込)</big>/<span class="period">年</span>
+                    </div>
+                    <div class="text-center font-size-lg-huge mb-3 btn-groups-2 hidden">
+                      <big class="price font-weight-bold display-4">3,980円(税込)</big>/<span class="period">年</span>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-center align-items-center mb-3 pb-lg-3">
+                    <span class="font-size-small ">自動更新タイプ</span>
+                    <span t="popover" data-original-title="「クレジットカード決済」、「Paypal」のみ自動更新されます。その他の決済方法でお支払いの場合は、自動更新されませんので、ご注意ください。" data-placement="top" data-html="true" class="with-hand">
+                              <i data-icon="extra-exclamation-circle" class="wsc-icon wsc-icon-font  font-size-small"></i>
+                          </span>
+                  </div>
+                  <div class="custom-control custom-checkbox pb-4 text-center">
+                    <input type="checkbox" id="customCheck2" name="receive" class="custom-control-input" checked>
+                    <label for="customCheck2" class="custom-control-label font-weight-bold "><a class='text-decoration-underline text-action' target='_blank'  href='https://dc.wondershare.jp/effects/store.html'>DemoCreator
+                      Effectsプラン</a>を7日間無料プレゼント。8日目以降、毎月980円で自動更新されます。
+                      <span t="popover" data-original-title="<a class='text-decoration-underline text-action' target='_blank'  href='https://dc.wondershare.jp/effects/store.html'>DemoCreator Effects </a>7日間無料プランを追加した場合、最初の7日間は全てのエフェクトを無料でご利用いただけます。8日目以降、毎月980円で自動更新されます。DemoCreator Effectsの自動更新の停止をご希望される場合、<a class='text-decoration-underline text-action' target='_blank' href='https://accounts.wondershare.jp/web/subscription'>こちら </a>よりお手続きいただけます。" data-placement="top" data-html="true" class="with-hand">
+                              <i data-icon="extra-exclamation-circle" class="wsc-icon wsc-icon-font  font-size-small"></i>
+                          </span></label>
+                  </div>
+                </div>
+                <!-- 按钮及特性 -->
+                <div class="mx-3">
+                  <div class="pb-3 mb-4 text-center">
+                    <a data-judge="1" class="btn-buy btn btn-lg  m-font-size-large btn-action font-weight-bold btn-rounded btn-uncap text-center m-0 w-100 btn-groups-1" style="max-width: 206px;border-radius: 4px;"
+                       href="https://store.wondershare.jp/index.php?submod=checkout&method=index&currency=JPY&language=ja_jp&sku_id=20022681&ver=v5&verify=F507B25E951591B77D81D53DCA372774&additional_sku=100107172680&additional_activity=1338403388187349072&quick_batch=0"><span class="text-white">購入する</span></a>
+                    <a data-judge="0" class="btn-buy btn btn-lg  m-font-size-large btn-action font-weight-bold btn-rounded btn-uncap text-center m-0 w-100 btn-groups-2 hidden" style="max-width: 206px;border-radius: 4px;" href="https://store.wondershare.jp/index.php?submod=checkout&method=index&currency=JPY&language=ja_jp&sku_id=20022681&ver=v5&verify=F507B25E951591B77D81D53DCA372774" href-win32="#"><span class="text-white">購入する</span></a>
+                  </div>
+                  <!-- 这一层div不可删，根据底部文案不同调整 -->
+                  <div class="mb-3 mt-n2">
+                    <div class="d-flex align-items-center py-2 border-bottom-1">
+                      <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick  flex-shrink-0 mr-2 pr-1 text-action"></i>
+                      <span class="font-size-small " >利用可能なOS：</span><span class="text-action">Windows & Mac</span>
+                    </div>
+
+                    <div class="d-flex align-items-center py-2 border-bottom-1">
+                      <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick  flex-shrink-0 mr-2 pr-1 text-action"></i>
+                      <span class="font-size-small " >録画時間無制限。</span>
+                    </div>
+
+                    <div class="d-flex align-items-center py-2 border-bottom-1">
+                      <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick  flex-shrink-0 mr-2 pr-1 text-action"></i>
+                      <span class="font-size-small " >すべての機能を利用できる。</span>
+                    </div>
+
+                    <div class="d-flex align-items-center py-2 border-bottom-1">
+                      <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick  flex-shrink-0 mr-2 pr-1 text-action"></i>
+                      <span class="font-size-small " >ライセンス有効期限内で無料バージョンアップ。</span>
+                    </div>
+                    <div class="btn-groups-1">
+                      <div class="d-flex align-items-center py-2 border-bottom-1">
+                        <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick  flex-shrink-0 mr-2 pr-1 align-self-start mt-1 text-action"></i>
+                        <span class="font-size-small " >7日間DemoCreator全てのエフェクトを無制限に利用可能。
+                                  <span t="popover" data-original-title="<a class=&quot;font-size-small text-action&quot; target='_blank' href=&quot;https://dc.wondershare.jp/effects.html&quot; target=&quot;_blank&quot;>DemoCreator Effects                                    </a>には、著作権フリーなエフェクト素材（タイトルやサウンド、トランジションなど）が豊富に搭載されています。" data-placement="top" data-html="true" class="with-hand">
+                                          <i data-icon="extra-exclamation-circle" class="wsc-icon wsc-icon-font  font-size-small"></i>
+
+                                  </span>
+                                  </span>
+                      </div>
+                    </div>
+                    <div class="btn-groups-2 hidden">
+                      <div class="d-flex align-items-center py-2 border-bottom-1">
+                        <i data-icon="symbol-checkmark" class="wsc-icon wsc-icon-sm wsc-icon-thick  flex-shrink-0 mr-2 pr-1 text-action" style="visibility: hidden;"></i>
+                        <span class="font-size-small " style="opacity: 0.5;">7日間DemoCreator全てのエフェクトを無制限に利用可能。</span>
+                      </div>
+                    </div>
+                    <div class="d-flex align-items-center py-2 border-bottom-1">
+                      <a href="#more-privileges" class="font-size-small ">もっと見る>></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="text-center font-size-tiny py-3">
+            <span class="mr-2">対応する支払い方法:</span> <img src="https://images.wondershare.com/images2020/img-we-accept1.png" alt="DemoCreator支払い形式図" width="320" class="img-fluid"> <img src="https://images.wondershare.com/images2020/img-we-accept2.png" alt="DemoCreator支払い方法" width="260" class="img-fluid">
+          </div>
+          <a name="more-privileges"></a>
+        </div>
+        <section class="pt-5 pb-3 mt-lg-3">
+          <div class="container container-xl">
+            <h2 class="text-center mb-4">各プランの詳細機能一覧</h2>
+
+          </div>
+          <div id="table-head" class="bg-white w-100 text-white">
+            <div class="container container-xl table-responsive-sm">
+              <table class="d-lg-table d-none table-style w-100 text-center" style="min-height: 72px; z-index: 10;">
+                <tbody>
+                <tr>
+                  <th height="25" class="border  py-4" style="width: 22%; min-width: 240px; background-color: #226ced;">機能</th>
+                  <th class="border btn-thead py-4" style="width: 12%; min-width: 120px; ">無料版</th>
+                  <th class="border btn-thead py-4" style="width: 22%; min-width: 120px;">年間スタンダードプラン</th>
+                  <th class="border btn-thead py-4" style="width: 22%; min-width: 120px; ">年間プレミアムプラン</th>
+                  <th class="border btn-thead py-4" style="width: 22%; min-width: 120px; ">
+                    永続ライセンス
+                  </th>
+                </tr>
+                <tr>
+                  <td class="platform-thead" style="width: 22%; min-width: 240px;background: #eae9e9;color: #226ced;font-weight: 700">利用可能なOS</td>
+                  <td class="platform-thead"  style="width: 12%; min-width: 120px;background: #ffffff;color: #226ced;">
+                    Mac
+                  </td>
+                  <td class="platform-thead"  style="width: 22%; min-width: 120px;background: #ffffff;color: #226ced;">
+                    Mac
+                  </td>
+                  <td style="width: 22%; min-width: 120px;background: #ffffff;" class="text-action platform-thead">
+                    Windows&amp;Mac
+                  </td>
+                  <td class="platform-thead"  style="width: 22%; min-width: 120px;background: #ffffff;color: #226ced;">
+                    Mac
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="container container-xl">
+            <div id="table-content" class="table-responsive table-integration">
+              <table class="table w-100 text-center mb-0">
+                <thead class="font-size-super text-white d-none">
+                <tr>
+                  <th height="25" class="border bg-black py-4" style="width: 22%; min-width: 240px; background-color: #EAE9E9;">機能</th>
+                  <th class="border bg-black py-4" style="width: 12%; min-width: 120px; background-color: #EAE9E9;">無料版</th>
+                  <th class="border bg-black py-4" style="width: 22%; min-width: 120px; background-color: #EAE9E9;">年間スタンダードプラン</th>
+                  <th class="border py-4" style="width: 22%; min-width: 120px; background-color: #FF4D13;">年間プレミアムプラン</th>
+                  <th class="border bg-black py-4" style="width: 22%; min-width: 120px; background-color: #EAE9E9;">
+                    永続ライセンス
+                  </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td colspan="5" class="p-0 border-0">
+                    <table id="headingTableOne" class="with-hand w-100" data-toggle="collapse" data-target="#collapseTableOne" aria-expanded="true" aria-controls="collapseTableOne">
+                      <tr>
+                        <td class="text-black" style="width: 22%; min-width: 240px;">
+                          <!-- <span-->
+                          <!--   title="DemoCreator"-->
+                          <!-- >-->
+
+                          <!--<img src="https://neveragain.allstatics.com/2019/assets/icon/logo/democreator-square.svg" alt="democreator" style="height: 2rem;">-->
+                          <!-- </span>-->
+                          <span class="ml-2 text-action"><strong>PC画面録画・Webカメラ録画</strong></span>
+                          <span class="ml-2">
+                                <svg class="wsc-svg-extra-angle-down" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 320 512" style="height: 1.5rem;">
+                                  <path d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z"></path>
+                                </svg>
+                              </span>
+                        </td>
+                        <td style="width: 12%; min-width: 120px;"><div class="aria-expanded-false-show">--</div></td>
+                        <td style="width: 22%; min-width: 120px;">
+                          <div class="aria-expanded-false-show">--</div>
+                        </td>
+                        <td style="width: 22%; min-width: 120px;">
+                          <div class="aria-expanded-false-show">--</div>
+                        </td>
+                        <td style="width: 22%; min-width: 120px;">
+                          <div class="aria-expanded-false-show">--</div>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="5" class="p-0 border-0">
+                    <div id="collapseTableOne" class="collapse multi-collapse show" aria-expanded="true" aria-labelledby="headingTableOne">
+                      <table class="collapse-table w-100">
+                        <tr>
+                          <td style="width: 22%; min-width: 240px;">録画可能な時間</td>
+                          <td style="width: 12%; min-width: 120px;">15分間</td>
+                          <td style="width: 22%; min-width: 120px;" class="text-action">
+                            無制限
+                          </td>
+                          <td style="width: 22%; min-width: 120px;" class="text-action">
+                            無制限
+                          </td>
+                          <td style="width: 22%; min-width: 120px;" class="text-action">
+                            無制限
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>画面描画ツール</td>
+                          <td>
+                            <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                              <path d="M2 20 L12 28 30 4"></path>
+                            </svg>
+                          </td>
+                          <td>
+                            <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                              <path d="M2 20 L12 28 30 4"></path>
+                            </svg>
+                          </td>
+                          <td>
+                            <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                              <path d="M2 20 L12 28 30 4"></path>
+                            </svg>
+                          </td>
+                          <td>
+                            <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                              <path d="M2 20 L12 28 30 4"></path>
+                            </svg>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td>デュアルモニター録画</td>
+                          <td>
+                            <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                              <path d="M2 20 L12 28 30 4"></path>
+                            </svg>
+                          </td>
+                          <td>
+                            <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                              <path d="M2 20 L12 28 30 4"></path>
+                            </svg>
+                          </td>
+                          <td>
+                            <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                              <path d="M2 20 L12 28 30 4"></path>
+                            </svg>
+                          </td>
+                          <td>
+                            <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                              <path d="M2 20 L12 28 30 4"></path>
+                            </svg>
+                          </td>
+                        </tr>
+
+
+
+                        <tr>
+                          <td>ウォーターマークなし</td>
+                          <td style="width: 12%; min-width: 120px;">
+                            <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
+                              <path d="M2 30 L30 2 M30 30 L2 2"></path>
+                            </svg>
+                          </td>
+                          <td style="width: 22%; min-width: 120px;"><svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                            <path d="M2 20 L12 28 30 4"></path>
+                          </svg></td>
+                          <td style="width: 22%; min-width: 120px;"><svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                            <path d="M2 20 L12 28 30 4"></path>
+                          </svg></td>
+                          <td style="width: 22%; min-width: 120px;"><svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                            <path d="M2 20 L12 28 30 4"></path>
+                          </svg></td>
+                        </tr>
+
+                        <tr>
+                          <td style="width: 22%; min-width: 240px;">グリーンスクリーン</td>
+                          <td style="width: 12%; min-width: 120px;">
+                            <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
+                              <path d="M2 30 L30 2 M30 30 L2 2"></path>
+                            </svg>
+                          </td>
+                          <td style="width: 22%; min-width: 120px;">
+                            <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                              <path d="M2 20 L12 28 30 4"></path>
+                            </svg>
+                          </td>
+                          <td style="width: 22%; min-width: 120px;"><svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                            <path d="M2 20 L12 28 30 4"></path>
+                          </svg></td>
+                          <td style="width: 22%; min-width: 120px;"><svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                            <path d="M2 20 L12 28 30 4"></path>
+                          </svg></td>
+                        </tr>
+
+
+
+                      </table>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td colspan="5" class="p-0 border-0">
+                    <table id="headingTableThree" class="with-hand w-100 " data-toggle="collapse" data-target="#collapseTableThree" aria-expanded="true" aria-controls="collapseTableThree">
+                      <tr>
+                        <td class="text-black" style="width: 22%; min-width: 240px;    font-size: 12px;">
+                          <!--<span-->
+                          <!--  title="Anireel"-->
+                          <!--&gt;-->
+                          <!--<img src="https://neveragain.allstatics.com/2019/assets/icon/logo/anireel-square.svg" alt="" style="height: 2rem;">-->
+                          <!--</span>-->
+                          <span class="most-popular-2" style="color: white;border-radius: 4px;padding: 4px;font-size: 12px;">NEW</span><span class="ml-2 text-action"><strong>プレゼンテーションモード</strong></span>
+                          <span class="ml-2">
+                        <svg class="wsc-svg-extra-angle-down" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 320 512" style="height: 1.5rem;">
+                          <path d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z"></path>
+                        </svg>
+                      </span>
+                        </td>
+                        <td style="width: 12%; min-width: 120px;"><div class="aria-expanded-false-show">--</div></td>
+                        <td style="width: 22%; min-width: 120px;">
+                          <div class="aria-expanded-false-show">
+                            <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
+                              <path d="M2 30 L30 2 M30 30 L2 2"></path>
+                            </svg>
+                          </div>
+                        </td>
+                        <td style="width: 22%; min-width: 120px;">
+                          <div class="aria-expanded-false-show">
+                            <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                              <path d="M2 20 L12 28 30 4"></path>
+                            </svg>
+                          </div>
+                        </td>
+                        <td style="width: 22%; min-width: 120px;">
+                          <div class="aria-expanded-false-show">
+                            <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                              <path d="M2 20 L12 28 30 4"></path>
+                            </svg>
+                          </div>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+
+
+                <tr>
+                  <td colspan="5" class="p-0 border-0">
+                    <div id="collapseTableThree" class="collapse multi-collapse show" aria-labelledby="headingTableThree">
+                      <table class="collapse-table w-100">
+
+
+
+
+
+                        <tr>
+                          <td style="width: 22%; min-width: 240px;">ビデオ会議対応
+                            <span
+                              t="popover"
+                              data-original-title="対応できるオンライン会議システム：Zoom, Teams, Skype, Google Meetingなど。"
+                              data-placement="right"
+                              data-html="true"
+                            >
+                        <svg class="wsc-svg-extra-exclamation-circle" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 512 512" height="16">
+                          <path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"></path>
+                        </svg>
+                      </span>
+                          </td>
+                          <td style="width: 12%; min-width: 120px;">
+                            <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                              <path d="M2 20 L12 28 30 4"></path>
+                            </svg>
+                          </td>
+                          <td style="width: 22%; min-width: 120px;">
+                            <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                              <path d="M2 20 L12 28 30 4"></path>
+                            </svg>
+                          </td>
+                          <td style="width: 22%; min-width: 120px;">
+                            <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                              <path d="M2 20 L12 28 30 4"></path>
+                            </svg>
+                          </td>
+                          <td style="width: 22%; min-width: 120px;">
+                            <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                              <path d="M2 20 L12 28 30 4"></path>
+                            </svg>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="width: 22%; min-width: 240px;">ライブ配信
+                            <span
+                              t="popover"
+                              data-original-title="対応できるライブ配信プラットフォーム：Twitch, YouTube live, Vimeo, Facebook Live, Discordなど。"
+                              data-placement="right"
+                              data-html="true"
+                            >
+                        <svg class="wsc-svg-extra-exclamation-circle" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 512 512" height="16">
+                          <path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"></path>
+                        </svg>
+                      </span>
+
+                          </td>
+                          <td style="width: 12%; min-width: 120px;">
+                            <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                              <path d="M2 20 L12 28 30 4"></path>
+                            </svg>
+                          </td>
+                          <td style="width: 22%; min-width: 120px;">
+                            <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                              <path d="M2 20 L12 28 30 4"></path>
+                            </svg>
+                          </td>
+                          <td style="width: 22%; min-width: 120px;">
+                            <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                              <path d="M2 20 L12 28 30 4"></path>
+                            </svg>
+                          </td>
+                          <td style="width: 22%; min-width: 120px;">
+                            <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                              <path d="M2 20 L12 28 30 4"></path>
+                            </svg>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td style="width: 22%; min-width: 240px;">ホワイトボード</td>
+                          <td style="width: 12%; min-width: 120px;">
+                            <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                              <path d="M2 20 L12 28 30 4"></path>
+                            </svg>
+                          </td>
+                          <td style="width: 22%; min-width: 120px;">
+                            <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                              <path d="M2 20 L12 28 30 4"></path>
+                            </svg>
+                          </td>
+                          <td style="width: 22%; min-width: 120px;">
+                            <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                              <path d="M2 20 L12 28 30 4"></path>
+                            </svg>
+                          </td>
+                          <td style="width: 22%; min-width: 120px;">
+                            <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                              <path d="M2 20 L12 28 30 4"></path>
+                            </svg>
+                          </td>
+                        </tr>
+
+
+                        <tr>
+                          <td style="width: 22%; min-width: 240px;">ロゴのカスタマイズ</td>
+                          <td style="width: 12%; min-width: 120px;">
+                            <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
+                              <path d="M2 30 L30 2 M30 30 L2 2"></path>
+                            </svg>
+                          </td>
+                          <td style="width: 22%; min-width: 120px;"><svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                            <path d="M2 20 L12 28 30 4"></path>
+                          </svg></td>
+                          <td style="width: 22%; min-width: 120px;"><svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                            <path d="M2 20 L12 28 30 4"></path>
+                          </svg></td>
+                          <td style="width: 22%; min-width: 120px;">
+                            <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                              <path d="M2 20 L12 28 30 4"></path>
+                            </svg>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td style="width: 22%; min-width: 240px;">バーチャル背景</td>
+                          <td style="width: 12%; min-width: 120px;">
+                            <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
+                              <path d="M2 30 L30 2 M30 30 L2 2"></path>
+                            </svg>
+                          </td>
+                          <td style="width: 22%; min-width: 120px;">
+                            <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
+                              <path d="M2 30 L30 2 M30 30 L2 2"></path>
+                            </svg>
+                          </td>
+                          <td style="width: 22%; min-width: 120px;"><svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                            <path d="M2 20 L12 28 30 4"></path>
+                          </svg></td>
+                          <td style="width: 22%; min-width: 120px;">
+                            <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                              <path d="M2 20 L12 28 30 4"></path>
+                            </svg>
+                          </td>
+                        </tr>
+
+
+
+                      </table>
+                    </div>
+                  </td>
+                </tr>
+
+
+
+
+
+
+                <tr>
+                  <td colspan="5" class="p-0 border-0">
+                    <table id="headingTableThree" class="with-hand w-100 " data-toggle="collapse" data-target="#collapseTableThree" aria-expanded="true" aria-controls="collapseTableThree">
+                      <tr>
+                        <td class="text-black" style="width: 22%; min-width: 240px;">
+                          <span class="ml-2 text-action"><strong>動画編集</strong></span>
+                          <span class="ml-2">
+                                <svg class="wsc-svg-extra-angle-down" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 320 512" style="height: 1.5rem;">
+                                  <path d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z"></path>
+                                </svg>
+                              </span>
+                        </td>
+                        <td style="width: 12%; min-width: 120px;"><div class="aria-expanded-false-show">--</div></td>
+                        <td style="width: 22%; min-width: 120px;">
+                          <div class="aria-expanded-false-show">--</div>
+                        </td>
+                        <td style="width: 22%; min-width: 120px;">
+                          <div class="aria-expanded-false-show">--</div>
+                        </td>
+                        <td style="width: 22%; min-width: 120px;">
+                          <div class="aria-expanded-false-show">--</div>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+
+
+                <tr>
+                  <td colspan="5" class="p-0 border-0">
+                    <div id="collapseTableFour" class="collapse multi-collapse show" aria-labelledby="headingTableFour">
+                      <table class="collapse-table w-100">
+
+                        <tr>
+                          <td style="width: 22%; min-width: 240px;">基本動画編集</td>
+                          <td style="width: 12%; min-width: 120px;">
+                            <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                              <path d="M2 20 L12 28 30 4"></path>
+                            </svg>
+                          </td>
+                          <td style="width: 22%; min-width: 120px;">
+                            <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                              <path d="M2 20 L12 28 30 4"></path>
+                            </svg>
+                          </td>
+                          <td style="width: 22%; min-width: 120px;">
+                            <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                              <path d="M2 20 L12 28 30 4"></path>
+                            </svg>
+                          </td>
+
+                          <td style="width: 22%; min-width: 120px;">
+                            <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                              <path d="M2 20 L12 28 30 4"></path>
+                            </svg>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td style="width: 22%; min-width: 240px;">一括編集＆グループ編集</td>
+                          <td style="width: 12%; min-width: 120px;">
+                            <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                              <path d="M2 20 L12 28 30 4"></path>
+                            </svg>
+                          </td>
+                          <td style="width: 22%; min-width: 120px;">
+                            <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                              <path d="M2 20 L12 28 30 4"></path>
+                            </svg>
+                          </td>
+                          <td style="width: 22%; min-width: 120px;">
+                            <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                              <path d="M2 20 L12 28 30 4"></path>
+                            </svg>
+                          </td>
+
+                          <td style="width: 22%; min-width: 120px;">
+                            <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                              <path d="M2 20 L12 28 30 4"></path>
+                            </svg>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td>ウォーターマークなし</td>
+                          <td style="width: 12%; min-width: 120px;">
+                            <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
+                              <path d="M2 30 L30 2 M30 30 L2 2"></path>
+                            </svg>
+                          </td>
+                          <td style="width: 22%; min-width: 120px;"><svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                            <path d="M2 20 L12 28 30 4"></path>
+                          </svg></td>
+                          <td style="width: 22%; min-width: 120px;"><svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                            <path d="M2 20 L12 28 30 4"></path>
+                          </svg></td>
+                          <td style="width: 22%; min-width: 120px;"><svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                            <path d="M2 20 L12 28 30 4"></path>
+                          </svg></td>
+                        </tr>
+
+                        <tr>
+                          <td style="width: 22%; min-width: 240px;">DemoCreator Effects
+                            <span
+                              t="popover"
+                              data-original-title="DemoCreatorの<a class='font-size-small text-action' href='https://dc.wondershare.jp/effects.html' target='_blank'>DemoCreator Effectsストア</a>には、10,000を超える著作権フリーなエフェクト素材を豊富に搭載。<a class='font-size-small text-action' href='https://dc.wondershare.jp/effects/store.html' target='_blank'>DemoCreator Effects有料プラン</a>をご購入いただくと、すべてのエフェクト素材を無制限にご利用いただけます。"
+                              data-placement="top"
+                              data-html="true"
+                            >
+                                  <svg class="wsc-svg-extra-exclamation-circle" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 512 512" height="16">
+                                    <path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"></path>
+                                  </svg>
+                                </span>
+                          </td>
+                          <td style="width: 12%; min-width: 120px;">
+                            <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
+                              <path d="M2 30 L30 2 M30 30 L2 2"></path>
+                            </svg>
+
+                          </td>
+                          <td style="width: 22%; min-width: 120px;"><svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                            <path d="M2 20 L12 28 30 4"></path>
+                          </svg></td>
+                          <td style="width: 22%; min-width: 120px;"><svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                            <path d="M2 20 L12 28 30 4"></path>
+                          </svg></td>
+                          <td style="width: 22%; min-width: 120px;"><svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                            <path d="M2 20 L12 28 30 4"></path>
+                          </svg></td>
+                        </tr>
+
+
+
+                        <tr>
+                          <td style="width: 22%; min-width: 240px;">
+                            自動ノイズ除去
+                          </td>
+                          <td style="width: 12%; min-width: 120px;">
+                            <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
+                              <path d="M2 30 L30 2 M30 30 L2 2"></path>
+                            </svg>
+                          </td>
+                          <td style="width: 22%; min-width: 120px;">
+                            <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                              <path d="M2 20 L12 28 30 4"></path>
+                            </svg>
+                          </td>
+                          <td style="width: 22%; min-width: 120px;"><svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                            <path d="M2 20 L12 28 30 4"></path>
+                          </svg></td>
+                          <td style="width: 22%; min-width: 120px;">
+                            <svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                              <path d="M2 20 L12 28 30 4"></path>
+                            </svg>
+                          </td>
+                        </tr>
+
+
+                        <tr id="specialEffects">
+                          <td style="width: 22%; min-width: 240px;">
+                            ボイスチェンジャー
+                          </td>
+                          <td style="width: 12%; min-width: 120px;">
+                            <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
+                              <path d="M2 30 L30 2 M30 30 L2 2"></path>
+                            </svg>
+                          </td>
+                          <td style="width: 22%; min-width: 120px;">
+                            <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
+                              <path d="M2 30 L30 2 M30 30 L2 2"></path>
+                            </svg>
+                          </td>
+                          <td style="width: 22%; min-width: 120px;"><svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                            <path d="M2 20 L12 28 30 4"></path>
+                          </svg></td>
+                          <td style="width: 22%; min-width: 120px;"><svg class="text-action" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="4">
+                            <path d="M2 20 L12 28 30 4"></path>
+                          </svg></td>
+                        </tr>
+
+
+
+
+                        <tr>
+                          <td style="width: 22%; min-width: 240px;">自動キャプション
+                            <span
+                              t="popover"
+                              data-original-title="DemoCreatorの<a class='font-size-small text-action' href='https://dc.wondershare.jp/buy/windows-auto-caption.html' target='_blank'>自動キャプション</a>機能は、ワンクリックで音声を字幕に自動変換できます。"
+                              data-placement="top"
+                              data-html="true"
+                            >
+                                  <svg class="wsc-svg-extra-exclamation-circle" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 512 512" height="16">
+                                    <path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"></path>
+                                  </svg>
+                                </span>
+                          </td>
+                          <td style="width: 12%; min-width: 120px;">
+                            <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
+                              <path d="M2 30 L30 2 M30 30 L2 2"></path>
+                            </svg>
+                          </td>
+                          <td style="width: 22%; min-width: 120px;">
+                            <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
+                              <path d="M2 30 L30 2 M30 30 L2 2"></path>
+                            </svg>
+                          </td>
+                          <td style="width: 22%; min-width: 120px;" class="text-action">
+                            1時間/月
+                          </td>
+                          <td style="width: 22%; min-width: 120px;">
+                            <svg class="text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="butt" stroke-linejoin="bevel" stroke-width="2">
+                              <path d="M2 30 L30 2 M30 30 L2 2"></path>
+                            </svg>
+                          </td>
+                        </tr>
+
+
+
+
+                      </table>
+                    </div>
+                  </td>
+                </tr>
+
+
+              </table>
+            </div>
+            </td>
+            </tr>
+            <tr>
+              <td colspan="5" class="p-0 border-0">
+                <table id="" class=" w-100 buy-container premium-container">
+                  <tr>
+                    <td class="" style="width: 22%; min-width: 240px;vertical-align: middle;background: #eae9e9;">
+                      <span class="ml-2 text-action"><strong>価格</strong></span>
+                    </td>
+                    <td style="width: 12%; min-width: 120px;"><div class="aria-expanded-false-show justify-content-center"></div></td>
+                    <td class="table-customCheck1" style="width: 22%; min-width: 120px;vertical-align: middle;">
+                      <div class="price-area btn-groups-1">
+                        <a class="btn btn-lg btn-premium with-hand" href="https://store.wondershare.jp/index.php?submod=checkout&method=index&currency=JPY&language=Japanese&sku_id=20022661&ver=v5&verify=3722849DDACDC53B14EA042EAE9AA247&additional_sku=100107172680&additional_activity=1338403388187349072&quick_batch=0">
+
+                          <div class="font-size-huge font-weight-bold text-black">
+                            <div class="mb-1"><span class="text-nowrap"><span>2,980円(税込)</span><span class="font-size-tiny font-weight-normal text-black">/年</span></span></div>
+                            <div class="d-inline-block align-items-center justify-content-center" style="font-size:14px;margin-left: 8px;align-self: center;padding: 7px 15px;background: #1f73fa;border-radius: 28px;color: white;">購入する</div>
+                          </div>
+                        </a>
+                      </div>
+
+                      <div class="price-area btn-groups-2 hidden">
+                        <a class="btn btn-lg btn-premium with-hand" href="https://store.wondershare.jp/index.php?submod=checkout&method=index&currency=JPY&language=Japanese&sku_id=20022661&ver=v5&verify=3722849DDACDC53B14EA042EAE9AA247">
+                          <div class="font-size-huge font-weight-bold text-black">
+
+                            <div class="mb-1"><span class="text-nowrap"><span>2,980円(税込)</span><span class="font-size-tiny font-weight-normal text-black">/年</span></span></div>
+                            <div class="d-inline-block align-items-center justify-content-center" style="font-size:14px;margin-left: 8px;align-self: center;padding: 7px 15px;background: #1f73fa;border-radius: 28px;color: white;">購入する</div>
+                          </div>
+                        </a>
+                      </div>
+                    </td>
+                    <td class="table-customCheck2" style="width: 22%; min-width: 120px;">
+                      <div class="price-area btn-groups-1">
+                        <a class="btn btn-lg btn-premium with-hand" href="https://store.wondershare.jp/index.php?submod=checkout&method=index&currency=JPY&language=ja_jp&sku_id=20022681&ver=v5&verify=F507B25E951591B77D81D53DCA372774&additional_sku=100107172680&additional_activity=1338403388187349072&quick_batch=0">
+                          <div class="font-size-huge font-weight-bold text-black">
+                            <div class="mb-1"><span class="text-nowrap"><span>3,980円(税込)</span><span class="font-size-tiny font-weight-normal text-black">/年</span></span></div>
+                            <div class="d-inline-block align-items-center justify-content-center" style="font-size:14px;margin-left: 8px;align-self: center;padding: 7px 15px;background: #1f73fa;border-radius: 28px;color: white;">購入する</div>
+                          </div>
+                        </a>
+                      </div>
+
+                      <div class="price-area btn-groups-2 hidden">
+                        <a class="btn btn-lg btn-premium with-hand" href="https://store.wondershare.jp/index.php?submod=checkout&method=index&currency=JPY&language=ja_jp&sku_id=20022681&ver=v5&verify=F507B25E951591B77D81D53DCA372774">
+                          <div class="font-size-huge font-weight-bold text-black">
+                            <div class="mb-1"><span class="text-nowrap"><span>3,980円(税込)</span><span class="font-size-tiny font-weight-normal text-black">/年</span></span></div>
+                            <div class="d-inline-block align-items-center justify-content-center" style="font-size:14px;margin-left: 8px;align-self: center;padding: 7px 15px;background: #1f73fa;border-radius: 28px;color: white;">購入する</div>
+                          </div>
+                        </a>
+                      </div>
+                    </td>
+                    <td class="table-customCheck3" style="width: 22%; min-width: 120px;">
+                      <div class="price-area btn-groups-1">
+                        <a class="btn btn-lg btn-premium with-hand" href="https://store.wondershare.jp/index.php?submod=checkout&method=index&currency=JPY&language=ja_jp&sku_id=20022701&ver=v5&verify=FF3240024BACA5B639415FC0C1CEEA99&additional_sku=100107172680&additional_activity=1338403388187349072&quick_batch=0">
+                          <div class="font-size-huge font-weight-bold text-black">
+                            <div class="mb-1"><span class="text-nowrap"><span>5,480円(税込)</span></span></div>
+                            <div class="d-inline-block align-items-center justify-content-center" style="font-size:14px;margin-left: 8px;align-self: center;padding: 7px 15px;background: #1f73fa;border-radius: 28px;color: white;">購入する</div>
+                          </div>
+                        </a>
+                      </div>
+
+                      <div class="price-area btn-groups-2 hidden">
+                        <a class="btn btn-lg btn-premium with-hand" href="https://store.wondershare.jp/index.php?submod=checkout&method=index&currency=JPY&language=ja_jp&sku_id=20022701&ver=v5&verify=FF3240024BACA5B639415FC0C1CEEA99">
+                          <div class="font-size-huge font-weight-bold text-black">
+                            <div class="mb-1"><span class="text-nowrap"><span>5,480円(税込)</span></span></div>
+                            <div class="d-inline-block align-items-center justify-content-center" style="font-size:14px;margin-left: 8px;align-self: center;padding: 7px 15px;background: #1f73fa;border-radius: 28px;color: white;">購入する</div>
+                          </div>
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            </tbody>
+            </table>
+          </div>
+      </div>
+      </section>
+
+      <div class="container container-xl pb-5 pt-lg-5">
+        <p class="display-4 m-display-5 text-center pt-lg-3 mt-lg-3 font-weight-normal"> 期間限定！まとめ買いがお得</p>
+        <div class="row justify-content-center">
+          <div class="col-lg-10 col-xl-6 pt-5">
+            <div class="row align-items-center">
+              <div class="col-md-8 order-1">
+                <div class="text-center"> <img src="https://images.wondershare.jp/democreator/dvdmemory-democreator.jpg" alt="DVD MemoryとDemoCreatorボックス" class="img-fluid"> </div>
+              </div>
+              <div class="col-md-8 order-2 order-md-3">
+                <div class=" ml-md-4 ml-lg-5">
+                  <div class="row row-cols-2 text-center font-size-small mx-n2">
+                    <div class="col px-2">
+                      <h6 class="font-size-md text-black mt-3">Wondershare<br>DVD Memory</h6>
+                      <p class="mb-0">簡単かつ強力なDVDツールボックス</p>
+                    </div>
+                    <div class="col px-2">
+                      <h6 class="font-size-md text-black mt-3">Wondershare DemoCreator</h6>
+                      <p class="mb-0">誰にでも簡単に使える画面録画ソフト </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 order-3 order-md-2 pt-4 pt-md-0 text-center text-md-left">
+                <img src="https://images.wondershare.jp/uniconverter/lp/buy-coupon-1.png" alt="20%OFF" width="110" height="38">
+
+                <div class="pb-3 pt-0 pt-md-3"> <del>￥6,960/年</del>
+                  <div class="font-size-super"> <span class="display-5 font-weight-bold">￥5,560</span>/年<small>(税込)</small></div>
+                  <div class="text-gray-6" style="font-size: 0.5rem">ダウンロード版</div>
+
+                </div>
+                <div> <a href="https://store.wondershare.jp/index.php?submod=checkout&method=sku_combine&is_combine=1&sku_id=102000001786&coupon_id=9122&currency=JPY&language=Japanese&verify=42115A82BE9AE3624AD28EC006587519" class="btn-buy btn btn-lg btn-action px-0 py-3 m-0"><span class="d-inline-block py-lg-0 py-2">今すぐ購入</span></a> </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-10 col-xl-6 pt-5">
+            <div class="row align-items-center">
+              <div class="col-md-8 order-1">
+                <div class="text-center"> <img src="https://images.wondershare.jp/democreator/filmora-democreator2.jpg" alt="FilmoraとDemoCreatorボックス" width="400"　class="img-fluid"> </div>
+              </div>
+              <div class="col-md-8 order-2 order-md-3">
+                <div class=" ml-md-4 ml-lg-5">
+                  <div class="row row-cols-2 text-center font-size-small mx-n2">
+                    <div class="col px-2">
+                      <h6 class="font-size-md text-black mt-3">Wondershare Filmora</h6>
+                      <p class="mb-0">ビギナーも、上級者も、オールインワン動画編集ソフト</p>
+                    </div>
+                    <div class="col px-2">
+                      <h6 class="font-size-md text-black mt-3">Wondershare DemoCreator</h6>
+                      <p class="mb-0">誰にでも簡単に使える画面録画ソフト</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 order-3 order-md-2 pt-4 pt-md-0 text-center text-md-left">
+                <img src="https://images.wondershare.jp/uniconverter/lp/buy-coupon-1.png" alt="20%OFF" width="110" height="38">
+                <div class="pb-3 pt-0 pt-md-3"> <del>￥9,960/年</del>
+                  <div class="font-size-super"> <span class="display-5 font-weight-bold">￥7,960</span>/年<small>(税込)</small></div>
+                  <div class="text-gray-6" style="font-size: 0.5rem">ダウンロード版</div>
+
+                </div>
+                <div> <a href="https://store.wondershare.jp/index.php?submod=checkout&method=sku_combine&is_combine=1&sku_id=102000001781&coupon_id=9117&currency=JPY&language=Japanese&verify=4CF9326374B16A94CA2C23EE2DFF67A4" class="btn-buy btn btn-lg btn-action px-0 py-3 m-0"><span class="d-inline-block py-lg-0 py-2">今すぐ購入</span></a> </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container container-xl">
+        <div class="pt-5 px-lg-4">
+          <h4 class="font-weight-bold mb-3">ダウンロード版 - 永続ライセンス</h4>
+          <p class="mb-5">本製品を永続的にご利用頂けます。マイナーアップデートは無料です。(例　ver5.00～5.99　迄　無料)ナンバリングの主要な桁が変わる大型メジャーアップデート(例　ver10.00⇒11.00　等)が行われ、新バージョンをお使いになりたい場合は、新バージョンに対応する永続ライセンスが必要です。ご購入頂いた型番の永続ライセンスは新バージョンが出ても引き続き永続的にお使い頂けます。(例　バージョン6が出てもバージョン5はそのままお使いいただけます。)</p>
+          <h4 class="font-weight-bold mb-3">ダウンロード版 - 1年間プラン</h4>
+          <p>
+            本製品を1年間ご利用いただけます。決済方法により更新方法が異なりますのでご確認下さい。</p>
+          <p> <b>「クレジットカード決済」「PayPal」でご購入の場合</b><br>
+            購入日から1年間経過した日に自動的に契約を更新、同額請求させていただきます。自動更新停止を希望される場合は、<a href="https://accounts.wondershare.jp/web/subscription" target="_blank" class="font-weight-bold hover">自動更新停止のお知らせ</a>へアクセスすると該当製品を解約できます。自動更新に関してご不明点などがございましたら、<a href="https://support.wondershare.jp/" target="_blank" class="font-weight-bold hover">サポートセンター</a>迄ご連絡ください。
+          </p>
+          <p><b>その他の決済方法(コンビニ決済、銀行振込)でご購入の場合                          </b>  <br>
+            購入日から1年間経過した日に製品版から試用版に切り替わります。期間以降も製品版をお使いになりたい場合は、新たに1年間プランのご契約が必要です。 </p>
+        </div>
+      </div>
+    </div>
+    <!-- store-business -->
+    <div class="tab-pane fade" id="nav-store-buy-business" role="tabpanel" aria-labelledby="nav-store-buy-tab">
+      <div class="py-5">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5 py-3">
+              <div class="h-100 p-5 p-md-4 p-lg-5 border d-flex flex-column justify-content-between">
+                <div id="team-container">
+                  <h5 class="text-center">プランをお選びください。</h5>
+                  <p class="text-center pb-3">法人・商用向けプランはグループやチーム間でご自由に<br>ライセンスをコントロール＆管理することが出来ます。</p>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label for="teamPlan" class="text-uppercase pb-2">プラン名</label>
+                        <select class="custom-select" id="teamPlan" v-model="annual">
+                          <option selected value="1">年間プラン</option>
+                          <option value="2">永続ライセンス</option>
+
+
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label for="teamUser" class="text-uppercase pb-2">数量</label>
+                        <select class="custom-select" id="teamUser" v-model="user">
+                          <option selected value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="font-size-large text-center py-3 mt-3 d-flex justify-content-center">
+                    <div v-if="annual == 1">
+                      <span class="pr-2 display-3 font-weight-bold" v-text="annualInfo[user-1].price"></span><span v-text="currency" class="display-3 font-weight-bold"></span> <br> <del  v-if="annualInfo[user-1].dPrice"><span v-text="annualInfo[user-1].dPrice"></span><span v-text="currency"></span></del>
+                    </div>
+                    <div v-else>
+                      <div v-if="perpetualComfirm">
+                        <span class="pr-2 display-3 font-weight-bold" v-text="perpetualInfo[user-1].price"></span><span v-text="currency" class="display-3 font-weight-bold"></span> <br> <del v-if="perpetualInfo[user-1].dPrice"><span v-text="perpetualInfo[user-1].dPrice"></span><span v-text="currency"></span></del>
+                      </div>
+                      <div v-else>
+                        <span class="pr-2 display-3 font-weight-bold" v-text="perpetualInfo[user-1].price"></span><span v-text="currency" class="display-3 font-weight-bold"></span> <br> <del v-if="perpetualInfo[user-1].dPrice"><span v-text="perpetualInfo[user-1].dPrice"></span><span v-text="currency"></span></del>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="pb-4 text-center">
+                    <div v-if="annual == 1">
+                      <a :href="annualInfo[user-1].url" class="btn btn-lg btn-action px-5">購入する</a>
+                    </div>
+                    <div v-else>
+                      <a :href="perpetualInfo[user-1].url" class="btn btn-lg btn-action px-5">購入する</a>
+                    </div>
+                  </div>
+                  <div class="pb-5 px-3 text-center d-none" v-if="annual == 2">
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input" id="confirmRules" v-model="perpetualComfirm" :value="perpetualAdd" @click="setComfirm">
+                      <label class="custom-control-label text-left" for="confirmRules" style="color: #6D6E78;">Add upgrade fee for <span class="font-weight-bold text-black">$10 per year to get the latest major version update.</span></label>
+                    </div>
+                  </div>
+                  <div class="text-left">
+
+                    <div class="border-bottom py-2 d-flex align-items-center justify-content-between">
+                      <span>ライセンスのマルチコントロール</span> <i class="wsc-icon wsc-icon-sm wsc-icon-thick text-secondary flex-shrink-0" data-icon="symbol-checkmark"></i>
+                    </div>
+                    <div class="border-bottom py-2 d-flex align-items-center justify-content-between">
+                      <span>年間プランの無料アップデート</span> <i class="wsc-icon wsc-icon-sm wsc-icon-thick text-secondary flex-shrink-0" data-icon="symbol-checkmark"></i>
+                    </div>
+                    <div class="border-bottom py-2 d-flex align-items-center justify-content-between">
+                      <span>著作権表示・提供等の表示は不要</span> <i class="wsc-icon wsc-icon-sm wsc-icon-thick text-secondary flex-shrink-0" data-icon="symbol-checkmark"></i>
+                    </div>
+                    <div class="border-bottom py-2 d-flex align-items-center justify-content-between">
+                      <span>ボリュームディスカウント</span> <i class="wsc-icon wsc-icon-sm wsc-icon-thick text-secondary flex-shrink-0" data-icon="symbol-checkmark"></i>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-7 py-3">
+              <div class="h-100 p-5 p-md-4 p-lg-5 border d-flex flex-column justify-content-between">
+                <div>
+                  <h5 class="text-center">お問い合わせ</h5>
+                  <p class="text-center pb-3">使用台数は5台以上の場合、下記のお問い合わせ窓口までご連絡ください。</p>
+                  <div>
+                    <form id="form-business">
+                      <div class="row">
+                        <div class="col-md-6 form-group">
+                          <input type="text" name="first_name" class="form-control form-control-lg" placeholder="姓 *" required>
+                        </div>
+                        <div class="col-md-6 form-group">
+                          <input type="text" name="last_name" class="form-control form-control-lg" placeholder="名 *" required>
+                        </div>
+                        <div class="col-md-6 form-group">
+                          <input type="email" name="contact_email" class="form-control form-control-lg" placeholder="連絡用メールアドレス *">
+                        </div>
+                        <div class="col-md-6 form-group">
+                          <input type="text" name="area_code" class="form-control form-control-lg" placeholder="郵便番号 *">
+                        </div>
+                        <div class="col-md-6 form-group">
+                          <input type="text" name="phone" class="form-control form-control-lg" placeholder="お使いの携帯電話番号 *">
+                        </div>
+                        <div class="col-md-6 form-group">
+                          <input type="text" name="company" class="form-control form-control-lg" placeholder="学校名/会社名 *">
+                        </div>
+                        <div class="col-12 form-group">
+                          <textarea name="content" class="form-control form-control-lg" rows="5" placeholder="ご要望、ご希望のライセンス数、ご利用台数やご利用期間などをご明記の上、お問い合わせください。 *"></textarea>
+                        </div>
+                        <div class="col-12">
+                          <input type="hidden" value="jp" name="country">
+                          <input id="hidden_product_ids" name="hidden_product_ids" type="hidden" value="1617">
+                          <input id="job_title" name="job_title" type="hidden" value="13">
+                          <input id="users" name="users" type="hidden" value="4">
+                          <input id="purchase_time_frame" name="purchase_time_frame" type="hidden" value="1">
+                          <a href="javascript:;" onclick="checkSubmit()" class="btn btn-lg btn-action d-block w-100 text-white">送信</a>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="text-center font-size-tiny py-3">
+            <span class="mr-2">支払い方法:</span> <img src="https://images.wondershare.com/images2020/img-we-accept1.png" alt="支払い形式マーク" width="320" class="img-fluid"> <img src="https://images.wondershare.com/images2020/img-we-accept2.png" alt="支払い形式図" width="260" class="img-fluid">
+          </div>
+          <div class="pt-5 px-lg-4">
+            <h4 class="font-weight-bold mb-3">ダウンロード版 - 永続ライセンス</h4>
+            <p class="mb-5">本製品を永続的にご利用頂けます。マイナーアップデートは無料です。(例　ver4.00～4.99　迄　無料)ナンバリングの主要な桁が変わる大型メジャーアップデート(例　ver4.00⇒5.00　等)が行われ、新バージョンをお使いになりたい場合は、新バージョンに対応する永続ライセンスが必要です。ご購入頂いた型番の永続ライセンスは新バージョンが出ても引き続き永続的にお使い頂けます。(例　バージョン11が出てもバージョン10はそのままお使いいただけます。)</p>
+            <h4 class="font-weight-bold mb-3">ダウンロード版 - 1年間プラン</h4>
+            <p>
+              本製品を1年間ご利用いただけます。決済方法により更新方法が異なりますのでご確認下さい。</p>
+            <p> <b>「クレジットカード決済」「PayPal」でご購入の場合</b><br>
+              購入日から1年間経過した日に自動的に契約を更新、同額請求させていただきます。自動更新停止を希望される場合は、<a href="https://accounts.wondershare.jp/web/subscription" target="_blank" class="font-weight-bold hover">自動更新停止のお知らせ</a>へアクセスすると該当製品を解約できます。自動更新に関してご不明点などがございましたら、<a href="https://support.wondershare.jp/" target="_blank" class="font-weight-bold hover">サポートセンター</a>迄ご連絡ください。
+            </p>
+            <p><b>その他の決済方法(コンビニ決済、銀行振込)でご購入の場合                          </b>  <br>
+              購入日から1年間経過した日に製品版から試用版に切り替わります。期間以降も製品版をお使いになりたい場合は、新たに1年間プランのご契約が必要です。 </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- store-students -->
+    <div class="tab-pane fade" id="nav-store-buy-students" role="tabpanel" aria-labelledby="nav-store-buy-tab">
+      <div class="container py-5">
+        <div class="border border-gray mt-lg-5">
+          <div class="row justify-content-center align-items-center pt-2 mx-0 my-5">
+            <div class="col-xl-3 col-md-4 col-9 text-center text-xl-right mb-4 mb-sm-0">
+              <img src="https://images.wondershare.jp/dc/images2021/students_buy/democreator-box.png" alt="box" class="img-fluid">
+            </div>
+            <div class="col-xl-4 col-md-6 text-center text-sm-left">
+              <div class="font-size-huge font-weight-bold" style="color: #EF2226;">1500円オフ！</div>
+              <div class="font-size-super mb-3 font-weight-bold">学生限定の学割価格</div>
+              <div class="font-size-huge font-weight-bold text-primary">1年間プラン/1PC、ダウンロード版</div>
+              <div class="font-size-large"><span class="display-4 font-weight-bold">2,080円（税込）</span></span><del class="m-font-size-normal d-sm-inline d-block pl-xxl-3">3,580円（税込）</del></div>
+
+              <div class="font-size-tiny text-gray-6">
+                <div class="py-2">
+                  ※自動更新タイプ<span class="with-hand" tabindex="0"  data-toggle="popover" data-placement="top" data-trigger="focus" data-html="true" data-content="※「クレジットカード決済」「Paypal」のみ自動更新されます。その他の決済方法でお支払いの場合は、自動更新されませんのでご注意ください。">  <i class="wsc-icon wsc-icon-font text-action font-size-small" data-icon="extra-exclamation-circle"></i> </span> </div>
+              </div>
+              <!-- <a href="#edu-form" pro-id="7452" license-id="125" success-jump-link="https://uniconverter.wondershare.jp/edu-student-buy.html" class="buy-btn btn btn-action text-capitalize rounded-2 px-5 m-0" style="border-radius: 4px;">
+                  今すぐ申込
+              </a> -->
+              <a href="#" class="btn btn-action" onclick="$('#edu-form').modal('show')">今すぐ申込</a>
+
+            </div>
+          </div>
+        </div>
+        <!-- 今すぐ申込 -->
+        <div id="edu-form" class="modal fade" tabindex="-1" role="dialog">
+          <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+
+            <div class="modal-content">
+              <div class="modal-header border-bottom-0"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="display-4"><i class="wsc-icon wsc-icon-font" data-icon="symbol-close"></i></span></button></div>
+              <div class="modal-body px-4 px-md-5 py-0">
+                <div class="mb-5 text-center text-lg-left">
+                  <p class="display-4 font-weight-bold text-center">学割申し込み</p>
+                  <p class="text-center mb-0">大学生、高等専門学校および専門学校生、短大生、これらの学校に進学
+                    が決まった生徒のみなさんが対象です*。</p>
+                </div>
+                <form>
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      <input type="text" class="form-control nameStudent" id="nameStudent" placeholder="お名前*:" required>
+                    </div>
+                    <div class="col-md-6 form-group">
+                      <input type="text" class="form-control yearStudent" id="yearStudent" placeholder="年齢*:" required>
+                    </div>
+                    <div class="col-md-6 form-group">
+                      <input type="text" class="form-control schoolStudent" id="schoolStudent" placeholder="学校名*:" required>
+                    </div>
+                    <div class="col-md-6 form-group">
+                      <input type="text" class="form-control departmentStudent" id="departmentStudent" placeholder="学部/部署*:" required>
+                    </div>
+                    <div class="col-md-12 form-group">
+                      <input type="email" class="form-control emailStudent" id="emailStudent" placeholder="メールアドレス：" required>
+                    </div>
+                    <div class="col-md-12 form-group text-center">
+                      *大学等教育機関発行のメールアドレスをご入力くださいますようお願いします。
+                    </div>
+                    <div class="col-12 pb-lg-5 pb-3">
+                      <a href="javascript:;" onClick="submitStuBtn(this)" class="btn btn-lg btn-action d-block btn-sub">送信</a>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end 今すぐ申込 -->
+      </div>
+    </div>
+  </div>
+
+  </div>
+
+
+  <div class="py-5">
+    <div class="container">
+      <p class="display-4 m-display-5 text-center mb-5"> よくある質問 </p>
+      <div id="ask-frequently" class="font-size-large">
+        <div class="border p-4 mb-4 d-flex align-items-center justify-content-between" data-toggle="collapse" data-target="#ask-0" aria-expanded="true" aria-controls="ask-0">
+          <div class="pr-3">
+            <div class="font-size-huge font-weight-bold">無料版と有料版の違いは何ですか？</div>
+            <div id="ask-0" class="pt-3 collapse show" aria-labelledby="heading0" data-parent="#ask-frequently">
+              <p>Wondershare DemoCreatorの無料お試し版では、録画可能な時間は10分間しかありませんが、有料版では、無制限に録画することができます。動画編集機能に関して、無料版では一部分の編集機能が使えませんが、有料版では、すべての編集機能がご利用いただけます。また、無料お試し版でエクスポートされたビデオには透かしが入ります。</p>
+            </div>
+          </div>
+          <i class="wsc-icon wsc-icon-thick" data-icon="symbol-plus" style="flex-shrink:0;"></i> </div>
+        <div class="border p-4 mb-4 d-flex align-items-center justify-content-between" data-toggle="collapse" data-target="#ask-1" aria-expanded="false" aria-controls="ask-1">
+          <div class="pr-3">
+            <div class="font-size-huge font-weight-bold">支払い方法と納品について</div>
+            <div id="ask-1" class="pt-3 collapse" aria-labelledby="heading1" data-parent="#ask-frequently">
+              <p>
+              <div class="mb-5">
+                <h6 class="font-weight-bold mb-3">クレジットカード支払い（ダウンロード版のみご利用可能）
+                </h6>
+                <p><span class="font-weight-bold">登録情報</span>は購入後、自動送信されます。</p>
+                <p>クレジットカードをご利用いただくと「ご注文完了」後、ご確認ページにてソフトのアクティベーションに必要なWondershare ID情報が即時表示されると同時に、メールにて登録情報が送信されます。インターネットの使用状況により、ご購入製品に関する情報の受信まで数分間かかる場合があります。</p>
+              </div>
+              <div class="mb-5">
+                <h6>PayPal（ダウンロード版のみご利用可能）</h6>
+                <p>手数料は一切かかりません。海外クレジットカードおよび日本国内発行のMastercard、VISA、American Express、JCBのご利用が可能です。Paypalをご利用の際はアカウント登録を行う必要があります。 PayPalをご用意頂くと「ご注文完了」後、メールにて登録情報をお送り致します。</p>
+              </div>
+              <div class="mb-5">
+                <h6 class="font-weight-bold mb-3">コンビニ決済（ダウンロード版のみご利用可能）</h6>
+
+                <p>クレジットカードや銀行口座を持っていなくても、お近くのコンビニで、土日祝日に関係なく24時間お支払いいただけます。
+                  対応コンビニ：セブンイレブン、ローソン、ファミリーマート、ミニストップ、セイコーマート</p>
+                <p>ご注文後、ご記入のメールアドレスに「ご注文内容およびコンビニ決済のご案内」のメールが送信されます。当該メールの案内に従って、お近くのコンビニエンスストアにて代金をお支払いください。
+                  入金確認後、製品の登録情報を送信いたします。*お客様の入金手続き時間により、登録情報の発送が1～2日程度かかる場合がございます。予め御了承ください。</p>
+              </div>
+              <div class="mb-5">
+                <h6>LINE Pay（ダウンロード版のみご利用可能）</h6>
+                <p>①LINE Payは代金先払いとなっております。ご入金の確認が取れ次第、商品の手配をさせていただきます。②利用には事前にLINE Payの利用登録が必要です。③LINEアプリをインストールしたスマートフォンが必要です。決済が完了しなかった場合は、20分の後に自動的にキャンセルとなり再決済は行うことが出来ません。必ず再度お申込をいただけるようお願い致します。詳しくはhttp://line.me/ja/payをご覧ください。</p>
+              </div>
+              <div class="mb-5">
+                <h6 class="font-weight-bold mb-3">銀行振込（ダウンロード版のみご利用可能）</h6>
+                <p>お振り込み先および金額をメールにてご連絡致します。お振込はご利用の銀行のみならず、ATMでもご利用可能です。入金確認後、登録情報を発送致します。お客様の入金手続き時間により、登録情報の発送が 1～2日程度かかる場合がございます。予め御了承ください。</p>
+              </div></p>
+            </div>
+          </div>
+          <i class="wsc-icon wsc-icon-thick" data-icon="symbol-plus" style="flex-shrink:0;"></i> </div>
+        <div class="border p-4 mb-4 d-flex align-items-center justify-content-between" data-toggle="collapse" data-target="#ask-2" aria-expanded="false" aria-controls="ask-2">
+          <div class="pr-3">
+            <div class="font-size-huge font-weight-bold"> 年間プランの自動更新を解約することはできますか？</div>
+            <div id="ask-2" class="pt-3 collapse" aria-labelledby="heading2" data-parent="#ask-frequently">
+              <p>はい、解約できます。 年間プランをご購入いただくと、この製品を１年間ご利用いただくことができ、引き続き利用したい場合はプランの更新が可能です。サブスクリプションプランの有効期限が終了する7日前に、利用プランの自動更新に関する案内メールが届き、この中に、自動更新のキャンセル方法が記載されています。</p>
+            </div>
+          </div>
+          <i class="wsc-icon wsc-icon-thick" data-icon="symbol-plus" style="flex-shrink:0;"></i> </div>
+        <div class="border p-4 mb-4 d-flex align-items-center justify-content-between" data-toggle="collapse" data-target="#ask-3" aria-expanded="false" aria-controls="ask-3">
+          <div class="pr-3">
+            <div class="font-size-huge font-weight-bold">DemoCreatorを購入した後、製品登録するにはどうすればいいですか？</div>
+            <div id="ask-3" class="pt-3 collapse" aria-labelledby="heading3" data-parent="#ask-frequently">
+              <p>ソフトを起動して動画編集画面に入り、編集画面の右上にある人型アイコンをクリックして、表示されるログイン画面で有料プラン購入時に登録したWondershare IDと設定したパスワードを入力してログインすると、ソフトがアクティベートできます。
+              </p>
+            </div>
+          </div>
+          <i class="wsc-icon wsc-icon-thick" data-icon="symbol-plus" style="flex-shrink:0;"></i> </div>
+        <div class="border p-4 mb-4 d-flex align-items-center justify-content-between" data-toggle="collapse" data-target="#ask-4" aria-expanded="false" aria-controls="ask-4">
+          <div class="pr-3">
+            <div class="font-size-huge font-weight-bold">録画時間に制限はありますか？</div>
+            <div id="ask-4" class="pt-3 collapse" aria-labelledby="heading4" data-parent="#ask-frequently">
+              <p>録画時間に制限はありません。ただし、録画したファイルを保存するドライブの空き容量によって制限がかかる場合があります。また、録画時間が長くなるとファイルのサイズが非常に大きくなり、編集やエクスポートする際、システムのパフォーマンスが低下したりクラッシュする可能性がありますので予めご了承ください。</p>
+            </div>
+          </div>
+          <i class="wsc-icon wsc-icon-thick" data-icon="symbol-plus" style="flex-shrink:0;"></i> </div>
+        <div class="border p-4 mb-4 d-flex align-items-center justify-content-between" data-toggle="collapse" data-target="#ask-5" aria-expanded="false" aria-controls="ask-5">
+          <div class="pr-3">
+            <div class="font-size-huge font-weight-bold">2つのディスプレイ画面を同時に録画できますか？</div>
+            <div id="ask-5" class="pt-3 collapse" aria-labelledby="heading5" data-parent="#ask-frequently">
+              <p>いいえ、2つのPC画面をご利用の場合、DemoCreatorは、メイン画面の録画のみをサポートしています。</p>
+            </div>
+          </div>
+          <i class="wsc-icon wsc-icon-thick" data-icon="symbol-plus" style="flex-shrink:0;"></i> </div>
+        <div class="border p-4 mb-4 d-flex align-items-center justify-content-between" data-toggle="collapse" data-target="#ask-6" aria-expanded="false" aria-controls="ask-6">
+          <div class="pr-3">
+            <div class="font-size-huge font-weight-bold">コンピュータの画面とウェブカメラを録画する方法は？</div>
+            <div id="ask-6" class="pt-3 collapse" aria-labelledby="heading6" data-parent="#ask-frequently">
+              <p>DemoCreatorは、PC画面とWebカメラを同時に録画することができます。DemoCreator（DemoCreator）を起動し、[クイックキャプチャ]をクリックし、[カメラ]を選択すると、カメラの解像度やフレームレートの設定オプションが表示され、ここで設定を調整することができます。コンピューターの画面録画動画とWebカメラの録画動画は、別々のトラックに表示され、編集も別々に行うことができます。</p>
+            </div>
+          </div>
+          <i class="wsc-icon wsc-icon-thick" data-icon="symbol-plus" style="flex-shrink:0;"></i> </div>
+
+        <div class="border p-4 mb-4 d-flex align-items-center justify-content-between" data-toggle="collapse" data-target="#ask-7" aria-expanded="false" aria-controls="ask-7">
+          <div class="pr-3">
+
+            <div class="font-size-huge font-weight-bold">バージョン4.Xからバージョン5にアップデートするにはどうすればよいですか？</div>
+            <div id="ask-7" class="pt-3 collapse" aria-labelledby="heading7" data-parent="#ask-frequently">
+              <p>バージョン4.Xからバージョン5にアップデートする方法は
+                <a href="https://dc.wondershare.jp/upgrade.html" target="_blank" rel="noopener">こちら</a>より詳しくご確認ください。</p>
+            </div>
+          </div>
+          <i class="wsc-icon wsc-icon-thick" data-icon="symbol-plus" style="flex-shrink:0;"></i> </div>
+      </div>
+    </div>
+  </div>
+  <div class="py-5 text-center text-lg-left">
+    <div class="container">
+      <div class="row border mx-0 pl-0 pl-md-3 pl-lg-5 pr-md-3 py-md-2">
+        <div class="col-md-6 col-lg-3 py-4">
+          <div class="mb-3"> <i class="wsc-icon wsc-icon-xl" data-path='https://images.wondershare.com/images2020/icon/secure.svg'></i> </div>
+          <p class="mb-1 font-size-super">お客様情報の安全性</p>
+          <p class="mr-lg-5">私たちはお客様のプライバシー保護を重要視し、高度な暗号化などで秘匿化されていたり、データを盗み出そうとするサイバー攻撃を防止してあなたの大切な個人情報を保護します。</p>
+        </div>
+        <div class="col-md-6 col-lg-3 py-4">
+          <div class="mb-3"> <i class="wsc-icon wsc-icon-xl" data-path='https://images.wondershare.com/images2020/icon/supportservice.svg'></i> </div>
+          <p class="mb-1 font-size-super">サポートサービス</p>
+          <p class="mr-lg-5">サポートセンターでお問い合わせいただくと、当社の熟練したカスタマーサポートスタッフから営業日の24時間以内にインスタントチャットやメールで対応いたします。<a href="https://support.wondershare.jp/" target="_blank"><br>サポートセンター</a></p>
+        </div>
+        <div class="col-md-6 col-lg-3 py-4">
+          <div class="mb-3"> <i class="wsc-icon wsc-icon-xl" data-path='https://images.wondershare.com/images2020/icon/moneybackguarantee.svg'></i> </div>
+          <p class="mb-1 font-size-super">返金保証</p>
+          <p class="mr-lg-5">すべての製品には30日間の返金保証が付いています。</p>
+        </div>
+        <div class="col-md-6 col-lg-3 py-4">
+          <div class="mb-3"> <i class="wsc-icon wsc-icon-xl" data-path='https://images.wondershare.com/images2020/icon/updateskeycode.svg'></i> </div>
+          <p class="mb-1 font-size-super">アップデート</p>
+          <p class="mr-lg-5">ご購入のプランによってプランの有効期限内でソフトウェアのアップデートは無料です。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="modal-success" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content border-0" style="border-radius: 5px;">
+        <div class="modal-body text-center">
+          <p class="pt-5">送信に成功しました！送信後1～2営業日以内に、弊社からご連絡させていただきます。</p>
+          <div class="py-4">
+            <button type="button" class="btn btn-action text-uppercase" data-dismiss="modal">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <aside>
+    <div class="modal fade" id="modal-buy" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+          </div>
+          <div class="modal-body">
+            <div class="text-center py-4">
+              <div class="font-size-extra">
+                <span  id="pageSys" class="font-weight-bolder text-capitalize"></span>
+                <span>版の購入ページを確認中です。</span>
+              </div>
+              <div class="font-size-small mt-3">
+                <a class="btn btn-primary text-white" id="continue">続ける</a>
+                <a class="btn btn-outline-primary" id="needOther">
+                  <span  id="currSys" class="font-weight-bolder text-capitalize"></span>
+                  <span>版はこちらへ</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+</main>

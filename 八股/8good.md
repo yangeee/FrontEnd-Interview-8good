@@ -512,8 +512,9 @@ Function.prototype.bind = function(obj, ...args) {
     return _self.call(this instanceof newFn? this : obj, ...args, ...rest)
   }
   // 为什么用_self而不是ctx呢，因为我们的原函数是调用bind的函数，比如fn.bind(obj)的fn，这个时候this是fn
+  // 为什么需要绑定呢，因为我们的新函数newFn被new的时候需要可以找到原型链，当然源函数时箭头函数就不需要了，所以加了个if
   if (_self.prototype) {
-    // 复制源函数的prototype给newFn 一些情况下函数没有prototype，比如箭头函数
+    // 复制源函数的prototype给newFn 一些情况下函数没有prototype，比如箭头函数 fn = ()=>{}
     newFn.prototype = Object.create(_self.prototype);
   }
   return newFn
@@ -559,6 +560,7 @@ Function.prototype.call = function (ctx, ...args) {
 apply 的实现
 
 ```js
+// 只有参数变成了不需要解构，默认是空数组，因为解构完会生成数组: args = [[1,2,3]] 
 Function.prototype.apply= function (ctx,args = []) { 
     if (typeof this !== 'function') {
         throw new TypeError('当前调用apply方法的不是函数！')
@@ -1020,7 +1022,7 @@ IE模型元素宽度 width = content + padding + border，高度计算相同
 完全依赖于这个元素的 position 属性
 
 > 1. position 属性为 static 、 relative 或 sticky：最近的祖先块元素（inline-block, block 或 list-item）的**内容区**的边缘组成
-> 2. position 属性为 absolute：最近的 position 的值不是 static 的祖先元素的**内边距区**的边缘
+> 2. position 属性为 absolute：最近的 position 的值不是 static 的祖先元素的**内边距区**的边缘(也就是会在padding里面)
 > 3. position 属性是 fixed：连续媒体的情况下包含块是 viewport（视口），分页媒体是分页区域
 > 4. absolute 或 fixed：也可能是满足以下条件的最近父级元素的内边距
      >    1）transform 或 perspective 的值不是 none
@@ -1099,15 +1101,16 @@ flex: 2 === flex: 2 1 0% 单值语法只改变 grow
 
 相同点：中间栏要在放在文档流前面优先渲染。前一半是相同的，也就是三栏全部 float 浮动，左右两栏加上负 margin 让其跟中间栏 div 并排，以形成三栏布局。
 
-不同点：解决”中间栏div内容不被遮挡“问题的思路不一样，圣杯给父元素一个padding或者margin，把整体变小，再使用**相对定位**配合 right和 left 属性把两栏往左和往右移
-双飞翼整体宽度不变，通过 middle 的子元素使用 margin 为左右两栏留出位置
+不同点：解决”中间栏div内容不被遮挡“问题的思路不一样
+圣杯给父元素一个padding或者margin，把整体变小，再使用**相对定位**配合 right和 left 属性把两栏往左和往右移
+双飞翼整体宽度不变，通过 middle 的子元素使用 margin 为左右两栏留出位置,**把相对定位去掉了**
 
 **圣杯**
 
 1. 4个元素：container、middle、left、right
 2. 父元素设置 overflow: hidden; 形成 BFC， 同时左右 padding 设置成左右子元素宽度
 3. 子元素全部 float:left;
-4. left、right 设置各自的宽度，同时 position: relative;  left: -leftWidth, right 设置 right: -rightWidth;
+4. left、right 设置各自的宽度，margin-left: -100%, margin-left: -rightWidth。同时 position: relative;  left: -leftWidth, right 设置 right: -rightWidth;
 5. middle设置width: 100%;
 
 **双飞翼**
@@ -1115,7 +1118,7 @@ flex: 2 === flex: 2 1 0% 单值语法只改变 grow
 1. 5个元素：container、middle、middle 的儿子 inner、left、right
 2. 父元素设置overflow: hidden; 形成BFC， 同时左右 padding 设置成左右子元素宽度
 3. 子元素全部 float:left;
-4. left、right 设置各自的宽度
+4. left、right 设置各自的宽度，margin-left: -100%, margin-left: -rightWidth
 5. middle 设置width: 100%;
 6. inner 设置左右边距为左右栏宽度，为左右栏腾出宽度
 
@@ -1682,7 +1685,7 @@ chrome 有一个优化操作，当渲染引擎收到字节流之后，会开启�
 
 渲染引擎在遇到 JavaScript 脚本时，不管该脚本是否操纵了 CSSOM，都会执行 CSS 文件下载（因为引擎无法确定是否已下载），解析操作，再执行 JavaScript 脚本。JavaScript 脚本是依赖样式表的，这又多了一个阻塞过程。
 
-总结：JavaScript 会阻塞 DOM 生成，而样式文件又会阻塞 JavaScript 的执行
+总结：JavaScript 会阻塞 DOM 生成(会将已经构建好的 DOM 元素渲染到屏幕上，减少白屏的时间)，而样式文件又会阻塞 JavaScript 的执行
 
 #### 四、优化操作
 
@@ -1724,7 +1727,7 @@ dispatchEvent 手动触发事件，参数为某个 event, 比如 click
 
 ` stopPropagation` 阻止冒泡和捕获，但不会阻止当前节点的事件触发后面的监听函数
 
-`stopImmediatePropagation` 彻底取消当前事件，后面的监听函数也不会触发
+`stopImmediatePropagation` 彻底取消当前事件，后面的监听函数也不会触发（可能同一个事件写了很多个处理函数）
 
 **Event 对象**
 
@@ -1752,16 +1755,63 @@ mouseleave：鼠标离开一个节点时触发，离开**父节点不会触发**
 
 mouseover：鼠标进入一个节点时触发，进入子节点会**再一次触发**这个事件
 
-mouseout：鼠标离开一个节点时触发，离开**父节点也会触发**这个事件
+mouseout：当鼠标移出某元素时触发，移入和移出其子元素时也会触发。**因为子元素遮盖了父元素的可视区域**
 
 wheel：滚动鼠标的滚轮时触发
 
 触发顺序：mousedown、mouseup、click、dblclick
 
-几个计算距离的属性：clientX/Y（浏览器可视）、pageX/Y（相对文档区域左上角距离，会随着页面滚动而改变）、offsetX/Y（当前DOM）、screenX/Y（显示器）
+鼠标事件：几个计算距离的属性：clientX/Y（浏览器可视）、pageX/Y（相对文档区域左上角距离，会随着页面滚动而改变）、offsetX/Y（当前DOM）、screenX/Y（显示器）  
 
 ![](https://content.markdowner.net/pub/j2xAGX-Lan0DVV)
 
+windows 对象属性：innerHeight 和 outerHeight 是只读属性  
+
+>window.innerHeight：浏览器窗口的视口（viewport）高度（以像素为单位）；如果有水平滚动条，也包括滚动条高度。  
+window.outerHeight: 浏览器窗口的高度，包括侧边栏（如果存在）、窗口镶边（window chrome）和窗口调正边框（window resizing borders/handles）。
+
+  
+DOM 属性：clientHeight 和 offsetHeight  
+> clientHeight = height + padding - 水平滚动条高度（如果存在）  
+offsetHeight = height + padding + border + 水平滚动条（如果存在）
+> scrollTop: 当前元素距离顶部的距离
+
+### 如何判断元素在视口内  
+传统的实现方法是，监听 scroll 事件，调用目标元素的 getBoundingClientRect() 方法，得到它对应于视口左上角的坐标，再判断是否在视口之内。这种方法的缺点是，由于 scroll 事件密集发生，计算量很大，容易造成性能问题。
+```js
+return (
+top >= 0 &&
+left >= 0 &&
+right <= viewWidth &&
+bottom <= viewHeight
+);
+```
+![img_3.png](img_3.png)
+
+IntersectionObserver （96%支持）
+```ts
+/**
+ * @param 如果同时有两个被观察的对象的可见性发生变化，entries数组就会有两个成员
+ */
+function callback(entires:Array){
+  console.log(entries);
+}
+// 返回值: 
+// time：可见性发生变化的时间，高精度时间戳，单位为毫秒
+// target：被观察的目标元素，DOM 节点对象
+// rootBounds：根元素的矩形区域的信息，getBoundingClientRect()方法的返回值，如果没有根元素（即直接相对于视口滚动），则返回null
+// boundingClientRect：目标元素的矩形区域的信息
+// intersectionRect：目标元素与视口（或根元素）的交叉区域的信息
+// intersectionRatio：目标元素的可见比例，即intersectionRect占boundingClientRect的比例，完全可见时为1，完全不可见时小于等于0
+
+var io = new IntersectionObserver(callback, option);
+// 开始观察
+io.observe(document.getElementById('example'));
+// 停止观察
+io.unobserve(element);
+// 关闭观察器
+io.disconnect();
+```
 ## 6、缓存机制
 
 ### HTTP 报文
@@ -1786,6 +1836,11 @@ HTTP头(通用信息头，响应头，实体头)
 
 ![](https://content.markdowner.net/pub/L5NrOV-a8ozXbX)
 
+host、refer、origin区别
+> Host 决定着访问哪个主机,一般和其他两个没区别，除非同一个ip的服务器上有多个网站
+> refer 包含了当前请求页面的来源页面的地址，一般用来做防盗链、日志分析
+> origin 该首部只用于 CORS 请求或者 POST 请求。
+
 ### 缓存过程
 
 1. 浏览器每次发起请求，先在浏览器缓存中查找请求的结果以及缓存标识
@@ -1805,7 +1860,7 @@ HTTP头(通用信息头，响应头，实体头)
 
 HTTP/1.0 的字段，值是服务器返回的过期时间。
 
-缺点：时区不同的话，客户端和服务端有一方的时间不准确发生误差，那么强制缓存则会直接失效
+缺点：Expires 定义的缓存时间是相对于服务器上的时间而言的，而浏览器在判断的时候是基于客户端的系统时间的，用户可以修改时间导致缓存失效
 
 ##### Cache-Control
 
@@ -1819,7 +1874,8 @@ HTTP/1.1 的字段
 
 注意：
 
-> 刷新：浏览器会在 js 和图片等文件解析执行后直接存入内存缓存中，刷新页面从内存缓存中读取(from memory cache)；而css文件则会存入硬盘文件中，每次渲染页面都需要从硬盘读取缓存(from disk cache)。
+> 刷新：浏览器会在 js 和图片等文件解析执行后直接存入内存缓存中，刷新页面从内存缓存中读取(from memory cache)；而css文件则会存入硬盘文件中，每次渲染页面都需要从硬盘读取缓存(from disk cache)，具体实施跟浏览器和当时已占的内存有关。
+> 因为CSS样式加载一次即可渲染出网页，但是脚本中的函数却可能随时会执行，如果每次都从硬盘中来IO开销大可能会卡顿。
 >
 > 关闭再打开：之前的进程内存已清空，所以都是硬盘缓存
 
@@ -1988,7 +2044,7 @@ UI 线程会先判断我们输入的内容是要搜索的内容还是要访问�
 
 1.额外资源的加载
 
-> 当 HTML 主解析器发现了类似 img 或 link 这样的标签时，预加载扫描器（副解析器）就会启动，它会马上找出接下来即将需要获取的资源(比如样式表,脚本,图片等资源)的 URL ，然后发送请求给浏览器进程的网络线程，而不用等到主解析器恢复运行，从而提高了整体的加载时间
+> 当 HTML 主解析器发现了类似 img 或 link 这样的标签时，预加载扫描器（副解析器）就会启动，它会马上找出接下来即将需要获取的资源(比如样式表,脚本,图片等资源)的 URL ，然后通知浏览器进程的网络线程提前请求，而不用等到主解析器一个一个扫到，从而提高了整体的加载时间
 
 2.JavaScript 会阻塞转化过程
 
@@ -2040,7 +2096,9 @@ UI 线程会先判断我们输入的内容是要搜索的内容还是要访问�
 
 #### 合成线程对事件的处理
 
-当页面被合成线程合成过，合成线程会标记那些有事件监听的区域。当事件发生在响应的区域时，合成线程就会将事件发送给主线程处理（这里会阻塞 UI 变化，详情见 passive 改善滚屏）。如果在非事件监听区域，则渲染进程直接创建新的帧而不关心主线程。
+当页面被合成线程合成过，合成线程会标记那些有事件监听的区域。当事件发生在响应的区域时，合成线程就会将事件发送给主线程处理（这里会阻塞 UI 变化，详情见 passive 改善滚屏）。
+如果在非事件监听区域，则渲染进程直接创建新的帧而不关心主线程。
+可以通过`passive: true`参数告诉浏览器，当事件发生时主线程继续监听处理事件，合成线程不再等待并继续合成新的帧(实际应用就是移动端滚动事件触发时，告诉浏览器会阻止默认事件，让浏览器忽略此次事件)。
 
 #### 减少发送给主线程的事件数量
 
@@ -2379,7 +2437,7 @@ CSS 放到头部，保证了下面的 DOM 构建后，CSSOM 构建完毕。JS �
 
 1. defer 会在 HTML 解析完成后，按照 script 标签顺序执行，async 执行顺序随机
 2. defer 脚本的编译执行一定在 DOMContentLoaded 之前，async 脚本的编译执行一定在 Onload 之前
-3. async 下载完成就立即开始执行，同时阻塞页面解析(实验了2021/8/5并不会阻塞）
+3. async 下载完成就立即开始执行，同时阻塞页面解析(实验了2021/8/5并不会阻塞,2022/6/7找了些资料还是说会阻塞，并且从普遍认知上来说JS执行确实会阻塞，因为可能操作dom）
 
 ![](https://content.markdowner.net/pub/Bqkk91-zybBy2k)
 
@@ -2487,6 +2545,7 @@ npm install --save-dev webpack-bundle-analyzer
 ```
 
 查看包的体积大小
+vite 可以使用 `rollup-plugin-visualizer`
 
 #### 3.解析与执行
 
@@ -2861,10 +2920,10 @@ window.requestIdleCallback(deadline => {
 >
 > 1. 举例：
      >
-     >    h1 与 1000个 li 都设置了 overflow: hidden 形成渲染层
+     >    h1 与 1000个 li 都设置了 overflow: hidden 形成渲染层  
      >
      >    h1设置了 animation ，同时是 transform ，循环运动，变成合成层。由于动态交叠不确定性，浏览器会把 1000 个 li 都提升为合成层，导致爆炸
-> 2. 元素的不经意的重叠也导致合成层的产生
+> 2. 元素的不经意的重叠也导致合成层的产生,一个合成层上的所有覆盖它的元素都会形成一个合成层（chrome 94已修复，会层压缩）
 
 解决方法：设置明确的合适的 z-index 或者 浏览器自带的层压缩
 
@@ -4203,15 +4262,15 @@ class MyExampleWebpackPlugin {
 
 ### 阻塞 I/O 到 I/O 多路复用
 
-阻塞 I/O：指进程发起调用后，会被挂起（阻塞），直到收到数据再返回（使用多线程处理多个文件描述符）
+阻塞 I/O：指进程发起数据请求后，会被挂起（阻塞），直到收到数据再返回（使用多线程处理多个文件描述符）
 
 > 缺点：多线程切换有一定的开销，因此引入非阻塞 I/O
 
-非阻塞 I/O：不会将进程挂起，调用时会立即返回成功或错误，因此可以在一个线程里轮询多个文件描述符是否就绪。
+非阻塞 I/O：不会将进程挂起，调用时会根据数据是否准备完毕立即返回数据或错误，因此可以在一个线程里轮询多个文件描述符是否就绪。
 
-> 缺点：次发起系统调用，只能检查一个文件描述符是否就绪。当文件描述符很多时，系统调用的成本很高
+> 缺点：每次发起系统调用，只能检查一个文件描述符是否就绪。当文件描述符很多时，系统调用的成本很高
 
-I/O 多路复用：通过一次系统调用，检查多个文件描述符的状态。在文件描述符较多的场景下，避免了频繁的用户态和内核态的切换，减少了系统调用的开销
+I/O 多路复用：通过一次系统调用，检查多个文件描述符（文件索引）的状态。在文件描述符较多的场景下，避免了频繁的用户态和内核态的切换，减少了系统调用的开销
 
 > 缺点：引入了一些额外的操作和开销，性能更差
 
@@ -4269,7 +4328,7 @@ HTTP 1.0 主要扩展：
 
 * 可以设置 keepalive 来让 HTTP 重用 TCP 链接，重用 TCP 链接可以省了每次请求都要在广域网上进行的 TCP 的三次握手的巨大开销。这就是所谓的“HTTP 长链接” 或是 “请求响应式的 HTTP 持久链接”。
 * 支持 pipeline 网络传输，只要第一个请求发出去了，不必等其回来，就可以发第二个请求出去，可以减少整体的响应时间。（注：非幂等的 POST 方法或是有依赖的请求是不能被pipeline 化的）
-* 支持 Chunked Responses ，也就是说，在 Response 的时候，不必说明 Content-Length 这样，客户端就不能断连接，直到收到服务端的 EOF 标识。这种技术又叫 “服务端Push模型”，或是 “服务端Push式的 HTTP 持久链接”
+* 支持 Chunked Responses ，也就是说，在 Response 的时候，不必说明 Content-Length ，这样客户端就不能断连接，直到收到服务端的 EOF 标识。这种技术又叫 “服务端Push模型”，或是 “服务端Push式的 HTTP 持久链接”
 * 增加了 cache control 机制。
 * 协议头注增加了 Language, Encoding, Type 等等头，让客户端可以跟服务器端进行更多的协商。
 * 正式加入了一个很重要的头—— HOST。这样的话，服务器就知道你要请求哪个网站了。因为可以有多个域名解析到同一个IP上，要区分用户是请求的哪个域名，就需要在HTTP的协议中加入域名的信息，而不是被DNS转换过的IP信息。
@@ -4312,6 +4371,13 @@ HTTP/2 和 HTTP/1.1 最主要的不同是：
   ![](https://content.markdowner.net/pub/j0yPVz-0RgzRm2)
 * **头部压缩**：用 header 字段表里的索引代替实际的 header。HPACK 算法使用一份索引表来定义常用的 http Header，请求的时候只需要发送在表里的索引位置即可，常见的用静态表，动态表用来追加。HPACK 同时还会将字符串进行霍夫曼编码来压缩字符串大小，比如 User-Agent。
 
+>  为什么不用 Gzip 压缩：  
+>  SPDY/2 曾经建议每个方都使用单独的 GZIP 上下文进行消息头压缩，该方法易于实现且效率很高。
+>
+> 随之的是 CRIME 攻击诞生了，这种方式可以攻击加密文件内部的所使用的压缩流
+>
+> 攻击者有能力将数据注入加密流中，并可以“探测”明文并恢复它，已经有了黑客重新恢复cookie和token的例子
+
   ![](https://content.markdowner.net/pub/W5GBx5-Eyyx2E3)
 
   常见的 gzip 等是报文内容（body）的压缩，二者合作效果更好
@@ -4324,18 +4390,18 @@ HTTP/2 和 HTTP/1.1 最主要的不同是：
 
 **http/2 主要的问题**：
 
-1）队首阻塞问题：若干个 HTTP 的请求在**复用一个 TCP** 的连接，TCP 协议收集排序整合 HTTP 请求，所以一旦发生丢包，所有的 HTTP 请求都必需等待这个丢了的包被重传回来，哪怕丢的那个包不是我这个 HTTP 请求的
+1）队首阻塞问题：若干个 HTTP 的请求在**复用一个 TCP** 的连接，TCP 协议收集排序整合 HTTP 请求，所以一旦发生丢包或者响应慢，所有的 HTTP 请求都必需等待这个丢了的包被重传回来，哪怕丢的那个包不是我这个 HTTP 请求的
 
 > 1.x 中 http 层和 tcp 层都存在，2的多路复用解决了 http 层，但是 tcp 层还是会有，并且由于强制使用 TLS 协议，还多了 TLS 协议层面的队头阻塞
 
-2）多次握手 RTT 高：tcp 连接、tsl/ssl 连接、http 数据交换
+2）多次握手 RTT(同一個封包來回時間（Round-Trip Time）) 高：tcp 连接、tsl/ssl 连接、http 数据交换
 
 3）拥塞控制副作用：如果网络上出现拥塞，大家都会丢包，于是都进入拥塞控制的算法中，算法会让所有人都“冷静”下来，然后进入一个“慢启动”的过程，包括在 TCP 连接建立时，这个慢启动也在，所以导致 TCP 性能迸发地比较慢。
 
-**解决方法**：在 UDP 基础上改造一个具备 TCP 协议优点的新协议 QUIC ！
+**解决方法**：在 UDP 基础上改造一个具备 TCP 协议优点的新协议 QUIC ！（6个特点）
 
 * Head-of-Line blocking 问题。UDP 不管顺序，不管丢包，QUIC 的多个 stream 之间没有依赖等待关系 （当然，QUIC 的一个任务是要像 TCP 稳定，所以 QUIC 有自己的丢包重传机制）
-* 改进的拥塞控制：没有固定的算法，可以根据需要切换
+* 改进的拥塞控制：没有固定的算法，可以根据需要切换（5个特点）
 
   > 1）支持热插拔
   >
@@ -4372,7 +4438,7 @@ HTTP/2 和 HTTP/1.1 最主要的不同是：
   > TCP：RTT = timestamp2 - timestamp1
   >
   > QUIC：RTT = timestamp2 - timestamp1 - ACK Delay
-* 0RTT 建链：
+* 0RTT 建立连接：
 
   首次连接
     1. 客户端发送 client hello
@@ -4389,7 +4455,10 @@ HTTP/2 和 HTTP/1.1 最主要的不同是：
 
        > 问：为什么 K 只用一次呢？
        >
-       > 答：基于前向安全，密钥泄漏不会让之前加密的数据被泄漏，影响的只有当前
+       > 答：基于前向安全，存储在客户端的密钥 K 泄漏不会让之前通过 M 加密的数据被泄漏，因为 M 是临时生成的
+       > 
+       >问：为什么服务端不自己生成公钥
+       > 答：因为客户端需要保存config以便下次直接请求数据，并且可以校验客户端是否使用的是自己发送的而不是伪造的config
 * 连接迁移
 
   QUIC 摒弃了 TCP 五元组（源IP地址，源端口，目的IP地址，目的端口和传输层协议），使用64位的随机数作为连接的 ID，并使用该 ID 表示连接。当我们从 4G 环境切换到 wifi 环境时，如果是 TCP 手机的 IP 地址就会发生变化，这时必须创建新的 TCP 连接才能继续传输数据，QUIC则不会，因为 connection ID 没变
@@ -4408,6 +4477,7 @@ HTTP/2 和 HTTP/1.1 最主要的不同是：
   QUIC 分为两种流量控制
 
   > 1）stream 级别：握手时，接收方通过传输参数设置 stream 的初始限制，可用窗口 = 最大窗口 - 已接收的最大偏移字节数
+  > 与 TCP 不同，就算此前有 packet 没有接收到，它的滑动只取决于接收到的最大偏移字节数（highest received byte offset）。只要还有可用窗口，发送方可以继续发送数据
   >
   > 2）Connection 级别：限制所有 streams 相加起来的总字节数，防止超过缓冲容量。可用窗口 = stream 1 可用窗口 + stream 2 可用窗口 + stream 3 可用窗口
 * 头压缩算法 QPACK：基于 QUIC 的 QPACK 利用两个附加的 QUIC stream，一个用来发送字典表的更新给对方，另一个用来 ack 对方发过来的 update
@@ -4444,7 +4514,7 @@ SSL 是 TLS 的前身
 
 #### 五、HTTPS 方案
 
-1. 某网站拥有用于非对称加密的公钥 A、私钥 B。
+1. 某网站服务器拥有用于非对称加密的公钥 A、私钥 B。
 2. 浏览器向服务器请求，服务器把公钥 A 明文给传输浏览器。
 3. 浏览器随机生成一个用于**对称加密**的密钥 X，用公钥 A 加密后传给服务器。
 4. 服务器拿到后用私钥 B 解密得到密钥 X。
@@ -4475,7 +4545,7 @@ SSL 是 TLS 的前身
 
 1. CA 机构拥有非对称加密的私钥和公钥。
 2. CA 机构对证书明文数据 T 进行 hash。
-3. 对 hash 后的值用私钥加密，得到数字签名 S。
+3. 对 hash 后的值用私钥加密，得到数字签名 S(相当于非对称加密生成密钥)。
 
 明文和数字签名共同组成了数字证书，这样一份数字证书就可以颁发给网站了。
 
@@ -4626,9 +4696,9 @@ Sec-WebSocket-Protocol: binary
     * 优雅的关闭 TCP 连接，尽量保证被动关闭的一端收到它自己发出去的 FIN 报文的 ACK 确认报文；
     * 处理延迟的重复报文，避免前后两个使用相同四元组的连接中的前一个连接的报文干扰后一个连接。
 
-   问：为什么发送了最后一个 ACK 报文之后需要等待 2MSL 时长的 TIME_WAIT 状态
+   问：四次挥手为什么发送了最后一个 ACK 报文之后需要等待 2MSL 时长的 TIME_WAIT 状态
 
-   答：第一个 MSL 是为了等自己发出去的最后一个 ACK 从网络中消失，而第二 MSL 是为了等在对端收到 ACK 之前的一刹那可能重传的 FIN 报文从网络中消失
+   答：总结：为了保证客户端发送的最后一个ACK报文段能够到达服务。第一个 MSL 是为了等自己发出去的最后一个 ACK 从网络中消失（服务端没收到需要重传），而第二 MSL 是为了等在对端收到 ACK 之前的一刹那可能重传的 FIN 报文从网络中消失（避免收不到重传）
 6. Sequence Number
 
    ![](https://content.markdowner.net/pub/GejPQM-Vr2g1bk)
@@ -4780,7 +4850,7 @@ cwnd 窗口表示的是发送频率，快速重传和快速恢复算法一般同
 
 * cwnd = ssthresh  + 3 * MSS （3表示有三个包发出去但是没有确认，如果也算在内会导致可继续发的包很少）
 * 发送方重传 Duplicated ACKs 指定的数据包（已丢失的）
-* 如果再收到 duplicated Acks，那么cwnd = cwnd +1 （又有丢失的包后面的包被接收，窗口变大）
+* 如果再收到 duplicated Acks，那么cwnd = cwnd +1 （乐观的假设在丢失的包后面发的包被接收，所以窗口变大）
 * 如果收到了新的Ack，那么，cwnd = sshthresh ，然后就进入了拥塞避免的算法了（重传的包被接收，ACK 返回目前收到的最后面的数据包）
 
   > 通俗解释：你既然收到 3 Dup-ACK，乐观一点，也就是丢失报文（假设序号n）之后的报文中，起码有三个已经发送成功了。那我先给你一点透支额度，不让你cwnd=cwnd/2了，而是cwnd=cwnd/2+3，3就是给你的透支额度。之后呢，我也不让你线性缓慢增长，而是假设你收到的每个ACK，都意味着有一个后面的报文发送成功了（n+x），我都会给你透支额度（此时每个dupACK都让窗口加1，就是允许你多发）。

@@ -1,167 +1,63 @@
-child.prototype = Object.create(parent.prototype)
 
-function instanceFake(l,r){
-  let right = r.prototype
-  let left = l.__proto__
-  while(true){
-    if(left === null) return false
-    if(right === left) return true
-    left = left.__proto__
+const N = 1e9
+class SegNode {
+  constructor() {
+    this.left = this.right = null // 左右孩子节点
+    this.val = this.add = 0 // 懒惰标记 add，当前节点值val
   }
 }
 
-function bind(obj,...args){
-  let self = this
-  function newFn(...rest){
-      return fn.call(this instanceof newFn ? this : obj,...args,...rest)
+class SegmentTree {
+  constructor() {
+    this.root = new SegNode()
   }
-  if(self.prototype){
-    newFn.prototype = Object.create(self.prototype)
-  }
-  return newFn
-}
-
-function call(obj,...args){
-  if(!this instanceof Function){
-    return false
-  }
-  obj = Object(obj) || window
-  let fn = Symbol('fn')
-  obj[fn] = this
-  const res = obj[fn](...args)
-  delete obj[fn]
-  return res
-}
-
-
-function apply(obj,args){
-  if(!this instanceof Function){
-    return false
-  }
-  obj = Object(obj) || window
-  let fn = Symbol('fn')
-  obj[fn] = this
-  const res = obj[fn](...args)
-  delete obj[fn]
-  return res
-}
-
-function curry(fn){
-  return function curried(...rest){
-    if(fn.length <= rest.length){
-      return fn.apply(null,rest)
-    }else {
-      return function (...args){
-        return curried(...rest,...args)
-      }
+  // 更新
+  update(node, start, end, l, r, val) {
+    // 找到满足要求的区间
+    if (l <= start && end <= r) {
+      // 区间节点加上更新值
+      node.val += (end - start + 1) * val
+      node.add += val
+      return
     }
+    const mid = start + end >> 1
+
+    // 下推标记
+    // mid - start + 1：表示左孩子区间叶子节点数量
+    // end - mid：表示右孩子区间叶子节点数量
+    this.pushDown(node,mid - start + 1, end - mid)
+    // [start, mid] 和 [l, r] 可能有交集，遍历左孩子区间
+    if (l <= mid) { this.update(node.left, start, mid, l, r, val) }
+    // [mid + 1, end] 和 [l, r] 可能有交集，遍历右孩.子区间
+    if (r > mid) { this.update(node.right, mid + 1, end, l, r, val) }
+    // 向上更新
+    this.pushUp(node)
   }
-}
- 
-function news(fn,...rest){
-  let newObj = Object.create(fn.prototype)
-  let res = fn.apply(newObj,rest)
-  return typeof res === 'object' ? res||newObj :newObj
-}
-
-const PENDING = 'PENDING';
-const FULFILLED = 'FULFILLED';
-const REJECTED = 'REJECTED';
-
-class Promise {
-  constructor(fn){
-    this.value = null
-    this.reason = null
-    this.status = PENDING
-    this.resFnArr=  []
-    this.rejFnArr=  []
-    let resolve = (value)=>{
-      if(this.status === PENDING){
-        this.value = value
-        this.status = FULFILLED
-        this.resFnArr.forEach(fn=>fn());
-      }
-    }
-    let reject = (reason)=>{
-      if(this.status === PENDING){
-        this.reason = reason
-        this.status = REJECTED
-        this.rejFnArr.forEach(fn=>fn());
-      }
-    }
-    try{
-      fn(resolve,reject)
-    }catch (e){
-      reject(e)
-    }
+  // 查询
+  query(node, start, end, l, r) {
+    if (l <= start && end <= r) { return node.val }
+    let ans = 0, mid = start + end >> 1
+    this.pushDown(node, mid - start + 1, end - mid)
+    if (l <= mid) { ans += this.query(node.left, start, mid, l, r) }
+    if (r > mid) { ans += this.query(node.right, mid + 1, end, l, r) }
+    return ans
   }
-  then(onRes,onRej){
-    onRes = typeof onRes === 'function' ? onRes : v=>v
-    onRej = typeof onRej === 'function' ? onRej : (err)=>{throw err}
-    let nextPromise = new Promise((resolve,reject)=>{
-      let resFn = ()=>{
-        setTimeout(()=>{
-        try{
-          let res = onRes(this.value)
-          resolvePromise(nextPromise,res,resolve,reject)
-        }catch(e){
-          reject(e)
-        }
-      })
-      }
-
-      let rejFn = ()=>{setTimeout(()=>{
-        try{
-          let res = onRej(this.reason)
-          resolvePromise(nextPromise,res,resolve,reject)
-        }catch(e){
-          reject(e)
-        }
-      })}
-      if(this.status === PENDING){
-        this.rejFnArr.push(rejFn)
-        this.resFnArr.push(resFn)
-      }
-      if(this.status === REJECTED){
-        rejFn()
-      }
-      if(this.status === FULFILLED){
-        resFn()
-      }
-    })
-    return nextPromise
+  pushUp(node) {
+    node.val = node.left.val + node.right.val;
+  }
+  pushDown(node, leftNum, rightNum) {
+    // 动态开点
+    if (node.left === null) {node.left = new SegNode()}
+    if (node.right === null) {node.right = new SegNode()}
+    if (node.add === 0) {return}
+    // 注意：当前节点加上 标记值✖该子树所有叶子节点的数量
+    node.left.val += node.add * leftNum
+    node.right.val += node.add * rightNum
+    // 对区间进行「加减」的更新操作，下推懒惰标记时需要累加起来，不能直接覆盖
+    node.left.add += node.add
+    node.right.add += node.add
+    // 取消当前节点标记,已经用过了
+    node.add = 0
   }
 }
 
-function resolvePromise(nextPromise,res,resolve,reject){
-  if (nextPromise === res) {
-    return reject(new TypeError('Chaining cycle detected for promise #<Promise>'))
-  }
-  if((typeof res === 'object' && res !== null) || typeof  res ==='function'){
-    let called = false
-    try{
-      let then = res.then
-      if(typeof then === 'function'){
-        then.call(res,(val)=>{
-          if(called) return
-          called = true
-          resolvePromise(nextPromise,val,resolve,reject)
-        }, (rea)=>{
-          if(called) return
-          called = true
-          reject(rea)
-        })
-      }else {
-        if(called) return
-        called = true
-        resolve(res)
-      }
-    }catch(e){
-      if(called) return
-      called = true
-      reject(e)
-    }
-  }else {
-    resolve(res)
-  }
-}
